@@ -1,0 +1,203 @@
+<section class="certifications-section">
+  <div class="container">
+    <div class="cert-head">
+      <span class="eyebrow">Certifications</span>
+      <h2>Un parcours certifiant en continu</h2>
+      <p>
+        ALX et Orange Digital Center m'ont formé à l'ingénierie logicielle, à l'IA,
+        au design UI/UX et au développement Angular. Chaque certificat est consultable
+        et détaillé ci-dessous. Les justificatifs téléchargeables sont affichés lorsqu'ils sont disponibles.
+      </p>
+    </div>
+
+    <!-- Filtres -->
+    <div class="cert-filters">
+      <button
+        class="cert-filter"
+        [class.active]="activeOrg() === null"
+        [attr.aria-pressed]="activeOrg() === null"
+        type="button"
+        (click)="setFilter(null)"
+      >
+        Toutes
+        <span class="filter-count">{{ certifications().length }}</span>
+      </button>
+      <button
+        class="cert-filter"
+        [class.active]="activeOrg() === 'alx'"
+        [attr.aria-pressed]="activeOrg() === 'alx'"
+        type="button"
+        (click)="setFilter('alx')"
+      >
+        ALX
+        <span class="filter-count">{{ certifications().filter(c => c.organization === 'alx').length }}</span>
+      </button>
+      <button
+        class="cert-filter"
+        [class.active]="activeOrg() === 'orange-digital-center'"
+        [attr.aria-pressed]="activeOrg() === 'orange-digital-center'"
+        type="button"
+        (click)="setFilter('orange-digital-center')"
+      >
+        Orange Digital Center
+        <span class="filter-count">{{ certifications().filter(c => c.organization === 'orange-digital-center').length }}</span>
+      </button>
+    </div>
+
+    <!-- Grille -->
+    @if (loading()) {
+      <p class="cert-state">Chargement des certifications…</p>
+    } @else if (error()) {
+      <p class="cert-state cert-error">{{ error() }}</p>
+    } @else {
+      <div class="cert-grid">
+        @for (cert of certifications(); track cert.id) {
+          <article class="cert-card" data-tilt>
+            <div class="cert-card-top">
+              <div class="cert-icon" [style.background]="cert.accent + '1A'" [style.color]="cert.accent" [style.borderColor]="cert.accent + '33'">
+                @switch (cert.iconType) {
+                  @case ('code') {
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M8 6l-6 6 6 6M16 6l6 6-6 6M13 4l-2 16"/>
+                    </svg>
+                  }
+                  @case ('robot') {
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="4" y="8" width="16" height="12" rx="2"/>
+                      <circle cx="9" cy="14" r="1.5"/>
+                      <circle cx="15" cy="14" r="1.5"/>
+                      <path d="M12 8V4M9 4h6M2 14h2M20 14h2"/>
+                    </svg>
+                  }
+                  @case ('assistant') {
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 2a4 4 0 0 1 4 4v2a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"/>
+                      <path d="M4 12a8 8 0 0 0 16 0M12 20v2"/>
+                    </svg>
+                  }
+                  @case ('ai') {
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 3l1.8 4.2L18 9l-4.2 1.8L12 15l-1.8-4.2L6 9l4.2-1.8L12 3z"/>
+                      <path d="M19 14l.9 2.1L22 17l-2.1.9L19 20l-.9-2.1L16 17l2.1-.9L19 14z"/>
+                    </svg>
+                  }
+                  @case ('figma') {
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="6" r="3"/>
+                      <circle cx="12" cy="12" r="3"/>
+                      <circle cx="12" cy="18" r="3"/>
+                      <path d="M6 6a3 3 0 0 1 3-3h3v6H9a3 3 0 0 1-3-3z"/>
+                    </svg>
+                  }
+                  @case ('animation') {
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/>
+                      <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                  }
+                  @case ('angular') {
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="9"/>
+                      <path d="M12 7l5 10M12 7l-5 10M9.5 13h5"/>
+                    </svg>
+                  }
+                }
+              </div>
+              <span class="cert-org" [style.color]="cert.accent">{{ cert.organizationLabel }}</span>
+              <span class="cert-year">{{ cert.year }}</span>
+            </div>
+
+            <h3 class="cert-title">{{ cert.title }}</h3>
+            <p class="cert-desc">{{ cert.description }}</p>
+
+            <div class="cert-skills">
+              @for (skill of cert.skills; track skill) {
+                <span class="cert-skill">{{ skill }}</span>
+              }
+            </div>
+
+            <div class="cert-actions">
+              <button type="button" class="cert-btn cert-btn-view" (click)="openModal(cert)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+                Voir
+              </button>
+              @if (cert.pdfUrl) {
+                <a class="cert-btn cert-btn-download" [href]="cert.pdfUrl" download>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 3v12M6 10l6 6 6-6M4 21h16"/>
+                  </svg>
+                  Télécharger
+                </a>
+              }
+            </div>
+          </article>
+        }
+      </div>
+    }
+  </div>
+</section>
+
+<!-- Modal -->
+@if (modalOpen() && selectedCert()) {
+  <div
+    class="cert-modal-backdrop"
+    (click)="onBackdropClick($event)"
+    (keydown.escape)="closeModal()"
+    role="dialog"
+    aria-modal="true"
+    tabindex="-1"
+    [attr.aria-label]="'Certificat : ' + selectedCert()!.title"
+  >
+    <div class="cert-modal">
+      <button type="button" class="cert-modal-close" (click)="closeModal()" aria-label="Fermer">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M6 6l12 12M18 6L6 18"/>
+        </svg>
+      </button>
+
+      <div class="cert-modal-header">
+        <div class="cert-modal-icon" [style.background]="selectedCert()!.accent + '1A'" [style.color]="selectedCert()!.accent">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/>
+            <path d="M9 12l2 2 4-4"/>
+          </svg>
+        </div>
+        <div>
+          <span class="cert-modal-org" [style.color]="selectedCert()!.accent">{{ selectedCert()!.organizationLabel }}</span>
+          <h3>{{ selectedCert()!.title }}</h3>
+          <span class="cert-modal-year">{{ selectedCert()!.year }}</span>
+        </div>
+      </div>
+
+      <p class="cert-modal-desc">{{ selectedCert()!.description }}</p>
+
+      <div class="cert-modal-skills">
+        @for (skill of selectedCert()!.skills; track skill) {
+          <span class="cert-modal-skill">{{ skill }}</span>
+        }
+      </div>
+
+      <div class="cert-modal-actions">
+        @if (selectedCert()!.pdfUrl) {
+          <a class="cert-btn cert-btn-download" [href]="selectedCert()!.pdfUrl" download>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3v12M6 10l6 6 6-6M4 21h16"/>
+            </svg>
+            Télécharger le PDF
+          </a>
+        }
+        @if (selectedCert()!.verifiable && selectedCert()!.verificationUrl) {
+          <a class="cert-btn cert-btn-verify" [href]="selectedCert()!.verificationUrl" target="_blank" rel="noopener noreferrer">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
+            </svg>
+            Vérifier
+          </a>
+        }
+      </div>
+    </div>
+  </div>
+}

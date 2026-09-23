@@ -1,0 +1,76 @@
+[
+  {
+    "id": "1",
+    "slug": "le-calao-dore",
+    "title": "Le Calao Doré",
+    "category": "Angular",
+    "shortDescription": "Site vitrine responsive pour un restaurant, pensé pour présenter le lieu et son expérience de restauration camerounaise.",
+    "description": "Site vitrine développé dans le cadre de l'Angular Talent Lab 2026, pour présenter un restaurant : menu, ambiance, informations pratiques.",
+    "context": "Un restaurant a besoin d'une présence en ligne claire, rapide à consulter sur mobile, qui donne envie de venir sur place.",
+    "goal": "Concevoir une interface professionnelle et responsive, capable de représenter l'identité du lieu sans complexité technique inutile.",
+    "role": "Conception et développement Front-End (UI, structure des composants, responsive).",
+    "technologies": ["Angular 22", "TypeScript", "Bootstrap 5", "Standalone Components"],
+    "features": [
+      "Présentation du restaurant et de son ambiance",
+      "Mise en avant du menu",
+      "Design responsive mobile / desktop",
+      "Composants standalone réutilisables"
+    ],
+    "challenges": "Obtenir une mise en page soignée avec Bootstrap 5 sans sacrifier la cohérence visuelle propre au projet.",
+    "solution": "Personnalisation ciblée des composants Bootstrap et découpage en composants Angular standalone pour garder un code lisible.",
+    "image": "assets/images/projects/le-calao-dore.PNG",
+    "images": [
+      "assets/images/projects/le-calao-dore.PNG",
+      "assets/images/projects/le-calao-dore2.PNG",
+      "assets/images/projects/le-calao-dore3.PNG",
+      "assets/images/projects/le-calao-dore4.PNG"
+    ],
+    "demoUrl": "",
+    "githubUrl": "",
+    "featured": true
+  },
+  {
+    "id": "2",
+    "slug": "chatapp",
+    "title": "ChatApp",
+    "category": "Full Stack",
+    "shortDescription": "Application de messagerie démontrant la communication entre le front-end et un back-end.",
+    "description": "Projet de messagerie visant à mettre en pratique les échanges de données entre client et serveur.",
+    "context": "Comprendre et mettre en œuvre une communication client/serveur au-delà d'un simple appel HTTP ponctuel.",
+    "goal": "Construire une messagerie fonctionnelle démontrant la gestion des échanges de données.",
+    "role": "Développement front-end et back-end.",
+    "technologies": ["Node.js", "PHP", "MySQL"],
+    "features": [
+      "Envoi et réception de messages",
+      "Gestion des utilisateurs",
+      "Persistance des données côté serveur"
+    ],
+    "challenges": "",
+    "solution": "",
+    "demoUrl": "",
+    "githubUrl": "",
+    "featured": true
+  },
+  {
+    "id": "3",
+    "slug": "wattmboa-237",
+    "title": "WattMboa 237",
+    "category": "Angular",
+    "shortDescription": "Outil d'estimation et de simulation de consommation électrique, avec formulaires et calculs côté client.",
+    "description": "Application Angular permettant à un utilisateur d'estimer sa consommation électrique à partir des équipements de son foyer.",
+    "context": "Beaucoup d'utilisateurs n'ont pas de visibilité claire sur leur consommation électrique réelle.",
+    "goal": "Fournir une estimation simple et compréhensible à partir de données saisies par l'utilisateur.",
+    "role": "Conception de la logique métier, des services et des composants Angular.",
+    "technologies": ["Angular", "Services", "Formulaires réactifs", "Logique de calcul côté client"],
+    "features": [
+      "Saisie des équipements électriques du foyer",
+      "Calcul de la consommation estimée",
+      "Restitution claire du résultat"
+    ],
+    "challenges": "Structurer une logique de calcul réutilisable en dehors des composants d'affichage.",
+    "solution": "Externalisation de la logique métier dans un service Angular dédié, appelé par les composants d'interface.",
+    "demoUrl": "",
+    "githubUrl": "",
+    "featured": true
+  }
+]

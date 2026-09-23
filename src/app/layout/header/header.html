@@ -1,0 +1,46 @@
+<header class="site-header">
+  <div class="container nav-inner">
+    <a routerLink="/" class="logo">
+      <span class="logo-bracket">{{ '{' }}</span>
+      fidele<span>.dev</span>
+      <span class="logo-bracket">{{ '}' }}</span>
+    </a>
+
+    <nav class="nav-links" aria-label="Navigation principale">
+      <a routerLink="/about" routerLinkActive="active">À propos</a>
+      <a routerLink="/" fragment="skills">Compétences</a>
+      <a routerLink="/projects" routerLinkActive="active">Projets</a>
+      <a routerLink="/certifications" routerLinkActive="active">Certifications</a>
+      <a routerLink="/" fragment="about-preview">Parcours</a>
+      <a routerLink="/contact" routerLinkActive="active">Contact</a>
+    </nav>
+
+    <div class="nav-cta">
+      <span class="btn btn-ghost nav-unavailable" title="Ajoutez le PDF du CV dans src/assets pour activer ce lien">CV à ajouter</span>
+      <a routerLink="/contact" class="btn btn-primary">Me contacter</a>
+      <button
+        class="menu-toggle"
+        type="button"
+        (click)="toggleMenu()"
+        [attr.aria-expanded]="menuOpen()"
+        aria-controls="mobilePanel"
+        aria-label="Ouvrir le menu"
+      >
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path d="M2 5h14M2 9h14M2 13h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  @if (menuOpen()) {
+    <div class="container mobile-panel" id="mobilePanel">
+      <a routerLink="/about" (click)="closeMenu()">À propos</a>
+      <a routerLink="/" fragment="skills" (click)="closeMenu()">Compétences</a>
+      <a routerLink="/projects" (click)="closeMenu()">Projets</a>
+      <a routerLink="/certifications" (click)="closeMenu()">Certifications</a>
+      <a routerLink="/" fragment="about-preview" (click)="closeMenu()">Parcours</a>
+      <a routerLink="/contact" (click)="closeMenu()">Contact</a>
+    </div>
+  }
+</header>

@@ -1,0 +1,68 @@
+<section class="section" style="border-bottom:none;">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Projets</span>
+      <h2>Réalisations concrètes</h2>
+      <p>3 à 5 projets choisis plutôt qu'une longue liste superficielle.</p>
+    </div>
+
+    <div class="projects-filter" role="tablist" aria-label="Filtrer les projets">
+      @for (filter of filters; track filter) {
+        <button
+          type="button"
+          class="filter-chip"
+          [class.active]="activeFilter() === filter"
+          (click)="setFilter(filter)"
+        >
+          {{ filter }}
+        </button>
+      }
+    </div>
+
+    @if (loading()) {
+      <p class="state-msg">Chargement des projets…</p>
+    } @else if (error()) {
+      <p class="state-msg state-error">{{ error() }}</p>
+    } @else if (filteredProjects().length === 0) {
+      <p class="state-msg">Aucun projet ne correspond à ce filtre.</p>
+    } @else {
+      <div class="project-grid">
+        @for (project of filteredProjects(); track project.id) {
+          <article class="project-card">
+            <div class="project-thumb">
+              @if (project.image) {
+                <div class="project-slides">
+                  @for (image of getProjectImages(project); track $index) {
+                    <div class="project-slide">
+                      <img [src]="image" [alt]="project.title + ' - image ' + ($index + 1)" class="thumb-image" loading="lazy" />
+                    </div>
+                  }
+                </div>
+              } @else {
+                <span class="project-visual-missing">Aperçu à ajouter</span>
+              }
+            </div>
+            <div class="project-body">
+              <span class="cat">{{ project.category }}</span>
+              <h3>{{ project.title }}</h3>
+              <p>{{ project.shortDescription }}</p>
+              <div class="stack-tags">
+                @for (tech of project.technologies; track tech) {
+                  <span>{{ tech }}</span>
+                }
+              </div>
+              <div class="project-links">
+                <a [routerLink]="['/projects', project.slug]">Étude de cas</a>
+                @if (project.githubUrl) {
+                  <a [href]="project.githubUrl" target="_blank" rel="noopener noreferrer">GitHub</a>
+                } @else {
+                  <span class="placeholder-tag">GitHub — lien à ajouter</span>
+                }
+              </div>
+            </div>
+          </article>
+        }
+      </div>
+    }
+  </div>
+</section>

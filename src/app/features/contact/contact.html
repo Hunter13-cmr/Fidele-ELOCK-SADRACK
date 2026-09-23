@@ -1,0 +1,55 @@
+<section class="section" style="border-bottom:none;">
+  <div class="container contact-wrap">
+    <div class="contact-info">
+      <span class="eyebrow">Contact</span>
+      <h1>Un besoin en développement Angular ou Front-End ?</h1>
+      <p>
+        Je serais heureux d'échanger autour de votre produit, de votre équipe ou de votre
+        prochain projet.
+      </p>
+      <div class="contact-channels">
+        <a href="mailto:felocksadrack@gmail.com"><span>Email</span><span>felocksadrack@gmail.com</span></a>
+        <a href="https://linkedin.com/in/esf1305" target="_blank" rel="noopener noreferrer"><span>LinkedIn</span><span>esf1305 ↗</span></a>
+        <a href="https://github.com/Hunter13-cmr" target="_blank" rel="noopener noreferrer"><span>GitHub</span><span>Hunter13-cmr ↗</span></a>
+        <div class="contact-channel"><span>CV (PDF)</span><span>fichier à ajouter</span></div>
+      </div>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+      <div class="form-group">
+        <label for="name">Nom</label>
+        <input id="name" type="text" autocomplete="name" formControlName="name" [attr.aria-invalid]="f.name.invalid && (f.name.touched || submitted())" [attr.aria-describedby]="f.name.invalid && (f.name.touched || submitted()) ? 'name-error' : null" />
+        @if (f.name.invalid && (f.name.touched || submitted())) {
+          <div id="name-error" class="form-error">Veuillez renseigner votre nom.</div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input id="email" type="email" autocomplete="email" formControlName="email" [attr.aria-invalid]="f.email.invalid && (f.email.touched || submitted())" [attr.aria-describedby]="f.email.invalid && (f.email.touched || submitted()) ? 'email-error' : null" />
+        @if (f.email.invalid && (f.email.touched || submitted())) {
+          <div id="email-error" class="form-error">Veuillez renseigner votre adresse email.</div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="subject">Sujet</label>
+        <input id="subject" type="text" formControlName="subject" [attr.aria-invalid]="f.subject.invalid && (f.subject.touched || submitted())" [attr.aria-describedby]="f.subject.invalid && (f.subject.touched || submitted()) ? 'subject-error' : null" />
+        @if (f.subject.invalid && (f.subject.touched || submitted())) {
+          <div id="subject-error" class="form-error">Veuillez renseigner un sujet.</div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" rows="5" formControlName="message" [attr.aria-invalid]="f.message.invalid && (f.message.touched || submitted())" [attr.aria-describedby]="f.message.invalid && (f.message.touched || submitted()) ? 'message-error' : null"></textarea>
+        @if (f.message.invalid && (f.message.touched || submitted())) {
+          <div id="message-error" class="form-error">Veuillez renseigner un message d'au moins 10 caractères.</div>
+        }
+      </div>
+
+      <button type="submit" class="btn btn-primary submit-btn">Envoyer le message</button>
+      <p class="form-note">Le formulaire ouvre votre client mail ; aucun message n'est stocké par le site.</p>
+    </form>
+  </div>
+</section>
