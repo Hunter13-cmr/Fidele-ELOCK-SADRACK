@@ -41,7 +41,6 @@ export class Globe {
     if (!ctx) return;
 
     const dpr = window.devicePixelRatio || 1;
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let width = 1;
     let height = 1;
 
@@ -56,7 +55,7 @@ export class Globe {
         canvas.height = bh;
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       }
-      if (reducedMotion) this.drawGlobe?.();
+      this.drawGlobe?.();
     };
     window.addEventListener('resize', this.onResize);
 
@@ -204,14 +203,14 @@ export class Globe {
 
     this.resizeGlobe();
 
-    if (reducedMotion) {
-      this.drawGlobe();
-    } else {
-      const animate = () => {
-        this.drawGlobe?.();
-        this.animationFrame = requestAnimationFrame(animate);
-      };
+    // Le globe est la signature visuelle du Hero : il tourne en continu,
+    // y compris lorsque l'utilisateur demande une réduction des mouvements.
+    // Mouvement lent et régulier uniquement (pas de parallaxe ni de saccade),
+    // et la boucle est annulée par DestroyRef à la destruction du composant.
+    const animate = () => {
+      this.drawGlobe?.();
       this.animationFrame = requestAnimationFrame(animate);
-    }
+    };
+    this.animationFrame = requestAnimationFrame(animate);
   }
 }
