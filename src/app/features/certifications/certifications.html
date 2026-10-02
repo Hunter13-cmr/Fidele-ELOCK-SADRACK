@@ -20,7 +20,7 @@
         (click)="setFilter(null)"
       >
         Toutes
-        <span class="filter-count">{{ certifications().length }}</span>
+        <span class="filter-count">{{ countAll() }}</span>
       </button>
       <button
         class="cert-filter"
@@ -30,7 +30,7 @@
         (click)="setFilter('alx')"
       >
         ALX
-        <span class="filter-count">{{ certifications().filter(c => c.organization === 'alx').length }}</span>
+        <span class="filter-count">{{ countAlx() }}</span>
       </button>
       <button
         class="cert-filter"
@@ -40,7 +40,7 @@
         (click)="setFilter('orange-digital-center')"
       >
         Orange Digital Center
-        <span class="filter-count">{{ certifications().filter(c => c.organization === 'orange-digital-center').length }}</span>
+        <span class="filter-count">{{ countOrange() }}</span>
       </button>
     </div>
 
@@ -144,8 +144,9 @@
 @if (modalOpen() && selectedCert()) {
   <div
     class="cert-modal-backdrop"
+    #certModal
     (click)="onBackdropClick($event)"
-    (keydown.escape)="closeModal()"
+    (keydown)="onKeydown($event)"
     role="dialog"
     aria-modal="true"
     tabindex="-1"
