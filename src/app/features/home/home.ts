@@ -58,8 +58,12 @@ export class Home implements OnInit {
     'Basé à Douala, Cameroun',
   ];
 
-  readonly mouseX = signal(0);
-  readonly mouseY = signal(0);
+  private revealObserver?: IntersectionObserver;
+  private readonly counterObservers: IntersectionObserver[] = [];
+  private readonly revealSeen = new WeakSet<Element>();
+  private readonly tiltSeen = new WeakSet<Element>();
+  private domObserver?: MutationObserver;
+  private scanFrame?: number;
 
   constructor() {
     afterNextRender(() => {
@@ -67,15 +71,17 @@ export class Home implements OnInit {
       this.profileIntroTimeout = setTimeout(() => this.showProfileIntro.set(false), 2000);
       this.initScrollReveal();
       this.initCounter();
+      this.watchDynamicContent();
+
+      // Le typing est le contenu principal du Hero : il doit toujours tourner.
+      // Auparavant il était bloqué par prefers-reduced-motion (texte statique).
+      this.initTyping();
 
       if (this.reducedMotion) {
-        this.setStaticRole();
         return;
       }
 
       this.initParticles();
-      this.initTilt();
-      this.initTyping();
       this.initCursorGlow();
     });
 
@@ -91,18 +97,11 @@ export class Home implements OnInit {
     this.resizeCanvas();
   }
 
-  @HostListener('window:scroll')
-  onScroll(): void {
-    this.initScrollReveal();
-  }
-
   @HostListener('window:mousemove', ['$event'])
   onMouseMove(e: MouseEvent): void {
     if (this.reducedMotion) return;
 
-    this.mouseX.set(e.clientX);
-    this.mouseY.set(e.clientY);
-    const glow = document.querySelector('.cursor-glow') as HTMLElement | null;
+    const glow = this.cursorGlow;
     if (glow) {
       glow.style.left = e.clientX + 'px';
       glow.style.top = e.clientY + 'px';
@@ -180,33 +179,72 @@ export class Home implements OnInit {
   }
 
   private initScrollReveal(): void {
-    const els: HTMLElement[] = this.el.nativeElement.querySelectorAll('.reveal');
-    els.forEach((el) => {
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight * 0.88 && rect.bottom > 0) {
-        el.classList.add('visible');
-      }
-    });
+    this.revealObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            this.revealObserver?.unobserve(entry.target);
+          }
+        }
+      },
+      { rootMargin: '0px 0px -12% 0px', threshold: 0 }
+    );
+    this.scanDynamicContent();
   }
 
-  private initTilt(): void {
-    const cards: HTMLElement[] = this.el.nativeElement.querySelectorAll('[data-tilt]');
-    cards.forEach((card) => {
-      card.addEventListener('mousemove', (e) => {
-        const r = card.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width - 0.5;
-        const y = (e.clientY - r.top) / r.height - 0.5;
-        card.style.transform = `perspective(1000px) rotateY(${x * 10}deg) rotateX(${y * -10}deg) translateY(-4px)`;
+  private watchDynamicContent(): void {
+    this.domObserver = new MutationObserver(() => {
+      if (this.scanFrame !== undefined) return;
+      this.scanFrame = requestAnimationFrame(() => {
+        this.scanFrame = undefined;
+        this.scanDynamicContent();
       });
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(1000px) rotateY(0) rotateX(0) translateY(0)';
+    });
+    this.domObserver.observe(this.el.nativeElement, { childList: true, subtree: true });
+  }
+
+  private scanDynamicContent(): void {
+    const root = this.el.nativeElement as HTMLElement;
+    if (this.revealObserver) {
+      const reveals = root.querySelectorAll<HTMLElement>('.reveal');
+      reveals.forEach((el) => {
+        if (!this.revealSeen.has(el)) {
+          this.revealSeen.add(el);
+          this.revealObserver!.observe(el);
+        }
       });
+    }
+    if (!this.reducedMotion) {
+      const tiltCards = root.querySelectorAll<HTMLElement>('[data-tilt]');
+      tiltCards.forEach((el) => {
+        if (this.tiltSeen.has(el)) return;
+        this.tiltSeen.add(el);
+        this.bindTilt(el);
+      });
+    }
+  }
+
+  private bindTilt(card: HTMLElement): void {
+    card.addEventListener('mousemove', (e) => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      card.style.transform = `perspective(1000px) rotateY(${x * 10}deg) rotateX(${y * -10}deg) translateY(-4px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(1000px) rotateY(0) rotateX(0) translateY(0)';
     });
   }
 
   private initTyping(): void {
     const el = this.el.nativeElement.querySelector('#typing-text') as HTMLElement | null;
     if (!el) return;
+
+    // .hero-typing porte la classe .reveal (opacity: 0 tant que .visible est
+    // ajouté par l'IntersectionObserver) : on garantit la visibilité sinon le
+    // texte est tapé dans un élément totalement transparent.
+    el.closest('.hero-typing')?.classList.add('visible');
 
     let role = 0;
     let char = 0;
@@ -242,7 +280,8 @@ export class Home implements OnInit {
   }
 
   private initCounter(): void {
-    const counters: HTMLElement[] = this.el.nativeElement.querySelectorAll('[data-counter]');
+    const root = this.el.nativeElement as HTMLElement;
+    const counters = root.querySelectorAll<HTMLElement>('[data-counter]');
     counters.forEach((el) => {
       const target = parseInt(el.getAttribute('data-counter') || '0', 10);
       if (!target) return;
@@ -268,6 +307,7 @@ export class Home implements OnInit {
         { threshold: 0.5 }
       );
       obs.observe(el);
+      this.counterObservers.push(obs);
     });
   }
 
@@ -287,6 +327,12 @@ export class Home implements OnInit {
   }
 
   private disposeVisualEffects(): void {
+    this.revealObserver?.disconnect();
+    this.counterObservers.forEach((obs) => obs.disconnect());
+    this.domObserver?.disconnect();
+    if (this.scanFrame !== undefined) {
+      cancelAnimationFrame(this.scanFrame);
+    }
     if (this.particleAnimationFrame) {
       cancelAnimationFrame(this.particleAnimationFrame);
     }

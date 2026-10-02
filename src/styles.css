@@ -47,6 +47,12 @@ html { scroll-behavior: smooth; }
     animation: none !important;
     transition-duration: 0.01ms !important;
   }
+  /* Sans .visible (IntersectionObserver), .reveal resterait à opacity: 0 :
+     le contenu réduit doit être visible immédiatement, pas animé. */
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 body {

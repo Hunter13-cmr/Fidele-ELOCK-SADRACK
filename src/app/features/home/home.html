@@ -1,5 +1,5 @@
 @if (showProfileIntro()) {
-  <div class="profile-intro" aria-label="Chargement du portfolio">
+  <div class="profile-intro" aria-hidden="true">
     <app-profile-card />
   </div>
 }
@@ -28,7 +28,7 @@
 
       <div class="hero-typing reveal reveal-delay-2">
         <span class="typing-prefix">{{ '{' }}</span>
-        <span id="typing-text" class="typing-text"></span>
+        <span id="typing-text" class="typing-text" aria-label="Développeur Front-End Angular, Full Stack Junior, Créateur d'interfaces modernes, Basé à Douala, Cameroun"></span>
         <span class="typing-cursor blink-cursor">|</span>
         <span class="typing-suffix">{{ '}' }}</span>
       </div>
@@ -82,14 +82,16 @@
       <div class="profile-photo-frame">
         <div class="profile-photo-placeholder">
           <img
-            src="assets/images/projects/le-calao-dore.PNG"
-            alt="Aperçu du projet Le Calao Doré"
+            src="assets/images/projects/fidel.jpg"
+            alt="Photo de profil de Fidèle Elock Sadrack"
             class="profile-photo"
           />
         </div>
       </div>
     </div>
   </div>
+
+</section>
 
 <!-- ============ TECH MARQUEE ============ -->
 <div class="tech-marquee marquee">
@@ -270,7 +272,7 @@
                 <div class="project-slides">
                   @for (image of getProjectImages(project); track $index) {
                     <div class="project-slide">
-                      <img [src]="image" [alt]="project.title + ' - image ' + ($index + 1)" class="thumb-image" loading="eager" (load)="onProjectImageLoad($event)" />
+                      <img [src]="image" [alt]="project.title + ' - image ' + ($index + 1)" class="thumb-image" loading="lazy" (load)="onProjectImageLoad($event)" />
                     </div>
                   }
                 </div>
