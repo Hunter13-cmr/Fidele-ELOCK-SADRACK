@@ -3,7 +3,7 @@
 > **Document de continuation du projet**  
 > Ce fichier agit comme une source de vérité unique pour tout nouvel agent IA (ou humain) amené à intervenir sur ce projet. Il doit être **mis à jour régulièrement** au fur et à mesure de l'avancement.
 >
-> **Dernière mise à jour :** 20 août 2026 — 15h23 (Africa/Douala, UTC+1)  
+> **Dernière mise à jour :** 1er octobre 2026 — (Africa/Douala, UTC+1)  
 > **Mis à jour par :** Agent IA courant
 
 ---
@@ -235,7 +235,7 @@ X [ERROR] NG5002: Unexpected closing tag "pre". It may happen when the tag has a
 1. Vérifier l'existence des fichiers avec `ls -la src/assets/images/projects/`
 2. Si absents, les créer ou utiliser un placeholder temporaire.
 
-**Statut :** ⏳ À investiguer
+**Statut :** ✅ Résolu (2026-10-01) — le dossier contient 4 captures JPEG/PNG pour Le Calao Doré ; références `projects.json`/`home.html` corrigées (`.PNG` → `.jpg`) et vérifiées. ChatApp et WattMboa 237 restent sans capture (« Aperçu à ajouter »).
 
 ### ❌ Problème 3 potentiel : CV PDF manquant
 
@@ -244,6 +244,20 @@ X [ERROR] NG5002: Unexpected closing tag "pre". It may happen when the tag has a
 **Solution recommandée :** Ajouter un fichier PDF de CV à cet emplacement, ou retirer temporairement le lien.
 
 **Statut :** ⏳ À investiguer
+
+---
+
+### ❌ Problème 4 : Affichage cassé de la page d'accueil — `<section>` hero non fermé
+
+**Symptôme :** Sur la page d'accueil, les sections sous le hero (marquee, stats, à propos, compétences, certifications, projets, processus) s'affichaient écrasées sur une seule rangée, tronquées — la page « n'affichait pas correctement » ses éléments.
+
+**Cause :** Le commit `457300f` (« Fichier html de la page d'accueil ») a supprimé le bloc « scroll indicator » **et** la balise `</section>` qui fermait le `.hero` (9 lignes retirées). Le parseur HTML ferme alors implicitement le tag à la fin du template : tout le contenu suivant devenait enfant de `<section class="hero">` (`display: flex; overflow: hidden; align-items: center`) → chaque section était rendue comme flex-item écrasé horizontalement, masqué par `overflow: hidden`. Le build passait (EXIT 0), le bug était purement runtime/visuel.
+
+**Fichier concerné :** `src/app/features/home/home.html`
+
+**Solution appliquée :** Restauration du bloc `.scroll-indicator` (les styles existaient déjà dans `home.css`, ajoutés par le commit suivant `dcd5df6`) et de la balise `</section>` manquante. Contrôle automatisé d'équilibre des balises sur tous les templates (`src/**/*.html`) : plus aucun déséquilibre.
+
+**Statut :** ✅ Corrigé — à vérifier avec `npm start`
 
 ---
 
@@ -266,6 +280,8 @@ X [ERROR] NG5002: Unexpected closing tag "pre". It may happen when the tag has a
 | 2026-08-20 15h23 | Correction de l'erreur NG5002 — `</code>` manquante | `src/app/features/home/components/profile-card/profile-card.html` | ✅ |
 | 2026-08-20 15h30 | Vérification du build — compilation réussie (33.762s, 1.47 MB) | `src/app/features/home/components/profile-card/profile-card.html` | ✅ |
 | 2026-08-21 | Audit et corrections de fiabilité, accessibilité et performance | Voir passation ci-dessous | ✅ |
+| 2026-10-01 | Revue experte : bugs, performances, accessibilité, sécurité | Voir passation 9.2 ci-dessous | ✅ |
+| 2026-10-01 | Fix affichage page d'accueil : balise `</section>` manquante (hero non fermé) + scroll indicator restauré | `src/app/features/home/home.html` — voir passation 9.3 | ✅ |
 
 ---
 
@@ -299,6 +315,73 @@ Auditer puis perfectionner le portfolio existant sans remplacer les données pro
 3. Ajouter les PDF de certification uniquement s'ils peuvent réellement être téléchargés et, si nécessaire, fournir des URLs de vérification confirmées.
 4. Créer un favicon et une image Open Graph authentiques avant une mise en ligne SEO complète.
 5. Lancer `npm run build` et vérifier visuellement les parcours mobile/desktop et le formulaire `mailto:` dans un navigateur.
+
+---
+
+## 9.2 Passation — 2026-10-01 (revue experte : bugs, perf, a11y, sécurité)
+
+### Objectif de la session
+
+Revue complète du code source : corriger les bugs, améliorer les bonnes pratiques, la sécurité et les performances Lighthouse **sans changer le comportement de l'application** ; compiler la liste de constations.
+
+### Bugs corrigés
+
+- `src/app/features/home/home.ts` :
+  - `bindTilt(card)` ignorait son paramètre et ré-attachait les listeners sur **toutes** les cartes `[data-tilt]` à chaque appel (listeners dupliqués malgré la garde `tiltSeen`) → n'attache plus que la carte passée ;
+  - `querySelectorAll('.reveal')` / `querySelectorAll('[data-tilt]')` assignés à `HTMLElement[]` sans générique (erreur TS2324/TS2345) → générique `querySelectorAll<HTMLElement>(…)`, avec `root` typé via `this.el.nativeElement as HTMLElement` (TS2347 : `nativeElement` est `any`, il ne faut pas de générique dessus directement).
+- **Images de projets cassées** : les PNG ont été convertis en JPG (`le-calao-dore*.jpg`) mais les références n'ont pas été mises à jour → `src/assets/data/projects.json` (`image` + `images[]`) et `src/app/features/home/home.html` pointent désormais vers `.jpg`. Audit automatisé (magic-bytes + `fs.existsSync`) : toutes les refs OK.
+- `src/app/features/certifications/certifications.ts|html` : compteurs de filtres renommés `countOdc` → `countOrange` (cohérent avec la valeur `'orange-digital-center'`) et calculés sur la liste complète.
+
+### Performance / Lighthouse
+
+- `home.ts` : le reveal au scroll par HostListener `scroll`+`mousemove` a été remplacé par un `IntersectionObserver` (`revealObserver`, WeakSets `revealSeen`/`tiltSeen`), un `MutationObserver` (RAF-throttled) pour le contenu dynamique, nettoyage via `disposeVisualEffects()` ; signaux `mouseX`/`mouseY` inutilisés supprimés.
+- `globe.ts` : `DestroyRef`, setup resize/canvas sorti de la boucle d'animation, largeur/hauteur en cache, dessin statique si `prefers-reduced-motion`, annulation du RAF.
+- `index.html` : `preconnect` vers `fonts.gstatic.com`, favicon SVG créé (`src/assets/images/favicon.svg`), métadonnées twitter/OG complétées.
+- Images : poids max 76,5 KB (JPEG), format vérifié par magic-bytes. Aucune image > 100 KB.
+
+### Accessibilité
+
+- `certifications` : modal accessible (focus dans la boîte, piège Tab, Échap, retour du focus, `DestroyRef` pour `overflow`), `#certModal` sur le fond avec `(keydown)`, `aria-pressed` sur les filtres, compteurs annonçables.
+- `projects.html` : `role="tablist"` → `role="group"` (ce ne sont pas des onglets au sens ARIA).
+- `header.html` : `aria-label` dynamique sur le burger ; `home.html` : `aria-hidden` sur `profile-intro`, `aria-label` sur le texte de typing, `loading="lazy"` sur les miniatures ; `project-detail.html` : suppression d'un `[style.background-image]` redondant.
+
+### Sécurité
+
+- `contact` : champ pot de miel (`website`, hors écran, `tabindex="-1"`) + retour anticipé dans `onSubmit` avant toute construction de `mailto:`.
+- `index.html` : liens externes avec `rel`/`crossorigin` appropriés (fonts), pas de code inline exécutable.
+
+### Vérifications
+
+- `ng build` (production) : **✅ succès** — bundle initial 284,25 kB brut / 78,60 kB estimés, `home` en chunk paresseux 60,87 kB ; budgets 500 kB/1 MB largement respectés.
+- Audit images (magic-bytes + existence des refs) : toutes OK.
+- `prefers-reduced-motion` vérifié présent dans `src/styles.css`.
+
+### Constatations restantes (non corrigées — comportement ou contenu)
+
+1. **CV PDF absent** : `src/assets/cv-fidele-elock-sadrack.pdf` toujours manquant (lien header signalé indisponible).
+2. **Captures manquantes** : ChatApp et WattMboa 237 sans image dans `projects.json` (affichage « Aperçu à ajouter »).
+3. **`le-calao-dore3.PNG`** est toujours un PNG (34,7 KB) à convertir en JPG pour rester cohérent.
+4. **README.md** : référence encore `contact@example.com` et évoque des captures/détails (ENEO, SONATREL) absents du projet.
+5. **Tests** : `ng test` non configuré (Karma/Jasmine par défaut) ; aucun test unitaire.
+6. **Lint/format** : scripts `eslint`/`prettier` cités dans ce fichier mais absents de `package.json`.
+
+---
+
+## 9.3 Passation — 2026-10-01 (fix affichage page d'accueil)
+
+### Objectif de la session
+
+Corriger l'affichage cassé de la page d'accueil signalé après les commits CSS/HTML des 2026-09-23.
+
+### Bug corrigé
+
+- `src/app/features/home/home.html` : le hero (`<section class="hero">`) n'était **jamais fermé**. Le commit `457300f` avait supprimé le bloc `.scroll-indicator` **et** la balise `</section>` fermante. Conséquence : tout le contenu suivant du template devenait enfant du hero (`display: flex; overflow: hidden`) → sections écrasées sur une rangée, contenu tronqué. Fix : restauration du bloc `.scroll-indicator` (styles déjà présents dans `home.css`) + `</section>`.
+
+### Vérifications
+
+- Contrôle d'équilibre des balises (`node`, regex sur `src/**/*.html`) : **ALL TEMPLATES BALANCED** (aucun mismatch).
+- `ng build` (production) : ✅ succès.
+- Inspection visuelle recommandée : `npm start` → section hero fermée avant le marquee, indicateur « scroll » visible en bas du hero.
 
 ---
 
