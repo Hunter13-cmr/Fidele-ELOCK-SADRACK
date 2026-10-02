@@ -43,6 +43,10 @@
       <div class="form-group">
         <label for="message">Message</label>
         <textarea id="message" rows="5" formControlName="message" [attr.aria-invalid]="f.message.invalid && (f.message.touched || submitted())" [attr.aria-describedby]="f.message.invalid && (f.message.touched || submitted()) ? 'message-error' : null"></textarea>
+        <div class="honeypot" aria-hidden="true">
+          <label for="website">Ne pas remplir</label>
+          <input id="website" type="text" formControlName="website" tabindex="-1" autocomplete="off" />
+        </div>
         @if (f.message.invalid && (f.message.touched || submitted())) {
           <div id="message-error" class="form-error">Veuillez renseigner un message d'au moins 10 caractères.</div>
         }

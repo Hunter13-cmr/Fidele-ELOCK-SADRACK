@@ -19,6 +19,8 @@ export class Contact {
     email: ['', [Validators.required, Validators.email]],
     subject: ['', [Validators.required, Validators.minLength(3)]],
     message: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(2000)]],
+    // Pot de miel : les humains ne remplissent jamais ce champ.
+    website: [''],
   });
 
   get f() {
@@ -26,6 +28,9 @@ export class Contact {
   }
 
   onSubmit(): void {
+    if (this.form.controls.website.value) {
+      return;
+    }
     this.submitted.set(true);
 
     if (this.form.invalid) {

@@ -19,6 +19,7 @@
 .form-group input:focus, .form-group textarea:focus { border-color: var(--color-primary); outline: none; }
 .form-group input[aria-invalid="true"], .form-group textarea[aria-invalid="true"] { border-color: var(--color-danger); }
 .form-error { font-size: 0.78rem; color: var(--color-danger); margin-top: 6px; }
+.honeypot { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .submit-btn { width: 100%; justify-content: center; }
 .form-note { font-size: 0.78rem; color: var(--color-text-faint); margin-top: 14px; }
 
