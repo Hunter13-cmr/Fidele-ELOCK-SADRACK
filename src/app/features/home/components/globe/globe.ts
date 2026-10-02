@@ -1,4 +1,4 @@
-import { Component, ElementRef, afterNextRender, inject } from '@angular/core';
+import { Component, DestroyRef, ElementRef, afterNextRender, inject } from '@angular/core';
 
 @Component({
   selector: 'app-globe',
@@ -8,11 +8,29 @@ import { Component, ElementRef, afterNextRender, inject } from '@angular/core';
 })
 export class Globe {
   private readonly el = inject(ElementRef);
+  private readonly destroyRef = inject(DestroyRef);
+
+  private animationFrame?: number;
+  private resizeGlobe?: () => void;
+  private drawGlobe?: () => void;
 
   constructor() {
     afterNextRender(() => {
       this.initGlobe();
     });
+    this.destroyRef.onDestroy(() => this.dispose());
+  }
+
+  private readonly onResize = (): void => {
+    this.resizeGlobe?.();
+  };
+
+  private dispose(): void {
+    if (this.animationFrame !== undefined) {
+      cancelAnimationFrame(this.animationFrame);
+      this.animationFrame = undefined;
+    }
+    window.removeEventListener('resize', this.onResize);
   }
 
   private initGlobe(): void {
@@ -23,14 +41,24 @@ export class Globe {
     if (!ctx) return;
 
     const dpr = window.devicePixelRatio || 1;
-    const resize = () => {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let width = 1;
+    let height = 1;
+
+    this.resizeGlobe = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      width = Math.max(1, Math.round(rect.width));
+      height = Math.max(1, Math.round(rect.height));
+      const bw = Math.max(1, Math.round(width * dpr));
+      const bh = Math.max(1, Math.round(height * dpr));
+      if (canvas.width !== bw || canvas.height !== bh) {
+        canvas.width = bw;
+        canvas.height = bh;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      if (reducedMotion) this.drawGlobe?.();
     };
-    resize();
-    window.addEventListener('resize', resize);
+    window.addEventListener('resize', this.onResize);
 
     const numPoints = 120;
     const goldenRatio = (1 + Math.sqrt(5)) / 2;
@@ -51,18 +79,13 @@ export class Globe {
 
     let time = 0;
 
-    const animate = () => {
-      const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    this.drawGlobe = () => {
+      ctx.clearRect(0, 0, width, height);
 
-      ctx.clearRect(0, 0, rect.width, rect.height);
+      const cx = width / 2;
+      const cy = height / 2;
 
-      const cx = rect.width / 2;
-      const cy = rect.height / 2;
-
-      const radius = Math.min(380, Math.max(130, Math.min(rect.width, rect.height) * 0.48));
+      const radius = Math.min(380, Math.max(130, Math.min(width, height) * 0.48));
 
       // Atmosphere glow
       const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius * 1.6);
@@ -70,7 +93,7 @@ export class Globe {
       gradient.addColorStop(0.5, 'rgba(122, 162, 247, 0.08)');
       gradient.addColorStop(1, 'rgba(240, 169, 62, 0.04)');
       ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, rect.width, rect.height);
+      ctx.fillRect(0, 0, width, height);
 
       // Draw latitude circles
       ctx.strokeStyle = 'rgba(240, 169, 62, 0.12)';
@@ -177,9 +200,18 @@ export class Globe {
       ctx.stroke();
 
       time += 16;
-      requestAnimationFrame(animate);
     };
 
-    requestAnimationFrame(animate);
+    this.resizeGlobe();
+
+    if (reducedMotion) {
+      this.drawGlobe();
+    } else {
+      const animate = () => {
+        this.drawGlobe?.();
+        this.animationFrame = requestAnimationFrame(animate);
+      };
+      this.animationFrame = requestAnimationFrame(animate);
+    }
   }
 }
