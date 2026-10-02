@@ -1,5 +1,11 @@
 <app-header />
 <main>
+  @if (showProfileIntro()) {
+    <div class="profile-intro" aria-hidden="true">
+      <app-profile-card />
+    </div>
+  }
   <router-outlet />
 </main>
 <app-footer />
+

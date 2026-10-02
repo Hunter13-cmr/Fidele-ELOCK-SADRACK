@@ -310,3 +310,39 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing:
   .section { padding: 72px 0; }
   .orb { filter: blur(60px); }
 }
+
+/* ============ PROFILE INTRO ============
+   Rendu par `app.html` (racine) pour charger la carte avant le chunk lazy de
+   la home. En global et non dans app.css : `.profile-intro ~ *` doit viser
+   <app-home>, injecté par le router-outlet, qui ne porte pas l'attribut
+   _ngcontent du composant App (encapsulation émulée). */
+.profile-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: var(--color-bg);
+  animation: profile-intro-out .2s ease 1.8s forwards;
+}
+
+.profile-intro ~ * {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.profile-intro app-profile-card {
+  display: block;
+  width: min(420px, 100%);
+  animation: profile-intro-in .8s cubic-bezier(.16, 1, .3, 1) both;
+}
+
+@keyframes profile-intro-in {
+  from { opacity: 0; transform: translateY(18px) scale(.72); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes profile-intro-out {
+  to { opacity: 0; visibility: hidden; pointer-events: none; }
+}

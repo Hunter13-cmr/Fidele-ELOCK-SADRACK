@@ -6,13 +6,11 @@ import {
   OnInit,
   afterNextRender,
   inject,
-  signal,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ProjectsService } from '../../core/services/projects.service';
 import { Project } from '../../core/models/project.model';
 import { Certifications } from '../certifications/certifications';
-import { ProfileCard } from './components/profile-card/profile-card';
 import { Globe } from './components/globe/globe';
 
 interface Particle {
@@ -28,7 +26,7 @@ interface Particle {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, Certifications, ProfileCard, Globe],
+  imports: [RouterLink, Certifications, Globe],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -42,13 +40,11 @@ export class Home implements OnInit {
   readonly error = this.projectsService.error;
 
   readonly year = new Date().getFullYear();
-  readonly showProfileIntro = signal(true);
   private particlesCanvas?: HTMLCanvasElement;
   private ctx?: CanvasRenderingContext2D;
   private particles: Particle[] = [];
   private particleAnimationFrame?: number;
   private typingTimeout?: ReturnType<typeof setTimeout>;
-  private profileIntroTimeout?: ReturnType<typeof setTimeout>;
   private cursorGlow?: HTMLElement;
   private reducedMotion = false;
   private readonly roles = [
@@ -68,7 +64,6 @@ export class Home implements OnInit {
   constructor() {
     afterNextRender(() => {
       this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      this.profileIntroTimeout = setTimeout(() => this.showProfileIntro.set(false), 2000);
       this.initScrollReveal();
       this.initCounter();
       this.watchDynamicContent();
@@ -338,9 +333,6 @@ export class Home implements OnInit {
     }
     if (this.typingTimeout) {
       clearTimeout(this.typingTimeout);
-    }
-    if (this.profileIntroTimeout) {
-      clearTimeout(this.profileIntroTimeout);
     }
     this.cursorGlow?.remove();
   }

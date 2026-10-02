@@ -62,7 +62,7 @@ portfolio-angular/
 │   ├── styles.css            # Styles globaux (tokens, utilitaires, responsive)
 │   ├── app/
 │   │   ├── app.ts            # Composant racine (app-root)
-│   │   ├── app.html          # Template racine (<router-outlet>, header, footer)
+│   │   ├── app.html          # Template racine (header, intro carte, router-outlet, footer)
 │   │   ├── app.css           # Styles racine
 │   │   ├── app.config.ts     # Configuration (zonaless, router, http)
 │   │   ├── app.routes.ts     # Routes (lazy loading)
@@ -78,7 +78,7 @@ portfolio-angular/
 │   │   │   │   ├── home.ts / home.html / home.css
 │   │   │   │   └── components/
 │   │   │   │   ├── globe/     # Globe 3D canvas
-│   │   │   │   └── profile-card/  # Carte code stylisée
+│   │   │   │   └── profile-card/  # Carte code stylisée (importée par app.ts → bundle initial)
 │   │   │   ├── about/          # À propos (parcours)
 │   │   │   ├── projects/        # Liste projets + filtres
 │   │   │   ├── project-detail/  # Détail projet par slug
@@ -382,6 +382,39 @@ Corriger l'affichage cassé de la page d'accueil signalé après les commits CSS
 - Contrôle d'équilibre des balises (`node`, regex sur `src/**/*.html`) : **ALL TEMPLATES BALANCED** (aucun mismatch).
 - `ng build` (production) : ✅ succès.
 - Inspection visuelle recommandée : `npm start` → section hero fermée avant le marquee, indicateur « scroll » visible en bas du hero.
+
+---
+
+## 9.4 Passation — 2026-10-02 (carte de profil : premier élément chargé)
+
+### Objectif de la session
+
+Faire de la carte de profil le **premier élément chargé à l'ouverture du site**, sans sortir la home du lazy loading.
+
+### Analyse
+
+La route `''` est lazy (`loadComponent` → `import('./features/home/home')`). `ProfileCard` étant importé par `Home`, il n'apparaissait qu'après le téléchargement du chunk `home` : **aucun pixel avant ~52 kB**. Le timer de l'intro ne démarrait lui aussi qu'après le rendu de `Home`.
+
+### Modifications réalisées
+
+- `src/app/app.ts` : import de `ProfileCard` → la carte entre dans le **bundle initial**. Signal `showProfileIntro` résolu de façon synchrone au construit, uniquement pour `/` ou `*/index.html` (`typeof window` pour rester compatible SSR), disparition après 2 s via `afterNextRender`, nettoyage `DestroyRef`.
+- `src/app/app.html` : bloc d'intro déplacé ici, en tête de `<main>` avant `<router-outlet />` (position d'affichage identique à l'ancien emplacement).
+- `src/app/features/home/home.html` : bloc `@if (showProfileIntro())` supprimé.
+- `src/app/features/home/home.ts` : retrait de `ProfileCard` (import + `imports[]`), de `showProfileIntro`, de `profileIntroTimeout`, et de l'import `signal` devenu inutilisé.
+- `src/app/features/home/home.css` → `src/styles.css` : bloc `.profile-intro` **passé en global**. Il ne peut pas rester dans `app.css` : `.profile-intro ~ *` doit viser `<app-home>`, élément créé par le router-outlet, qui ne reçoit pas l'attribut `_ngcontent` d'`App` (l'encapsulation émulée postfixe `[_ngcontent-x]` à chaque sélecteur, y compris `*`).
+
+### Vérifications
+
+- `npm run build` (production) : **EXIT 0**, budgets `500 kB / 1 MB` respectés.
+- Inspection du `dist/portfolio/browser` via Node. **Outil à savoir** : `findstr` échoue silencieusement sur les JS minifiés (lignes > 8191 caractères) et `git grep` donne parfois faux négatifs — utiliser un script Node (`String.includes`) pour auditer les bundles.
+  - template de la carte (`Compiled in 1.2s`, `No errors`, `profile.ts`) présent **uniquement** dans `main-*.js` (bundle initial) ;
+  - `.profile-intro{position:fixed;…}` présent dans `styles-*.css` (global), **absent** des styles encapsulés des chunks ;
+  - `hero-title` toujours dans le chunk lazy de la home.
+- Comportement attendu inchangé : overlay plein écran opaque masquant ses frères jusqu'à la suppression de l'élément à 2 s ; header/footer hors `<main>` donc non masqués.
+
+### À vérifier visuellement
+
+`npm start` → la carte s'affiche immédiatement à l'ouverture de `/`, disparaît après 2 s, puis le hero apparaît. L'intro ne s'affiche **pas** sur `/projects`, `/contact`, etc.
 
 ---
 
