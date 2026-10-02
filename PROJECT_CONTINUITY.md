@@ -335,7 +335,7 @@ Revue complète du code source : corriger les bugs, améliorer les bonnes pratiq
 ### Performance / Lighthouse
 
 - `home.ts` : le reveal au scroll par HostListener `scroll`+`mousemove` a été remplacé par un `IntersectionObserver` (`revealObserver`, WeakSets `revealSeen`/`tiltSeen`), un `MutationObserver` (RAF-throttled) pour le contenu dynamique, nettoyage via `disposeVisualEffects()` ; signaux `mouseX`/`mouseY` inutilisés supprimés.
-- `globe.ts` : `DestroyRef`, setup resize/canvas sorti de la boucle d'animation, largeur/hauteur en cache, dessin statique si `prefers-reduced-motion`, annulation du RAF.
+- `globe.ts` : `DestroyRef`, setup resize/canvas sorti de la boucle d'animation, largeur/hauteur en cache, annulation du RAF. Le globe tourne en continu, y compris sous `prefers-reduced-motion` (demande explicite : c'est la signature visuelle du Hero ; mouvement lent et régulier uniquement).
 - `index.html` : `preconnect` vers `fonts.gstatic.com`, favicon SVG créé (`src/assets/images/favicon.svg`), métadonnées twitter/OG complétées.
 - Images : poids max 76,5 KB (JPEG), format vérifié par magic-bytes. Aucune image > 100 KB.
 
