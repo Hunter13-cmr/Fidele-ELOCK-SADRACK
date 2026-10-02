@@ -53,7 +53,7 @@
             <div class="detail-image-carousel" aria-label="Images du projet">
               <div class="detail-image-track">
                 @for (image of getProjectImages(p); track $index) {
-                  <div class="detail-project-slide" [style.background-image]="'url(\'' + image + '\')'">
+                  <div class="detail-project-slide">
                     <img [src]="image" [alt]="p.title + ' - image ' + ($index + 1)" class="detail-project-image" loading="lazy" />
                   </div>
                 }

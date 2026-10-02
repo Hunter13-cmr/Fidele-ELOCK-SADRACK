@@ -18,12 +18,12 @@
     ],
     "challenges": "Obtenir une mise en page soignée avec Bootstrap 5 sans sacrifier la cohérence visuelle propre au projet.",
     "solution": "Personnalisation ciblée des composants Bootstrap et découpage en composants Angular standalone pour garder un code lisible.",
-    "image": "assets/images/projects/le-calao-dore.PNG",
+    "image": "assets/images/projects/le-calao-dore.jpg",
     "images": [
-      "assets/images/projects/le-calao-dore.PNG",
-      "assets/images/projects/le-calao-dore2.PNG",
+      "assets/images/projects/le-calao-dore.jpg",
+      "assets/images/projects/le-calao-dore2.jpg",
       "assets/images/projects/le-calao-dore3.PNG",
-      "assets/images/projects/le-calao-dore4.PNG"
+      "assets/images/projects/le-calao-dore4.jpg"
     ],
     "demoUrl": "",
     "githubUrl": "",

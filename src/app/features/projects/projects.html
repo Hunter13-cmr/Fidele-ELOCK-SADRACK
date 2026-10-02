@@ -6,12 +6,13 @@
       <p>3 à 5 projets choisis plutôt qu'une longue liste superficielle.</p>
     </div>
 
-    <div class="projects-filter" role="tablist" aria-label="Filtrer les projets">
+    <div class="projects-filter" role="group" aria-label="Filtrer les projets">
       @for (filter of filters; track filter) {
         <button
           type="button"
           class="filter-chip"
           [class.active]="activeFilter() === filter"
+          [attr.aria-pressed]="activeFilter() === filter"
           (click)="setFilter(filter)"
         >
           {{ filter }}
