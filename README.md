@@ -81,9 +81,7 @@ Le projet est prêt pour Vercel. Le fichier `vercel.json` redirige toutes les ro
 
 ## À compléter avant mise en ligne
 
-- Liens réels : GitHub, LinkedIn, démos des projets
-- CV au format PDF (`src/assets/cv-fidele-elock-sadrack.pdf`)
-- Captures d'écran des projets (`src/assets/images/projects/`)
-- Adresse email de contact (actuellement `contact@example.com` en placeholder)
-- Détails des stages ENEO Cameroun et SONATREL
-- Organisation du poste de Téléconseiller (fév. – mai 2024)
+- Liens réels : GitHub, LinkedIn, démos des projets ✅ (renseignés dans le header/footer)
+- Adresse email de contact ✅ (`felocksadrack@gmail.com`, utilisée par le formulaire et le footer)
+- Captures d'écran des projets : Le Calao Doré ✅ ; ChatApp et WattMboa 237 → « Aperçu à ajouter » tant que les captures ne sont pas fournies
+- CV au format PDF (`src/assets/cv-fidele-elock-sadrack.pdf`) — le lien header reste signalé indisponible tant que le fichier n'est pas fourni

@@ -5,3 +5,10 @@ out-tsc/
 *.log
 .DS_Store
 PROJECT_CONTINUITY.md
+
+# Outils de session (scripts d'audit/verification temporaires)
+_*.js
+_*.bat
+_*.ps1
+_build.status
+_tmp/

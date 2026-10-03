@@ -186,20 +186,24 @@ portfolio-angular/
 
 ### Priorité haute
 - [x] **Corriger l'erreur de build** : balise `<code>` non fermée dans `profile-card.html` (résolu — voir section 7)
-- [ ] **Remplacer les placeholders** dans `projects.html` : `<span>CAPTURE À AJOUTER</span>` → intégrer les vignettes d'images réelles
-- [ ] **Vérifier les images** : `assets/images/projects/*.webp` existent-ils ? (référencées dans projects.json mais non listées dans le workspace)
-- [ ] **Ajouter le CV PDF** : `assets/cv-fidele-elock-sadrack.pdf` référencé dans le header mais fichier absent du workspace
+- [x] **Remplacer les placeholders** dans `projects.html` : `<span>CAPTURE À AJOUTER</span>` → remplacé par un état honnête « Aperçu à ajouter » (2026-08-21) ; Le Calao Doré dispose de 4 captures réelles
+- [x] **Vérifier les images** : `src/assets/images/projects/` contient 5 fichiers, **tous JPEG**, et chaque référence de `projects.json` pointe vers un fichier existant (audit `_refs.js` : TOUTES LES REFERENCES EXISTENT)
+- [ ] **Ajouter le CV PDF** : `assets/cv-fidele-elock-sadrack.pdf` référencé dans le header mais fichier absent du workspace → **impossible sans le fichier fourni par le titulaire**
 
 ### Priorité moyenne
-- [ ] **Tester le formulaire contact** : vérifier que le `mailto:` fonctionne en local et en production
-- [ ] **Vérifier le scroll vers les ancres** : `routerLink="/"` + `fragment="skills"` fonctionne-t-il correctement ?
-- [ ] **Polir les animations** : vérifier que les compteurs, le typing, et le tilt fonctionnent sans bugs sur mobile
-- [ ] **Valider le SEO** : méta tags OG, vérifier que le titre/description sont pertinents
+- [x] **Tester le formulaire contact** : `mailto:` construit avec `encodeURIComponent`, pot de miel vérifié avant, destinataire `felocksadrack@gmail.com` cohérent footer/contact/header (relecture de code ; test navigateur manuel recommandé)
+- [x] **Vérifier le scroll vers les ancres** : `withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'enabled' })` dans `app.config.ts` + `id="skills"` / `id="about-preview"` présents dans `home.html`
+- [ ] **Polir les animations** : vérifier que les compteurs, le typing, et le tilt fonctionnent sans bugs sur mobile (test manuel requis)
+- [x] **Valider le SEO** : méta description/OG/Twitter/robots/theme-color/favicon SVG/preconnect présents dans `src/index.html`
 
 ### Priorité basse
 - [ ] **Tests unitaires** : ajouter `@angular/core` testing pour les services et composants (aucun test n'existe pour le moment)
-- [ ] **Optimisation du bundle** : vérifier les budgets de production (500KB warning / 1MB error)
-- [ ] **Accessibilité** : audit plus poussir (aria-label, contraste, navigation clavier)
+- [x] **Optimisation du bundle** : budget initial largeement respecté (~143 kB dans le controle `_verify.js`, seuils 500 kB / 1 MB)
+- [ ] **Accessibilité** : audit plus poussé (aria-label, contraste, navigation clavier)
+
+### Données attendues de la part du titulaire
+1. Le PDF du CV (`src/assets/cv-fidele-elock-sadrack.pdf`).
+2. Les captures d'écran de **ChatApp** et **WattMboa 237** (puis renseigner `image`/`images[]` dans `projects.json`).
 
 ---
 
@@ -282,6 +286,7 @@ X [ERROR] NG5002: Unexpected closing tag "pre". It may happen when the tag has a
 | 2026-08-21 | Audit et corrections de fiabilité, accessibilité et performance | Voir passation ci-dessous | ✅ |
 | 2026-10-01 | Revue experte : bugs, performances, accessibilité, sécurité | Voir passation 9.2 ci-dessous | ✅ |
 | 2026-10-01 | Fix affichage page d'accueil : balise `</section>` manquante (hero non fermé) + scroll indicator restauré | `src/app/features/home/home.html` — voir passation 9.3 | ✅ |
+| 2026-10-03 | Marquee dynamique + refactor global, suppression doublon certification 2027, conversions/références images, README, aria-label | Voir passation 9.5 ci-dessous | ✅ |
 
 ---
 
@@ -415,6 +420,39 @@ La route `''` est lazy (`loadComponent` → `import('./features/home/home')`). `
 ### À vérifier visuellement
 
 `npm start` → la carte s'affiche immédiatement à l'ouverture de `/`, disparaît après 2 s, puis le hero apparaît. L'intro ne s'affiche **pas** sur `/projects`, `/contact`, etc.
+
+---
+
+## 9.5 Passation — 2026-10-03 (marquee dynamique, données, ménage)
+
+### Objectif de la session
+
+Reprendre le travail en cours (marquee non committé), corriger les incohérences de données repérées et poursuivre les tâches de la section 6.
+
+### Modifications réalisées
+
+- `src/app/features/home/home.ts` : nouvelle `techList` (20 technologies, source unique de la bande défilante) + `marqueeCopies = [1, 2, 3]` ; premier rôle du typing remplacé par « Développeur Web ».
+- `src/app/features/home/home.html` : les 20 `<span>` en dur du marquee remplacés par une double boucle `@for` ; `aria-label` du texte de typing synchronisé avec `roles` (« Développeur Web, … »).
+- `src/styles.css` : `.marquee-track` et la keyframe `marquee-left-to-right` sont **les seuls définitions** (départ à `-33,3333 %` = 1/3 pour 3 copies, arrivée à `0`, couture exacte via `padding-right: 48px` = le `gap`).
+- `src/app/features/home/home.css` : suppression du double `.tech-marquee .marquee-track` et de la keyframe concurrente `marquee-right` (conflit de sens de défilement).
+- `src/assets/data/certifications.json` : **suppression de la 8ᵉ entrée « Angular Talent Lab 2027 »** (doublon de 2026 : même description, `year: 2026`) → 7 certifications, cohérent avec les stats (7) et le footer (7).
+- `src/assets/images/projects/` : `le-calao-dore3.PNG` converti en `le-calao-dore3.jpg` (56 Ko, magic-bytes JPG vérifiés) puis le PNG d'origine supprimé ; `projects.json` (`images[]`) mise à jour.
+- `README.md` : section « À compléter » réécrite — `contact@example.com` et les mentions ENEO/SONATREL retirés, état réel des captures et du CV explicité.
+- `.gitignore` : les outils de session (`_*.js`, `_*.bat`, `_*.ps1`, `_build.status`, `_tmp/`) sont ignorés ; `start-build.js` (fichier parasite « dd ») supprimé.
+
+### Vérifications
+
+- `npm run build` (production) : **✅ EXIT 0** — bundle initial 292,05 kB brut / 80,52 kB estimés, `home` en chunk lazy 50,87 kB ; budgets 500 kB / 1 MB respectés.
+- `node _refs.js` : toutes les images référencées par `projects.json` existent.
+- `node _img.js` : les 5 fichiers de `src/assets/images/projects/` sont bien des JPEG.
+- `node _verify.js` : 16/16 contrôles marquee passent (sens gauche→droite, `marquee-right` absente, couture, 20 technos, 3 copies, budget).
+- Ancres : `anchorScrolling: 'enabled'` actif, `id="skills"` et `id="about-preview"` présents.
+
+### Reste à faire (données externes ou test manuel)
+
+1. **CV PDF** et **captures ChatApp / WattMboa 237** : fichiers à fournir par le titulaire.
+2. **Test manuel** : `npm start` → marquee, compteurs, tilt, `mailto:`, parcours mobile.
+3. **Tests unitaires** et **audit a11y** approfondi (priorité basse, aucun test dans le projet).
 
 ---
 
