@@ -454,16 +454,6 @@
   position: relative;
 }
 
-.tech-marquee .marquee-track {
-  display: inline-flex;
-  width: max-content;
-  flex-shrink: 0;
-  gap: 48px;
-  padding-right: 0;
-  animation: marquee-right 18s linear infinite;
-  will-change: transform;
-}
-
 .tech-marquee .marquee-track span {
   font-family: var(--font-mono);
   font-size: 0.9rem;
@@ -474,11 +464,8 @@
 
 .tech-marquee .sep { color: var(--color-primary); opacity: 0.6; }
 
-/* The duplicated track enters from the left and moves toward the right. */
-@keyframes marquee-right {
-  0% { transform: translate3d(-50%, 0, 0); }
-  100% { transform: translate3d(0, 0, 0); }
-}
+/* La piste, son sens de défilement et sa keyframe sont définis globalement
+   dans styles.css : `.marquee` / `.marquee-track` y vivent ensemble. */
 
 /* ============ STATS BAR ============ */
 .stats-bar {

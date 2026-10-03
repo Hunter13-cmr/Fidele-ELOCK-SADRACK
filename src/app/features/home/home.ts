@@ -40,6 +40,42 @@ export class Home implements OnInit {
   readonly error = this.projectsService.error;
 
   readonly year = new Date().getFullYear();
+
+  /**
+   * Technologies de la bande défilante de l'accueil.
+   * Liste unique reprise de la section « Compétences » : pour en ajouter une,
+   * c'est ici qu'il faut l'écrire (le template la répète automatiquement).
+   */
+  readonly techList = [
+    'Angular',
+    'TypeScript',
+    'JavaScript',
+    'RxJS',
+    'HTML5',
+    'CSS3',
+    'Bootstrap',
+    'Node.js',
+    'PHP',
+    'Python',
+    'Django / Flask',
+    'MySQL',
+    'MongoDB',
+    'SQLite',
+    'REST API',
+    'HTTP',
+    'EmailJS',
+    'Git / GitHub',
+    'VS Code',
+    'Vercel',
+  ];
+
+  /**
+   * Nombre de copies de `techList` dans la piste. Il en faut au moins 2 pour
+   * une boucle infinie ; 3 garantit en plus que la piste reste plus large que
+   * l'écran (sinon une zone vide apparaît à droite à chaque tour).
+   */
+  readonly marqueeCopies = [1, 2, 3];
+
   private particlesCanvas?: HTMLCanvasElement;
   private ctx?: CanvasRenderingContext2D;
   private particles: Particle[] = [];
@@ -48,7 +84,7 @@ export class Home implements OnInit {
   private cursorGlow?: HTMLElement;
   private reducedMotion = false;
   private readonly roles = [
-    'Développeur Front-End Angular',
+    'Développeur Web',
     'Full Stack Junior',
     "Créateur d'interfaces modernes",
     'Basé à Douala, Cameroun',
