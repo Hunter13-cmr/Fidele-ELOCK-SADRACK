@@ -297,14 +297,14 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing:
 }
 
 /*
- * Défilement de la GAUCHE vers la DROITE : la piste démarre décalée d'une
- * copie entière vers la gauche (-33,3333 % = 1/3 des 3 copies) puis remonte
- * jusqu'à 0. Le contenu avance donc vers la droite, sans à-coups.
- * (Un défilement droite → gauche serait l'inverse : 0 % puis -33,3333 %.)
+ * Défilement de la GAUCHE vers la DROITE : chaque élément naît à gauche et
+ * avance vers la droite. La piste va donc de 0 jusqu'à +33,3333 % (1/3 des
+ * 3 copies) puis revient à 0. -33,3333 % vers 0 donnerait l'inverse
+ * (droite → gauche).
  */
 @keyframes marquee-left-to-right {
-  0% { transform: translate3d(-33.3333%, 0, 0); }
-  100% { transform: translate3d(0, 0, 0); }
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(33.3333%, 0, 0); }
 }
 
 /* ============ Section accents ============ */
