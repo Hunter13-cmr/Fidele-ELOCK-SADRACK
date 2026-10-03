@@ -43,7 +43,13 @@ html { scroll-behavior: smooth; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  *, *::before, *::after {
+  /* NB : le marquee reste animé même en mouvement réduit : c'est un
+     défilement de lecture lent et régulier, pas un effet décoratif
+     stroboscopique ; le figer casserait la fonction de la bande.
+     Toutes les autres animations sont neutralisées ci-dessous. */
+  *:not(.marquee-track):not(.marquee-track *),
+  *:not(.marquee-track):not(.marquee-track *)::before,
+  *:not(.marquee-track):not(.marquee-track *)::after {
     animation: none !important;
     transition-duration: 0.01ms !important;
   }

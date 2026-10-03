@@ -452,6 +452,21 @@
   backdrop-filter: blur(12px);
   overflow: hidden;
   position: relative;
+  /* Garde-fou : la piste doit toujours être plus large que le conteneur pour
+     que le défilement soit visible, même si le contenu venait à être court. */
+  min-width: 100%;
+}
+
+.tech-marquee .marquee-track {
+  /* Ceinture et bretelles : si le CSS global `styles.css` n'est pas chargé
+     (cache, CDN), la piste garde sa propre animation et le défilement reste
+     visible au lieu d'être figée. */
+  animation: marquee-left-to-right 30s linear infinite;
+}
+
+@keyframes marquee-left-to-right {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(33.3333%, 0, 0); }
 }
 
 .tech-marquee .marquee-track span {
