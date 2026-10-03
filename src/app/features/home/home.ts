@@ -70,11 +70,16 @@ export class Home implements OnInit {
   ];
 
   /**
-   * Nombre de copies de `techList` dans la piste. Il en faut au moins 2 pour
-   * une boucle infinie ; 3 garantit en plus que la piste reste plus large que
-   * l'écran (sinon une zone vide apparaît à droite à chaque tour).
+   * Copies de `techList` dans la piste : EXACTEMENT 2. La keyframe
+   * `marquee-left-to-right` glisse la piste d'une copie (0 → +50 %) avant
+   * de boucler, ce qui rend le redémarrage invisible. Avec 3 copies et un
+   * glissement de 50 %, la 3ᵉ copie créerait un à-coup à chaque tour —
+   * ne pas changer ce chiffre sans changer la keyframe en même temps.
+   *
+   * Largeur de sécurité : 2 copies × 20 technos ≈ 2 × la largeur d'écran
+   * sur desktop comme sur mobile, donc aucun vide n'apparaît aux bords.
    */
-  readonly marqueeCopies = [1, 2, 3];
+  readonly marqueeCopies = [1, 2];
 
   private particlesCanvas?: HTMLCanvasElement;
   private ctx?: CanvasRenderingContext2D;
