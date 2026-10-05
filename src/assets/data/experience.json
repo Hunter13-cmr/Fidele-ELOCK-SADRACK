@@ -21,6 +21,43 @@
     ]
   },
   {
+    "id": "alx-software-engineering",
+    "title": "Software Engineering",
+    "organization": "ALX",
+    "organizationFull": "ALX Africa",
+    "period": "nov. 2021 → jan. 2025 · achevée",
+    "contract": "Formation certifiante",
+    "location": "À distance",
+    "kind": "training",
+    "summary": "Formation d’ingénierie logicielle : fondamentaux de la programmation, structures de données, algorithmes et bonnes pratiques de développement.",
+    "note": "Suivie en parallèle de la 3ᵉ année à l’ESIAC, avec des pauses dans le parcours, et achevée après le début de ma première mission terrain.",
+    "skills": [
+      "C",
+      "Python",
+      "JavaScript",
+      "Shell",
+      "Data Structures",
+      "Git"
+    ]
+  },
+  {
+    "id": "esiac-genie-logiciel",
+    "title": "Génie Logiciel — cycle ingénieur",
+    "organization": "ESIAC",
+    "organizationFull": "École Supérieure d’Ingénieurs et de Management d’Afrique Centrale",
+    "period": "oct. 2019 → oct. 2022",
+    "contract": "Douala",
+    "kind": "training",
+    "summary": "Formation d’ingénieur en Génie Logiciel. Cycle de 5 ans suivi jusqu’à la 3ᵉ année puis interrompu.",
+    "note": "La formation n’a pas été achevée : je l’ai arrêtée après la 3ᵉ année pour entrer dans des postes d’encadrement terrain.",
+    "skills": [
+      "Algorithmique",
+      "Génie logiciel",
+      "Bases de données",
+      "Réseaux"
+    ]
+  },
+  {
     "id": "burep",
     "title": "Chef d’équipe",
     "organization": "BUCREP",
