@@ -12,10 +12,12 @@ import {
 } from '@angular/core';
 import { CertificationsService } from '../../core/services/certifications.service';
 import { Certification, CertificationOrg } from '../../core/models/certification.model';
+import { OdcBrand } from '../../shared/odc-brand/odc-brand';
 
 @Component({
   selector: 'app-certifications',
   standalone: true,
+  imports: [OdcBrand],
   templateUrl: './certifications.html',
   styleUrl: './certifications.css',
 })

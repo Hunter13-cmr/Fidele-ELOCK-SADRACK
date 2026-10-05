@@ -148,6 +148,15 @@
   transform: scale(1.1) rotate(-5deg);
 }
 
+/* Nom de l'organisme porte par le composant OdcBrand : le libelle textuel
+   (uppercase, interlettre) n'a pas a s'appliquer a ses deux lignes. */
+.cert-org-brand,
+.cert-modal-org-brand {
+  text-transform: none;
+  letter-spacing: normal;
+  line-height: 1.1;
+}
+
 .cert-org {
   font-family: var(--font-mono);
   font-size: 0.72rem;

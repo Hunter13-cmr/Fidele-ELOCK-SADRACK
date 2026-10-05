@@ -15,6 +15,7 @@ import { Project } from '../../core/models/project.model';
 import { Certifications } from '../certifications/certifications';
 import { Globe } from './components/globe/globe';
 import { StatCounter } from './components/stat-counter/stat-counter';
+import { OdcBrand } from '../../shared/odc-brand/odc-brand';
 
 interface Particle {
   x: number;
@@ -29,7 +30,7 @@ interface Particle {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, Certifications, Globe, StatCounter],
+  imports: [RouterLink, Certifications, Globe, StatCounter, OdcBrand],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })

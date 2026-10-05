@@ -69,29 +69,7 @@
   flex-shrink: 0;
 }
 
-/* ---------- Nom de l'organisme dans le badge du hero ----------
-   « Orange » au-dessus de « Digital Center », l'un en orange, l'autre en
-   blanc cassés. Le fond du hero étant très sombre (#0A0E14), un texte noir
-   y serait invisible : le blanc cassé joue le rôle du texte principal du
-   site (--color-text) et reste lisible sur tous les écrans.
-   L'orange (#FF7900) est la teinte de la marque, distincte du --color-primary
-   du thème (#F0A93E, plus jaune) pour qu'il ne se confonde pas. */
-.badge-org {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: flex-start;
-  line-height: 1.15;
-  vertical-align: middle;
-  margin-right: 8px;
-}
-.badge-org-orange {
-  color: #FF7900;
-  font-weight: 600;
-}
-.badge-org-center {
-  color: var(--color-text);
-  font-weight: 500;
-}
+/* Le separateur « · » : gris discret pour ne pas concurrencer le nom. */
 .badge-sep {
   color: var(--color-text-faint);
   margin-right: 8px;

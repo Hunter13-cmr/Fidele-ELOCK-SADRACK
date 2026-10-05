@@ -119,7 +119,13 @@
                   }
                 }
               </div>
-              <span class="cert-org" [style.color]="cert.accent">{{ cert.organizationLabel }}</span>
+              @if (cert.organization === 'orange-digital-center') {
+                <span class="cert-org cert-org-brand">
+                  <app-odc-brand />
+                </span>
+              } @else {
+                <span class="cert-org" [style.color]="cert.accent">{{ cert.organizationLabel }}</span>
+              }
               <span class="cert-year">{{ cert.period || cert.year }}</span>
             </div>
 
@@ -183,7 +189,15 @@
           </svg>
         </div>
         <div>
-          <span class="cert-modal-org" [style.color]="selectedCert()!.accent">{{ selectedCert()!.organizationLabel }}</span>
+          @if (selectedCert()!.organization === 'orange-digital-center') {
+            <span class="cert-modal-org cert-modal-org-brand">
+              <app-odc-brand />
+            </span>
+          } @else {
+            <span class="cert-modal-org" [style.color]="selectedCert()!.accent">
+              {{ selectedCert()!.organizationLabel }}
+            </span>
+          }
           <h3>{{ selectedCert()!.title }}</h3>
           <span class="cert-modal-year">{{ selectedCert()!.period || selectedCert()!.year }}</span>
         </div>
