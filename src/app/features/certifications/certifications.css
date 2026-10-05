@@ -130,6 +130,7 @@
   align-items: center;
   gap: 12px;
   margin-bottom: 20px;
+  min-width: 0;
 }
 
 .cert-icon {
@@ -149,12 +150,16 @@
 }
 
 /* Nom de l'organisme porte par le composant OdcBrand : le libelle textuel
-   (uppercase, interlettre) n'a pas a s'appliquer a ses deux lignes. */
+   (uppercase, interlettre) n'a pas a s'appliquer a ses deux lignes.
+   min-width: 0 autorise le retrecissement dans la colonne, sans quoi la
+   pastille deborderait au lieu de declencher l'abrege « ODC ». */
 .cert-org-brand,
 .cert-modal-org-brand {
   text-transform: none;
   letter-spacing: normal;
-  line-height: 1.1;
+  line-height: 1.15;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .cert-org {
