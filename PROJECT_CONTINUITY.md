@@ -3,7 +3,7 @@
 > **Document de continuation du projet**  
 > Ce fichier agit comme une source de vérité unique pour tout nouvel agent IA (ou humain) amené à intervenir sur ce projet. Il doit être **mis à jour régulièrement** au fur et à mesure de l'avancement.
 >
-> **Dernière mise à jour :** 1er octobre 2026 — (Africa/Douala, UTC+1)  
+> **Dernière mise à jour :** 4 octobre 2026 — (Africa/Douala, UTC+1)  
 > **Mis à jour par :** Agent IA courant
 
 ---
@@ -69,9 +69,11 @@ portfolio-angular/
 │   │   ├── core/             # Services et modèles (singleton)
 │   │   │   ├── models/
 │   │   │   │   ├── project.model.ts
+│   │   │   │   ├── academic-project.model.ts
 │   │   │   │   └── certification.model.ts
 │   │   │   └── services/
 │   │   │       ├── projects.service.ts
+│   │   │       ├── academic-projects.service.ts
 │   │   │       └── certifications.service.ts
 │   │   ├── features/          # Pages par fonctionnalité
 │   │   │   ├── home/          # Page d'accueil
@@ -79,6 +81,7 @@ portfolio-angular/
 │   │   │   │   └── components/
 │   │   │   │   ├── globe/     # Globe 3D canvas
 │   │   │   │   └── profile-card/  # Carte code stylisée (importée par app.ts → bundle initial)
+│   │   │   │   └── stat-counter/   # Compteur animé de la barre de stats (value en signal)
 │   │   │   ├── about/          # À propos (parcours)
 │   │   │   ├── projects/        # Liste projets + filtres
 │   │   │   ├── project-detail/  # Détail projet par slug
@@ -91,6 +94,7 @@ portfolio-angular/
 │   └── assets/
 │       ├── data/
 │       │   ├── projects.json
+│       │   ├── academic-projects.json
 │       │   └── certifications.json
 │       └── images/
 │           └── projects/
@@ -168,9 +172,12 @@ portfolio-angular/
 ### Core (services & modèles)
 - [x] `Project` model (interface complète)
 - [x] `Certification` model (avec types d'icônes, organizations)
-- [x] `ProjectsService` (HttpClient → Observable → Signal, cache, loading/error states, computed `featuredProjects`)
-- [x] `CertificationsService` (HttpClient → Signal, filtres par organisation, computed)
-- [x] Données JSON : 3 projets (1 featured) + 7 certifications (4 ALX, 3 ODC)
+- [x] `ProjectsService` (HttpClient → Observable → Signal, cache, loading/error states, computed `featuredProjects`, `projectsCount`)
+- [x] `CertificationsService` (HttpClient → Signal, filtres par organisation, computed `certificationsCount` + `organizationsCount`)
+- [x] `AcademicProjectsService` + `AcademicProject` (source des projets de formation, non affichés)
+- [x] `StatCounter` (composant de compteur animé, réactif : ré-anime à chaque changement de `value`)
+- [x] Stats bar : les 4 compteurs sont des `computed` de services (aucun nombre en dur)
+- [x] Données JSON : 3 projets (1 featured) + 6 projets académiques + 7 certifications (4 ALX, 3 ODC)
 
 ### Pages feature
 - [x] **About** : Timeline parcours + box "Ce que je cherche"
@@ -188,7 +195,7 @@ portfolio-angular/
 - [x] **Corriger l'erreur de build** : balise `<code>` non fermée dans `profile-card.html` (résolu — voir section 7)
 - [x] **Remplacer les placeholders** dans `projects.html` : `<span>CAPTURE À AJOUTER</span>` → remplacé par un état honnête « Aperçu à ajouter » (2026-08-21) ; Le Calao Doré dispose de 4 captures réelles
 - [x] **Vérifier les images** : `src/assets/images/projects/` contient 5 fichiers, **tous JPEG**, et chaque référence de `projects.json` pointe vers un fichier existant (audit `_refs.js` : TOUTES LES REFERENCES EXISTENT)
-- [ ] **Ajouter le CV PDF** : `assets/cv-fidele-elock-sadrack.pdf` référencé dans le header mais fichier absent du workspace → **impossible sans le fichier fourni par le titulaire**
+- [ ] **Ajouter le CV PDF** : les 2 versions attendues (`cv-developpeur-angular.pdf`, `cv-operations-terrain.pdf`) doivent être déposées dans `src/assets/cvs/` → **impossible sans les fichiers fournis par le titulaire** (sélecteur en place, cf. passation 9.7)
 
 ### Priorité moyenne
 - [x] **Tester le formulaire contact** : `mailto:` construit avec `encodeURIComponent`, pot de miel vérifié avant, destinataire `felocksadrack@gmail.com` cohérent footer/contact/header (relecture de code ; test navigateur manuel recommandé)
@@ -202,8 +209,24 @@ portfolio-angular/
 - [ ] **Accessibilité** : audit plus poussé (aria-label, contraste, navigation clavier)
 
 ### Données attendues de la part du titulaire
-1. Le PDF du CV (`src/assets/cv-fidele-elock-sadrack.pdf`).
+1. Les PDF des 2 CV (`src/assets/cvs/cv-developpeur-angular.pdf` et `cv-operations-terrain.pdf`).
 2. Les captures d'écran de **ChatApp** et **WattMboa 237** (puis renseigner `image`/`images[]` dans `projects.json`).
+3. **Les vrais titres/descriptions des 6 projets académiques** dans `src/assets/data/academic-projects.json` (actuellement des entrees de substitution, cf. passation 9.6).
+
+### Comment ajouter / supprimer un élément (aucune modification de code)
+
+| Effet | Action |
+|---|---|
+| +1 « Projets réalisés » | ajouter une entrée dans `src/assets/data/projects.json` |
+| +1 « Projets académiques » | ajouter une entrée dans `src/assets/data/academic-projects.json` |
+| +1 « Certifications obtenues » | ajouter une entrée dans `src/assets/data/certifications.json` |
+| +1 « Organisations certifiantes » | ajouter une certification avec un nouvel `organization` (`'alx'`, `'orange-digital-center'`, ou une nouvelle valeur) |
+| −1 | supprimer l'entrée correspondante (mêmes fichiers) |
+| « 7 certifications » du footer | suit `certifications.json` automatiquement |
+
+Le nombre d'organisations est **dédupliqué automatiquement** (`Set`), donc
+ajouter une 2ᵉ certification ALX ne change pas le compteur « Organisations
+certifiantes » ; seul un nouvel `organization` l'incrémente.
 
 ---
 
@@ -287,6 +310,9 @@ X [ERROR] NG5002: Unexpected closing tag "pre". It may happen when the tag has a
 | 2026-10-01 | Revue experte : bugs, performances, accessibilité, sécurité | Voir passation 9.2 ci-dessous | ✅ |
 | 2026-10-01 | Fix affichage page d'accueil : balise `</section>` manquante (hero non fermé) + scroll indicator restauré | `src/app/features/home/home.html` — voir passation 9.3 | ✅ |
 | 2026-10-03 | Marquee dynamique + refactor global, suppression doublon certification 2027, conversions/références images, README, aria-label | Voir passation 9.5 ci-dessous | ✅ |
+| 2026-10-04 | Barre de statistiques calculée automatiquement (4 compteurs en `computed`) | Voir passation 9.6 — commit `8a13481` | ✅ |
+| 2026-10-04 | Sélecteur de CV (header + contact), section Expérience, certifications 7→13 et 2→4 organisations, parcours fictif supprimé | Voir passation 9.7 — commit `a5d1f78` | ✅ |
+| 2026-10-03 | Stats bar 100 % calculée (composants `StatCounter` + services), plus de nombres en dur | Voir passation 9.6 ci-dessous | ✅ |
 
 ---
 
@@ -453,6 +479,235 @@ Reprendre le travail en cours (marquee non committé), corriger les incohérence
 1. **CV PDF** et **captures ChatApp / WattMboa 237** : fichiers à fournir par le titulaire.
 2. **Test manuel** : `npm start` → marquee, compteurs, tilt, `mailto:`, parcours mobile.
 3. **Tests unitaires** et **audit a11y** approfondi (priorité basse, aucun test dans le projet).
+
+---
+
+## 9.6 Passation — 2026-10-03 (barre de statistiques calculée automatiquement)
+
+### Objectif de la session
+
+Remplacer les quatre nombres écrits en dur dans la barre de statistiques de la
+page d'accueil par des valeurs **calculées à partir des données**, afin
+qu'un ajout ou une suppression dans les JSON mette les compteurs à jour sans
+toucher au code.
+
+### Constat initial
+
+`home.html` (4 occurrences) et `footer.html` contenaient des totaux saisis à la
+main : `data-counter="3"`, `"6"`, `"7"`, `"2"` et « 7 certifications ». Deux
+obstacles :
+
+1. `initCounter()` (`home.ts`) lisait l'attribut `data-counter` **une seule fois**
+   via `querySelectorAll` dans `afterNextRender`, puis animait une fois : même
+   avec des valeurs liées, le compteur n'aurait pas été réactif.
+2. **« Projets académiques » (6) n'avait aucune source de données** — les
+   projets de formation ALX / ODC n'existaient nulle part dans le dépôt.
+
+### Modifications réalisées
+
+- **`src/app/features/home/components/stat-counter/`** (nouveau) : composant
+  autonome `StatCounter`, `value` en `input.required<number>()` et `suffix`.
+  Un `effect` ré-anime à chaque changement de `value` **depuis la valeur déjà
+  affichée** (donc un incrément comme un décrément, sans repasser par 0) ;
+  `IntersectionObserver` pour le premier remplissage à l'entrée à l'écran ;
+  durée adaptée à l'écart parcouru ; `prefers-reduced-motion` → écriture
+  directe. Nettoyage via `DestroyRef` (`observer.disconnect()` + `cancelAnimationFrame`).
+  `ChangeDetectionStrategy.OnPush`, template d'une ligne.
+- **`src/app/core/models/academic-project.model.ts`** (nouveau) : interface
+  `AcademicProject` (`id`, `title` obligatoires ; `organization`, `year`,
+  `description`, `url` facultatifs) — distincte de `Project`.
+- **`src/app/core/services/academic-projects.service.ts`** (nouveau) : même
+  schéma que `ProjectsService` (HttpClient → Signal, cache, `loading`/`error`) +
+  `projectsCount` en `computed`.
+- **`src/assets/data/academic-projects.json`** (nouveau) : **6 entrees de
+  substitution**, titres « Projet académique N — titre à remplacer » et
+  descriptions « Description à compléter. » → le titulaire n'a plus qu'à
+  renommer ces champs. **À compléter par l'utilisateur.**
+- **`projects.service.ts`** : ajout de `projectsCount` (`computed`).
+- **`certifications.service.ts`** : ajout de `organizationsCount`
+  (`new Set(c.map(c => c.organization)).size` → déduplication automatique).
+- **`home.ts`** : injection des deux services, exposition des quatre compteurs
+  en `readonly` (simples alias des `computed`), `ngOnInit` charge les trois
+  sources, import de `StatCounter`. **Suppression de `initCounter()`**, du
+  tableau `counterObservers` et de son `disconnect()` dans `disposeVisualEffects()`.
+- **`home.html`** : les 4 `<span data-counter>` deviennent des
+  `<app-stat-counter [value]="…" suffix="+" />`. La classe `stat-num` est
+  désormais appliquée via `host:` dans le composant — **le CSS de `home.css`
+  est inchangé**.
+- **`footer.ts` / `footer.html`** : « 7 certifications » en dur remplacé par
+  `{{ certificationsCount() }}` avec repli tant que le JSON n'est pas chargé
+  (le footer appelle `load()` lui-même, le service étant `providedIn: 'root'`).
+
+### Valeurs après changement
+
+**Inchangées à l'affichage** (3 / 6 / 7 / 2) — vérifié par recalcul sur les
+JSON — mais désormais dérivées des données.
+
+### Vérifications
+
+- `npm run build` (production) : **✅ EXIT 0** — bundle initial 294,42 kB brut /
+  81,41 kB estimés, `home` en chunk paresseux 54,00 kB ; budgets 500 kB/1 MB
+  respectés. `strictTemplates` valide les 4 liaisons `[value]`.
+- Audit des bundles (Node) : `academic-projects.json` présent dans
+  `dist/.../assets/data/` ; `app-stat-counter`, `organizationsCount`,
+  `projectsCount` présents dans le chunk `home` ; **plus aucune occurrence de
+  `data-counter`** dans le JS compilé.
+- Recalcul des 4 `computed` sur les JSONsources : 3 / 6 / 7 / 2 (identique).
+- Simulation ajout/suppression : les compteurs suivent (6→7, 6→5, 7→8, 7→6)
+  sans modification de code.
+
+### ⚠️ À faire par le titulaire
+
+1. **Remplacer les 6 titres et descriptions de substitution** dans
+   `src/assets/data/academic-projects.json` par les vrais projets académiques.
+   Tant qu'ils sont discounts, le nombre affiché (6) est correct mais les
+   titres ne le sont pas — ils ne sont **pas affichés dans l'interface**,
+   seuls comptés.
+2. Vérifier visuellement `npm start` : les compteurs doivent animée 0 → 3/6/7/2
+   au défilement. Si la page est déjà scrolled au chargement, l'`IntersectionObserver`
+   déclenche au premier rendu.
+
+### Note d'outillage (utile pour la prochaine session)
+
+Les commandes shell expirent après **30 s** et `ng build` en prend ~33 s : la
+build est donc **toujours tuée** si elle est lancée directement. Méthode qui
+fonctionne (build réellement détachée) :
+
+```bat
+@echo off
+cd /d "<projet>"
+call npm.cmd run build > bv.log 2>&1
+echo EXIT=%ERRORLEVEL% >> bv.log
+echo done > bv.finished
+```
+
+puis `wmic process call create "<projet>\_run_build.bat"` (ReturnValue 0 =
+démarré ; 9 = chemin introuvable) et, pour suivre : `ping -n 28 127.0.0.1 > nul`
+avant chaque `type bv.log`. **Piège** : `if exist bv.finished (echo X) else (echo Y) & type bv.log`
+n'affiche pas le log — le `&` est absorbé par la clause `else` ; utiliser deux
+commandes séparées. PowerShell n'est pas exploitable ici (sa sortie n'est pas
+capturée par l'outil). Enfin, `findstr` échoue silencieusement sur les JS
+minifiés (lignes > 8191 caractères) : auditer les bundles avec un script Node
+(`String.includes`).
+
+---
+
+## 9.7 Passation — 2026-10-04 (sélecteur de CV, section Expérience, certifications réelles)
+
+> ⚠️ **Convention de travail rappelée par le titulaire :** *à chaque fichier mis à
+> jour, commiter et pousser sur GitHub avec le message de commit correspondant.*
+> Cette session avait d'abord oublié le push — les commits ont été créés et
+> poussés ensuite (`8a13481`, `a5d1f78`).
+
+### Objectif
+
+1. Rendre le CV du header **sélectif** (le visiteur choisit la version à consulter), et faire de même dans la rubrique « Me contacter ».
+2. Corriger le parcours affiché, qui ne correspondait pas à la réalité.
+3. Alimenter la barre de statistiques en données réelles.
+
+### Parcours réel (source : titulaire)
+
+| Période | Élément |
+|---|---|
+| oct. 2019 → ~oct. 2022 | **ESIAC** — Génie Logiciel, cycle ingénieur 5 ans, **interrompu après la 3ᵉ année** |
+| nov. 2021 → jan. 2025 | **ALX Software Engineering** (avec pauses) |
+| sept. 2023 → août 2024 | **Agent de sécurité** — GAS Security (Grand Aigle Security) |
+| juin 2025 → avr. 2026 · 11 mois | **Responsable des opérations** — ADG Group · CDD · Douala V |
+| avr. 2026 → sept. 2026 · 6 mois | **Chef d'équipe** — BUCREP · CDD · Douala III |
+| juin → oct. 2026 | **Angular Talent Lab** — ODC, **simultané au recensement** |
+
+Points retenus :
+- **avr. 2026** : ADG se termine, BUCREP commence (aucun doublon).
+- **Simultanité assumée** : formation ODC 9 h–16 h en semaine, supervision terrain
+  le lundi–vendredi ; le week-end recensement en journée et Angular en soirée,
+  jusqu'à la fin des opérations.
+- BUCREP = *Bureau Central des Recensements et des Etudes de Population*.
+  Sigle conservé tel quel, développé en `organizationFull` (aucune expansion inventée).
+
+### Modifications
+
+**Sélecteur de CV**
+- `src/app/core/models/cv.model.ts`, `src/assets/data/cvs.json`,
+  `src/app/core/services/cvs.service.ts` (nouveaux).
+- `src/app/shared/cv-picker/` (nouveau) : composant **partagé** header + contact,
+  `role="menu"` / `menuitemradio` + `aria-checked`, `↑` `↓` `Home` `End`
+  `Entrée` `Échap` (restitution du focus), `Tab` ne piège pas, fermeture au clic
+  extérieur. Si un seul CV existe → lien direct au lieu d'un menu.
+- `header.html` : le span mort `CV à ajouter` → `<app-cv-picker>` + sélecteur
+  aussi dans la `mobile-panel`.
+- `contact.html` : la ligne morte `CV (PDF) / fichier à ajouter` → `<app-cv-picker>`.
+- `mailto:` **inchangé** (il ne peut pas joindre de pièce jointe).
+
+**Section Expérience (`/about`)**
+- `experience.model.ts`, `experience.json`, `experience.service.ts` (nouveaux).
+- `about.html` : section Expérience en cartes (période, contrat, lieu, missions,
+  résultats chiffrés en encadré, compétences en badges) ; section Formation pour
+  ESIAC et l'Angular Talent Lab. **Aucune donnée de parcours en dur** hors ESIAC.
+- `about.css` : `.xp-*`, `.tl-note`, `.tl-location`, `.tl-contract`.
+
+**Certifications — 7 → 13, 2 → 4 organisations**
+- Ajouts : TME Education (Arduino, sept. 2021), Fortinet (NSE 1, 2 et 3 — 3 entrées
+  distinctes, décision du titulaire), ODC (Systèmes Distribués, À la découverte de l'IA).
+- **6 des 7 entrées avaient une année fausse** : le Masterclass Web était daté
+  **2026** au lieu de **nov. 2024**.
+- Nouveaux champs `period` (« sept. → nov. 2024 ») et `dateEnd` (`AAAA-MM`, clé de tri).
+- `CertificationOrg` élargi à 4 valeurs, `IconsType` gains `chip`, `shield`,
+  `cloud`, `book` (sinon erreur de compilation).
+- **Barre de filtres rendue dynamique** (`@for` sur `organizations()` +
+  `countFor(org)`) : elle était écrite en dur sur ALX et Orange Digital Center,
+  TME et Fortinet étaient donc **inaccessibles au visiteur**.
+
+**Nettoyage du parcours fictif**
+- Suppression des stages **ENEO / SONATREL** et du poste de **Téléconseiller**.
+- Réécriture des 2 paragraphes qui s'appuyaient dessus (`about.html`, `home.html`).
+- Retrait du tag **« Full Stack Junior »** (`index.html` reste à faire) : non prouvé
+  par les projets. Le hero met désormais en avant ESIAC + l'encadrement du 4ᵉ RGPH.
+
+### Effet sur la barre de statistiques — preuve du mécanisme
+
+| Compteur | Avant | Après |
+|---|---|---|
+| Certifications obtenues | 7 | **13** |
+| Organisations certifiantes | 2 | **4** |
+
+Aucune ligne de `home.html` modifiée : les compteurs suivent les données.
+
+### Vérifications
+
+- `npm run build` (production) : **✅ EXIT 0** — bundle initial 303,94 kB brut /
+  83,25 kB estimés ; budgets 500 kB/1 MB respectés.
+- `npx ngc -p tsconfig.app.json` : aucune erreur (a détecté et fait corriger un
+  chemin d'import erroné `../../../core/` → `../../core/`).
+- Audit automatisé (Node) : 13 certifications / 4 organisations / 3 projets /
+  6 projets académiques / 3 postes ; tri antéchronologique OK ; slugs et ids
+  uniques ; **absence vérifiée** de `nav-unavailable`, `CV à ajouter`,
+  `fichier à ajouter`, `ENEO`, `SONATREL`, `Téléconseiller`, `Full Stack Junior`,
+  `data-counter`.
+- `git push` : `bc78619..a5d1f78`, `main` synchronisé avec `origin/main`.
+- `start-build.js` (contenu `dd`) ajouté au `.gitignore` au lieu d'être commité.
+
+### ⚠️ Restent à faire par le titulaire
+
+1. **Les 2 PDF** dans `src/assets/cvs/` : `cv-developpeur-angular.pdf` et
+   `cv-operations-terrain.pdf`. Dossier créé avec un `README.md`. **Tant qu'ils
+   sont absents, le sélecteur s'affiche mais les liens donnent une 404** — le
+   script de vérification le signale explicitement.
+2. **Titres des 6 projets académiques** dans `academic-projects.json`
+   (le compteur est déjà à 6 ; les titres ne sont pas affichés, seulement comptés).
+3. **« Full Stack Junior »** dans `src/index.html` (meta description, OG,
+   Twitter) : signalé, **non modifié** en attente d'un accord.
+
+### Note d'outillage (session 2026-10-04)
+
+- Les fichiers du dépôt sont en **CRLF** : toute édition multi-lignes par
+  remplacement de chaîne échoue. Écrire les fichiers via des scripts Node
+  (`fs.writeFileSync`) ou utiliser des éditions mono-ligne.
+- `node -e "..."` avec des guillemets imbriqués est corrompu par cmd.exe → écrire
+  un fichier `.cjs` temporaire (déjà ignoré par `.gitignore` : `_*.js`).
+- Un commit dont le message contient `3ᵉ` échoue (encodage console) → utiliser
+  `git commit -F fichier.txt` en ASCII.
+- `%ERRORLEVEL%` n'est pas développé par le shell de l'agent : ne pas l'utiliser
+  pour tester une commande ; relire la sortie et `git log` après l'écriture.
 
 ---
 
