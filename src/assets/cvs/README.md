@@ -5,7 +5,7 @@ Dépose ici, les deux versions du CV attendues par `assets/data/cvs.json` :
 | Fichier attendu | Version | État |
 |---|---|---|
 | `cv-developpeur-angular.pdf` | CV Développeur Front-End / Angular | ⚠️ à déposer |
-| `cv-operations-terrain.pdf` | CV Opérations & Terrain | ✅ déposé (155 Ko, 1 page) |
+| `cv-operations-terrain.pdf` | CV Chargé des opérations | ✅ déposé (155 Ko, 1 page) |
 
 Le sélecteur (header + page contact) lit cette liste dans `cvs.json`, et la
 page `/cv/:id` affiche l'aperçu puis propose le téléchargement.
