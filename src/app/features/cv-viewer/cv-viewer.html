@@ -19,26 +19,42 @@
         </header>
 
         <div class="cv-frame-wrap">
-          <object
-            class="cv-frame"
-            [data]="pdfUrl() + '#view=FitH'"
-            type="application/pdf"
-            aria-label="Aperçu du CV"
-          >
-            <div class="cv-noembed">
-              <p>Votre navigateur ne peut pas afficher le PDF directement.</p>
-              <a class="btn btn-primary" [href]="pdfUrl()" [download]="cv()?.fileName">
-                Télécharger le PDF
-              </a>
-            </div>
-          </object>
+          @if (renderError()) {
+            <p class="cv-render-error">{{ renderError() }}</p>
+          } @else {
+            <canvas #pdfCanvas class="cv-canvas" role="img" aria-label="Aperçu du CV"></canvas>
+
+            @if (pageCount() > 1) {
+              <div class="cv-pager">
+                <button
+                  type="button"
+                  class="cv-page-btn"
+                  [disabled]="!hasPrev()"
+                  (click)="prevPage()"
+                  aria-label="Page précédente"
+                >
+                  ‹
+                </button>
+                <span class="cv-page-info">
+                  Page {{ page() }} sur {{ pageCount() }}
+                </span>
+                <button
+                  type="button"
+                  class="cv-page-btn"
+                  [disabled]="!hasNext()"
+                  (click)="nextPage()"
+                  aria-label="Page suivante"
+                >
+                  ›
+                </button>
+              </div>
+            }
+          }
         </div>
 
         <p class="cv-hint">
-          L'aperçu reste vide ? Le PDF n'est peut-être pas intégré à votre navigateur :
-          <a [href]="pdfUrl()" [download]="cv()?.fileName">téléchargez le fichier</a>
-          ou
-          <a [href]="pdfUrl()" target="_blank" rel="noopener noreferrer">ouvrez-le dans un nouvel onglet</a>.
+          Aperçu généré à la volée — l'image peut différer légèrement du PDF d'origine.
+          Pour la version exacte, préférez le téléchargement.
         </p>
 
         <div class="cv-actions">
