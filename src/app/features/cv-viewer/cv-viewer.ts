@@ -50,9 +50,20 @@ export class CvViewer {
     effect(() => {
       const id = this.params()?.get('id');
       const list = this.cvsService.cvs();
+      const loading = this.cvsService.loading();
 
-      if (this.cvsService.loading() && list.length === 0) {
-        this.state.set('loading');
+      // Tant que la liste est vide, on ne peut conclure ni dans un sens ni
+      // dans l'autre : `loading` peut déjà être repassé à false entre deux
+      // exécutions de cet effet, ce qui ferait conclure à tort à un id
+      // inconnu. On se base donc sur la seule liste.
+      if (list.length === 0) {
+        if (!loading && !this.cvsService.error()) {
+          // Les donnees sont arrivees et ne contiennent aucun CV : URL invalide.
+          this.state.set('unknown-id');
+          this.title.setTitle('CV introuvable — Fidèle Elock Sadrack');
+        } else {
+          this.state.set('loading');
+        }
         return;
       }
 

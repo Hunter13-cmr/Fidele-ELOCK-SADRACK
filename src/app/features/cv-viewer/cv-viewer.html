@@ -32,17 +32,27 @@
         </div>
 
         <div class="cv-frame-wrap">
-          <object class="cv-frame" [data]="pdfUrl() + '#view=FitH'" type="application/pdf">
+          <object
+            class="cv-frame"
+            [data]="pdfUrl() + '#view=FitH'"
+            type="application/pdf"
+            aria-label="Aperçu du CV"
+          >
             <div class="cv-noembed">
-              <p>
-                Votre navigateur ne peut pas afficher le PDF directement.
-              </p>
+              <p>Votre navigateur ne peut pas afficher le PDF directement.</p>
               <a class="btn btn-primary" [href]="pdfUrl()" [download]="cv()?.fileName">
                 Télécharger le PDF
               </a>
             </div>
           </object>
         </div>
+
+        <p class="cv-hint">
+          L'aperçu reste vide ? Le PDF n'est peut-être pas intégré à votre navigateur :
+          <a [href]="pdfUrl()" [download]="cv()?.fileName">téléchargez le fichier</a>
+          ou
+          <a [href]="pdfUrl()" target="_blank" rel="noopener noreferrer">ouvrez-le dans un nouvel onglet</a>.
+        </p>
       }
 
       @default {

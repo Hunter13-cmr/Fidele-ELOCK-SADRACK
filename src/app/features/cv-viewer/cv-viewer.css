@@ -33,6 +33,12 @@
 .cv-frame { display: block; width: 100%; height: 78vh; min-height: 520px; border: 0; }
 .cv-noembed { padding: 60px 24px; text-align: center; color: var(--color-text-muted); }
 .cv-noembed p { margin-bottom: 18px; }
+.cv-hint {
+  margin-top: 14px; font-size: 0.78rem; color: var(--color-text-faint);
+  font-family: var(--font-mono); line-height: 1.7;
+}
+.cv-hint a { color: var(--color-primary); text-decoration: underline; text-underline-offset: 2px; }
+.cv-hint a:hover { color: var(--color-text); }
 
 /* ---------- 404 ---------- */
 .cv-404 { text-align: center; padding: 70px 0 90px; }
