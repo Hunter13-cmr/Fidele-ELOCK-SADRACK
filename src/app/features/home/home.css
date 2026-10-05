@@ -74,6 +74,17 @@
   color: var(--color-text-faint);
   margin-right: 8px;
 }
+
+/* Libellé du badge sur deux lignes : « 2026 » sous « ANGULAR TALENT LAB ». */
+.hero-badge .eyebrow {
+  display: inline-flex;
+  align-items: center;
+}
+.badge-label {
+  display: inline-flex;
+  flex-direction: column;
+  line-height: 1.35;
+}
 .pulse-dot::after {
   content: '';
   position: absolute;
