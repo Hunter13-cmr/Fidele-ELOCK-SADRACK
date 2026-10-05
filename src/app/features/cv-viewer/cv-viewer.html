@@ -18,19 +18,6 @@
           <p class="cv-audience">{{ cv()?.audience }}</p>
         </header>
 
-        <div class="cv-actions">
-          <a class="btn btn-primary" [href]="pdfUrl()" [download]="cv()?.fileName">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M12 3v12M6 10l6 6 6-6M4 21h16"/>
-            </svg>
-            Télécharger le PDF
-          </a>
-          <a class="btn btn-ghost" [href]="pdfUrl()" target="_blank" rel="noopener noreferrer">
-            Ouvrir dans un nouvel onglet
-          </a>
-          <span class="cv-updated">Mise à jour : {{ cv()?.updated }}</span>
-        </div>
-
         <div class="cv-frame-wrap">
           <object
             class="cv-frame"
@@ -53,6 +40,19 @@
           ou
           <a [href]="pdfUrl()" target="_blank" rel="noopener noreferrer">ouvrez-le dans un nouvel onglet</a>.
         </p>
+
+        <div class="cv-actions">
+          <a class="btn btn-primary" [href]="pdfUrl()" [download]="cv()?.fileName">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 3v12M6 10l6 6 6-6M4 21h16"/>
+            </svg>
+            Télécharger le PDF
+          </a>
+          <a class="btn btn-ghost" [href]="pdfUrl()" target="_blank" rel="noopener noreferrer">
+            Ouvrir dans un nouvel onglet
+          </a>
+          <span class="cv-updated">Mise à jour : {{ cv()?.updated }}</span>
+        </div>
       }
 
       @default {
