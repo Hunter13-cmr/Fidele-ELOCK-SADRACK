@@ -2,69 +2,79 @@
   <div class="container about-grid">
     <div>
       <span class="eyebrow">À propos</span>
-      <h1>D'un poste de support à la conception d'interfaces</h1>
+      <h1>De l'encadrement terrain à la conception d'interfaces</h1>
       <p>
-        Avant de développer, j'ai passé du temps <strong>sur le terrain et au support</strong> —
-        à diagnostiquer des pannes, configurer des postes, accompagner des utilisateurs.
-        Cette expérience m'a appris à comprendre un problème avant d'y répondre.
+        J'ai une formation d'<strong>ingénieur en Génie Logiciel</strong> à l'ESIAC
+        (3ᵉ année sur un cycle de 5 ans), complétée par une certification
+        <strong>Software Engineering</strong> d'ALX. En parallèle, j'ai encadré des
+        équipes terrain sur des projets d'envergure — dont le
+        <strong>4ᵉ Recensement Général de la Population et de l'Habitat</strong>.
       </p>
       <p>
-        Aujourd'hui, je développe avec <strong>Angular</strong> dans le cadre de la première
-        cohorte de l'<strong>Angular Talent Lab 2026</strong> à l'Orange Digital Center Cameroun,
-        où je construis des applications complètes : composants, services, routing,
-        formulaires, consommation d'API.
-      </p>
-      <p>
-        Je cherche à transformer ce double bagage — technique et terrain — en une
-        contribution utile au sein d'une équipe produit.
+        Aujourd'hui, je développe avec <strong>Angular</strong> à l'Orange Digital Center
+        Cameroun : composants standalone, signaux, services et formulaires réactifs.
+        Ce que je recherche, c'est une équipe où le code est relu, discuté et amélioré —
+        en m'appuyant sur une expérience d'encadrement qui m'a appris à tenir un objectif
+        et une équipe.
       </p>
 
-      <h2>Parcours</h2>
-      <div class="timeline">
-        <div class="tl-item">
-          <div class="tl-period">2026</div>
-          <div class="tl-content">
-            <h3>Angular Talent Lab — 1ère cohorte</h3>
-            <div class="tl-org">Orange Digital Center Cameroun</div>
-            <p class="tl-desc">
-              Formation intensive Angular moderne : standalone components, signals, RxJS,
-              routing, formulaires réactifs. Développement de plusieurs projets complets.
-            </p>
+      <h2>Formation</h2>
+      @if (loading()) {
+        <p class="xp-state">Chargement du parcours…</p>
+      } @else if (error()) {
+        <p class="xp-state xp-error">{{ error() }}</p>
+      } @else {
+        <div class="xp-timeline">
+          @for (t of training(); track t.id) {
+            <div class="tl-item">
+              <div class="tl-period">{{ t.period }}</div>
+              <div class="tl-content">
+                <h3>{{ t.title }}</h3>
+                <div class="tl-org">
+                  {{ t.organizationFull || t.organization }}
+                  @if (t.contract) {
+                    <span class="tl-contract">· {{ t.contract }}</span>
+                  }
+                </div>
+                @if (t.location) {
+                  <div class="tl-location">{{ t.location }}</div>
+                }
+                @if (t.summary) {
+                  <p class="tl-desc">{{ t.summary }}</p>
+                }
+                @if (t.note) {
+                  <p class="tl-note">{{ t.note }}</p>
+                }
+                @if (t.skills?.length) {
+                  <div class="xp-skills">
+                    @for (s of t.skills; track s) {
+                      <span class="xp-skill">{{ s }}</span>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+          }
+          <div class="tl-item">
+            <div class="tl-period">oct. 2019 → oct. 2022</div>
+            <div class="tl-content">
+              <h3>Génie Logiciel — cycle ingénieur</h3>
+              <div class="tl-org">
+                ESIAC — École Supérieure d'Ingénieurs et de Management d'Afrique Centrale
+                <span class="tl-contract">· Douala</span>
+              </div>
+              <p class="tl-desc">
+                Formation d'ingénieur en Génie Logiciel. Cycle de 5 ans suivi jusqu'à
+                la 3ᵉ année puis interrompu.
+              </p>
+              <p class="tl-note">
+                La formation n'a pas été achevée : je l'ai arrêtée après la 3ᵉ année pour
+                entrer dans des postes d'encadrement terrain.
+              </p>
+            </div>
           </div>
         </div>
-        <div class="tl-item">
-          <div class="tl-period">Juin 2025 — Fév. 2026</div>
-          <div class="tl-content">
-            <h3>Chargé des Opérations / Superviseur Terrain</h3>
-            <div class="tl-org">ADG Group — Projet Accent Media</div>
-            <p class="tl-desc">Supervision d'opérations terrain, coordination et suivi d'exécution.</p>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-period">Fév. — Mai 2024</div>
-          <div class="tl-content">
-            <h3>Téléconseiller</h3>
-            <div class="tl-org">— organisation à préciser —</div>
-            <p class="tl-desc">Relation client, gestion des demandes et des incidents à distance.</p>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-period">Stage</div>
-          <div class="tl-content">
-            <h3>Stage — support / environnement IT</h3>
-            <div class="tl-org">ENEO Cameroun</div>
-            <p class="tl-desc">Détails du stage à compléter (missions, outils utilisés).</p>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-period">Stage</div>
-          <div class="tl-content">
-            <h3>Stage — support / environnement IT</h3>
-            <div class="tl-org">SONATREL</div>
-            <p class="tl-desc">Détails du stage à compléter (missions, outils utilisés).</p>
-          </div>
-        </div>
-      </div>
+      }
     </div>
 
     <div class="seeking-box">
@@ -73,9 +83,81 @@
         <li>Une opportunité junior en développement Front-End / Angular</li>
         <li>Une équipe où le code est relu, discuté, amélioré</li>
         <li>Un environnement pour progresser rapidement et durablement</li>
-        <li>La possibilité d'apporter aussi une culture support / IT</li>
+        <li>La possibilité d'apporter aussi une expérience d'encadrement</li>
       </ul>
       <a routerLink="/contact" class="btn btn-primary" style="margin-top:20px; width:100%; justify-content:center;">Me contacter</a>
     </div>
+  </div>
+</section>
+
+<!-- ============ EXPÉRIENCE PROFESSIONNELLE ============ -->
+<section class="section xp-section">
+  <div class="section-accent"></div>
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Expérience</span>
+      <h2>Des postes d'encadrement sur des projets de terrain</h2>
+      <p>
+        Des opérations exigeantes : encadrement d'agents recenseurs sur un recensement
+        national, coordination de partenaires, surveillance. C'est là que j'ai appris à
+        tenir un objectif et à synchroniser une équipe.
+      </p>
+    </div>
+
+    @if (loading()) {
+      <p class="xp-state">Chargement de l'expérience…</p>
+    } @else if (error()) {
+      <p class="xp-state xp-error">{{ error() }}</p>
+    } @else {
+      <div class="xp-grid">
+        @for (job of jobs(); track job.id) {
+          <article class="xp-card">
+            <header class="xp-card-head">
+              <h3 class="xp-card-title">{{ job.title }}</h3>
+              <div class="xp-card-org">{{ job.organizationFull || job.organization }}</div>
+              <div class="xp-card-meta">
+                <span class="xp-meta-item">{{ job.period }}</span>
+                @if (job.contract) {
+                  <span class="xp-meta-item xp-meta-contract">{{ job.contract }}</span>
+                }
+                @if (job.location) {
+                  <span class="xp-meta-item">{{ job.location }}</span>
+                }
+              </div>
+            </header>
+
+            @if (job.summary) {
+              <p class="xp-card-summary">{{ job.summary }}</p>
+            }
+
+            @if (job.missions?.length) {
+              <h4 class="xp-subtitle">Missions principales</h4>
+              <ul class="xp-missions">
+                @for (m of job.missions; track m) {
+                  <li>{{ m }}</li>
+                }
+              </ul>
+            }
+
+            @if (job.results?.length) {
+              <h4 class="xp-subtitle xp-subtitle-results">Résultats obtenus</h4>
+              <ul class="xp-results">
+                @for (r of job.results; track r) {
+                  <li>{{ r }}</li>
+                }
+              </ul>
+            }
+
+            @if (job.skills?.length) {
+              <div class="xp-skills">
+                @for (s of job.skills; track s) {
+                  <span class="xp-skill">{{ s }}</span>
+                }
+              </div>
+            }
+          </article>
+        }
+      </div>
+    }
   </div>
 </section>

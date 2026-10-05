@@ -16,7 +16,7 @@
     </nav>
 
     <div class="nav-cta">
-      <span class="btn btn-ghost nav-unavailable" title="Ajoutez le PDF du CV dans src/assets pour activer ce lien">CV à ajouter</span>
+      <app-cv-picker />
       <a routerLink="/contact" class="btn btn-primary">Me contacter</a>
       <button
         class="menu-toggle"
@@ -41,6 +41,7 @@
       <a routerLink="/certifications" (click)="closeMenu()">Certifications</a>
       <a routerLink="/" fragment="about-preview" (click)="closeMenu()">Parcours</a>
       <a routerLink="/contact" (click)="closeMenu()">Contact</a>
+      <app-cv-picker class="mobile-cv" />
     </div>
   }
 </header>

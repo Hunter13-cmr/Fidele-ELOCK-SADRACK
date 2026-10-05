@@ -1,0 +1,18 @@
+[
+  {
+    "id": "dev",
+    "label": "CV Développeur Front-End / Angular",
+    "audience": "Postes de développement web, junior ou en alternance",
+    "fileUrl": "assets/cvs/cv-developpeur-angular.pdf",
+    "fileName": "cv-developpeur-angular.pdf",
+    "updated": "octobre 2026"
+  },
+  {
+    "id": "ops",
+    "label": "CV Opérations & Terrain",
+    "audience": "Chargé d’opérations, chef d’équipe, projets de recensement",
+    "fileUrl": "assets/cvs/cv-operations-terrain.pdf",
+    "fileName": "cv-operations-terrain.pdf",
+    "updated": "octobre 2026"
+  }
+]

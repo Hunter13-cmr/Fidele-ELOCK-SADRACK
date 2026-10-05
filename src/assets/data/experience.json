@@ -1,0 +1,98 @@
+[
+  {
+    "id": "talent-lab",
+    "title": "Angular Talent Lab 2026 — 1ère cohorte",
+    "organization": "ODC",
+    "organizationFull": "Orange Digital Center Cameroun",
+    "period": "juin → oct. 2026 · en cours",
+    "contract": "Programme intensif",
+    "location": "Douala, Cameroun",
+    "status": "En cours",
+    "kind": "training",
+    "summary": "Formation intensive au développement Angular moderne : composants standalone, signals, services, routing, formulaires réactifs et consommation d’API.",
+    "note": "Suivie simultanément à l’encadrement du 4ᵉ RGPH : formation de 9 h à 16 h en semaine, puis supervision des agents recenseurs sur le terrain du lundi au vendredi ; le week-end, recensement en journée et révision Angular en soirée, jusqu’à la fin des opérations.",
+    "skills": [
+      "Angular",
+      "TypeScript",
+      "Signals",
+      "RxJS",
+      "Standalone Components",
+      "Zoneless"
+    ]
+  },
+  {
+    "id": "burep",
+    "title": "Chef d’équipe",
+    "organization": "BUCREP",
+    "organizationFull": "Bureau Central des Recensements et des Etudes de Population",
+    "period": "avr. 2026 – sept. 2026 · 6 mois",
+    "contract": "CDD",
+    "location": "Douala III, Région du Littoral, Cameroun · Hybride",
+    "kind": "job",
+    "summary": "Supervision et pilotage des opérations de collecte dans le cadre du 4ᵉ Recensement Général de la Population et de l’Habitat, couplé au Recensement Général de l’Agriculture et de l’Élevage (4-RGPH/RGAE).",
+    "missions": [
+      "Supervision, encadrement et coordination des agents recenseurs sur le terrain",
+      "Planification et organisation des activités de collecte dans les zones de dénombrement attribuées",
+      "Contrôle de la qualité, de l’exhaustivité et de la fiabilité des données collectées",
+      "Suivi quotidien de l’avancement des opérations et identification rapide des difficultés rencontrées",
+      "Vérification de la couverture des ménages et des exploitations afin de garantir l’exhaustivité du recensement",
+      "Coordination avec les responsables de la chaîne de supervision et remontée des rapports opérationnels",
+      "Gestion des contraintes logistiques et organisationnelles pour assurer la continuité des opérations"
+    ],
+    "results": [
+      "100 % de réalisation sur ZD050, ZD051 et ZD052B lors de la phase principale",
+      "100 % de réalisation sur ZD052A lors du redéploiement complémentaire",
+      "Zones supervisées : ZD050, ZD051, ZD052B puis ZD052A"
+    ],
+    "skills": [
+      "Management d’équipe",
+      "Supervision terrain",
+      "Coordination opérationnelle",
+      "Contrôle qualité",
+      "Collecte de données",
+      "Gestion des objectifs"
+    ]
+  },
+  {
+    "id": "adg",
+    "title": "Responsable des opérations",
+    "organization": "ADG Group",
+    "period": "juin 2025 – avr. 2026 · 11 mois",
+    "contract": "CDD",
+    "location": "Douala V, Région du Littoral, Cameroun · Hybride",
+    "kind": "job",
+    "summary": "Coordination et suivi des activités opérationnelles liées à différents projets et partenariats.",
+    "missions": [
+      "Supervision des activités de GoodWill Financial House et de Yango",
+      "Suivi opérationnel et logistique des activités menées avec les différents partenaires",
+      "Coordination et suivi de l’entretien des kiosques, en partenariat avec Accent Média",
+      "Suivi administratif et organisationnel des opérations",
+      "Coordination entre les équipes internes, les prestataires et les partenaires pour assurer une communication fluide",
+      "Suivi des besoins opérationnels et remontée des informations nécessaires à la prise de décision"
+    ],
+    "skills": [
+      "Coordination opérationnelle",
+      "Gestion logistique",
+      "Suivi de projets",
+      "Gestion des partenaires",
+      "Communication professionnelle"
+    ]
+  },
+  {
+    "id": "gas-security",
+    "title": "Agent de sécurité",
+    "organization": "GAS Security",
+    "organizationFull": "Grand Aigle Security",
+    "period": "sept. 2023 – août 2024 · 12 mois",
+    "contract": "Gardiennage",
+    "location": "Douala, Cameroun",
+    "kind": "job",
+    "summary": "Surveillance et sécurisation des sites confiés, avec tenue des registres et application des consignes dIntervention.",
+    "skills": [
+      "Surveillance",
+      "Rigueur",
+      "Gestion des incidents",
+      "Autonomie"
+    ]
+  }
+]

@@ -1,0 +1,77 @@
+@if (loading()) {
+  <span class="cv-loading">Chargement du CV…</span>
+} @else if (error()) {
+  <span class="cv-error">{{ error() }}</span>
+} @else if (singleCv(); as cv) {
+  <!-- Une seule version disponible : un lien direct, sans menu superflu. -->
+  <a class="cv-link" [href]="cv.fileUrl" [download]="cv.fileName">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M12 3v12M6 10l6 6 6-6M4 21h16"/>
+    </svg>
+    CV
+  </a>
+} @else if (cvs().length > 0) {
+  <div class="cv-picker" [class.cv-inline]="variant() === 'inline'">
+    <button
+      #trigger
+      type="button"
+      class="cv-trigger"
+      [class.cv-trigger-inline]="variant() === 'inline'"
+      aria-haspopup="menu"
+      [attr.aria-expanded]="open()"
+      [attr.aria-label]="'Choisir un CV — ' + cvs().length + ' versions disponibles'"
+      (click)="toggle()"
+      (keydown)="onTriggerKeydown($event)"
+    >
+      @if (variant() === 'header') {
+        CV
+      } @else {
+        CV
+        <span class="cv-trigger-current">{{ selectedCv()?.label }}</span>
+      }
+      <svg
+        class="cv-caret"
+        [class.cv-caret-open]="open()"
+        width="12"
+        height="12"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.4"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M6 9l6 6 6-6"/>
+      </svg>
+    </button>
+
+    @if (open()) {
+      <div
+        #menu
+        class="cv-menu"
+        role="menu"
+        [attr.aria-label]="'Versions du CV disponibles'"
+        (keydown)="onMenuKeydown($event)"
+      >
+        @for (cv of cvs(); track cv.id; let i = $index) {
+          <a
+            class="cv-item"
+            role="menuitemradio"
+            [attr.aria-checked]="selectedCv()?.id === cv.id"
+            [class.cv-item-active]="selectedCv()?.id === cv.id"
+            [tabindex]="activeIndex() === i ? 0 : -1"
+            [href]="cv.fileUrl"
+            [download]="cv.fileName"
+            (click)="choose(cv); $event.preventDefault()"
+            (focus)="activeIndex.set(i)"
+          >
+            <span class="cv-item-label">{{ cv.label }}</span>
+            <span class="cv-item-audience">{{ cv.audience }}</span>
+            <span class="cv-item-updated">Mise à jour : {{ cv.updated }}</span>
+          </a>
+        }
+      </div>
+    }
+  </div>
+}

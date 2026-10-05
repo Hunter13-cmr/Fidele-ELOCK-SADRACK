@@ -31,10 +31,9 @@ export class Certifications implements OnInit {
 
   /** Compteurs de la barre de filtres : toujours calculés sur la liste complète. */
   readonly countAll = computed(() => this.allCertifications().length);
-  readonly countAlx = computed(() => this.allCertifications().filter((c) => c.organization === 'alx').length);
-  readonly countOrange = computed(() =>
-    this.allCertifications().filter((c) => c.organization === 'orange-digital-center').length
-  );
+  /** Organisations présentes dans le JSON — la barre de filtres se construit dessus. */
+  readonly organizations = this.certificationsService.organizations;
+  readonly countFor = (org: CertificationOrg) => this.certificationsService.countFor(org);
 
   readonly selectedCert = signal<Certification | null>(null);
   readonly modalOpen = signal(false);

@@ -9,6 +9,8 @@
 }
 .contact-channels a:hover { color: var(--color-text); }
 .contact-channels :is(a, .contact-channel) span:last-child { font-family: var(--font-mono); font-size: 0.8rem; color: var(--color-text-faint); }
+.cv-channel { align-items: center; }
+.cv-channel app-cv-picker { display: inline-flex; }
 
 .form-group { margin-bottom: 18px; }
 .form-group label { display: block; font-size: 0.82rem; color: var(--color-text-muted); margin-bottom: 7px; font-family: var(--font-mono); }

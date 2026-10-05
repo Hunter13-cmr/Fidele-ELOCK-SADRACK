@@ -25,6 +25,20 @@ export class CertificationsService {
   readonly error = this._error.asReadonly();
   readonly activeOrg = this._activeOrg.asReadonly();
 
+  /** Organisations réellement présentes dans le JSON, triées par libellé. */
+  readonly organizations = computed<{ id: CertificationOrg; label: string }[]>(() => {
+    const map = new Map<CertificationOrg, string>();
+    for (const c of this._certifications()) map.set(c.organization, c.organizationLabel);
+    return [...map.entries()]
+      .map(([id, label]) => ({ id, label }))
+      .sort((a, b) => a.label.localeCompare(b.label, 'fr'));
+  });
+
+  /** Nombre de certifications d'une organisation donnée. */
+  countFor(org: CertificationOrg): number {
+    return this._certifications().filter((c) => c.organization === org).length;
+  }
+
   readonly filteredCertifications = computed(() => {
     const org = this._activeOrg();
     if (!org) return this._certifications();
@@ -32,6 +46,16 @@ export class CertificationsService {
   });
 
   readonly certificationsCount = computed(() => this._certifications().length);
+
+  /**
+   * Nombre d'organisations distinctes ayant délivré les certifications — source
+   * unique du compteur « Organisations certifiantes » de la barre de
+   * statistiques. Se recalcule automatiquement si une certification est
+   * ajoutée ou retirée de `assets/data/certifications.json`.
+   */
+  readonly organizationsCount = computed(
+    () => new Set(this._certifications().map((c) => c.organization)).size
+  );
 
   load(): void {
     if (this.loaded || this._loading()) return;

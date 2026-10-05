@@ -1,10 +1,11 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CvPicker } from '../../shared/cv-picker/cv-picker';
 
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CvPicker],
   templateUrl: './contact.html',
   styleUrl: './contact.css',
 })

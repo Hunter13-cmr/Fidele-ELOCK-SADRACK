@@ -84,17 +84,11 @@
   padding: 9px 18px;
   font-size: 0.8rem;
 }
-.nav-unavailable {
-  cursor: default;
-  opacity: 0.72;
-}
-.nav-unavailable:hover {
-  transform: none;
-  border-color: var(--color-border);
-  color: var(--color-text-muted);
-  box-shadow: none;
-}
-.nav-unavailable:hover::after { transform: scaleX(0); }
+
+/* Le sélecteur de CV occupe la place du bouton CV : meme gabarit visuel. */
+.nav-cta app-cv-picker { display: inline-flex; }
+.mobile-panel app-cv-picker { width: 100%; margin-top: 10px; }
+.mobile-panel app-cv-picker .cv-trigger { width: 100%; justify-content: space-between; }
 
 .menu-toggle {
   display: none;
@@ -143,6 +137,7 @@
   .nav-links { display: none; }
   .nav-cta { gap: 8px; }
   .nav-cta .btn-ghost { display: inline-flex; padding: 8px 10px; font-size: 0.72rem; }
+  .nav-cta app-cv-picker .cv-trigger { padding: 8px 12px; font-size: 0.75rem; }
   .menu-toggle { display: flex; }
   .nav-cta .btn-primary { padding: 9px 14px; font-size: 0.75rem; }
 }

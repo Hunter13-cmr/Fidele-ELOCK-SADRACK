@@ -10,7 +10,7 @@
       </p>
     </div>
 
-    <!-- Filtres -->
+    <!-- Filtres — construits depuis les organisations présentes dans le JSON -->
     <div class="cert-filters">
       <button
         class="cert-filter"
@@ -22,26 +22,18 @@
         Toutes
         <span class="filter-count">{{ countAll() }}</span>
       </button>
-      <button
-        class="cert-filter"
-        [class.active]="activeOrg() === 'alx'"
-        [attr.aria-pressed]="activeOrg() === 'alx'"
-        type="button"
-        (click)="setFilter('alx')"
-      >
-        ALX
-        <span class="filter-count">{{ countAlx() }}</span>
-      </button>
-      <button
-        class="cert-filter"
-        [class.active]="activeOrg() === 'orange-digital-center'"
-        [attr.aria-pressed]="activeOrg() === 'orange-digital-center'"
-        type="button"
-        (click)="setFilter('orange-digital-center')"
-      >
-        Orange Digital Center
-        <span class="filter-count">{{ countOrange() }}</span>
-      </button>
+      @for (org of organizations(); track org.id) {
+        <button
+          class="cert-filter"
+          [class.active]="activeOrg() === org.id"
+          [attr.aria-pressed]="activeOrg() === org.id"
+          type="button"
+          (click)="setFilter(org.id)"
+        >
+          {{ org.label }}
+          <span class="filter-count">{{ countFor(org.id) }}</span>
+        </button>
+      }
     </div>
 
     <!-- Grille -->
@@ -101,10 +93,34 @@
                       <path d="M12 7l5 10M12 7l-5 10M9.5 13h5"/>
                     </svg>
                   }
+                  @case ('chip') {
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="7" y="7" width="10" height="10" rx="1"/>
+                      <path d="M10 2v3M14 2v3M10 19v3M14 19v3M2 10h3M2 14h3M19 10h3M19 14h3"/>
+                    </svg>
+                  }
+                  @case ('shield') {
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/>
+                      <path d="M9 12l2 2 4-4"/>
+                    </svg>
+                  }
+                  @case ('cloud') {
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M6 18a4 4 0 0 1 .4-8A6 6 0 0 1 18 9.5a3.5 3.5 0 0 1 .5 6.9"/>
+                      <path d="M12 13v7M9.5 17.5L12 20l2.5-2.5"/>
+                    </svg>
+                  }
+                  @case ('book') {
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M4 5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2V5z"/>
+                      <path d="M8 3v18"/>
+                    </svg>
+                  }
                 }
               </div>
               <span class="cert-org" [style.color]="cert.accent">{{ cert.organizationLabel }}</span>
-              <span class="cert-year">{{ cert.year }}</span>
+              <span class="cert-year">{{ cert.period || cert.year }}</span>
             </div>
 
             <h3 class="cert-title">{{ cert.title }}</h3>
@@ -169,7 +185,7 @@
         <div>
           <span class="cert-modal-org" [style.color]="selectedCert()!.accent">{{ selectedCert()!.organizationLabel }}</span>
           <h3>{{ selectedCert()!.title }}</h3>
-          <span class="cert-modal-year">{{ selectedCert()!.year }}</span>
+          <span class="cert-modal-year">{{ selectedCert()!.period || selectedCert()!.year }}</span>
         </div>
       </div>
 
