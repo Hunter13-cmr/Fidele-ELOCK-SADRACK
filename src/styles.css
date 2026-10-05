@@ -43,13 +43,7 @@ html { scroll-behavior: smooth; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  /* NB : le marquee reste animé même en mouvement réduit : c'est un
-     défilement de lecture lent et régulier, pas un effet décoratif
-     stroboscopique ; le figer casserait la fonction de la bande.
-     Toutes les autres animations sont neutralisées ci-dessous. */
-  *:not(.marquee-track):not(.marquee-track *),
-  *:not(.marquee-track):not(.marquee-track *)::before,
-  *:not(.marquee-track):not(.marquee-track *)::after {
+  *, *::before, *::after {
     animation: none !important;
     transition-duration: 0.01ms !important;
   }
@@ -58,6 +52,14 @@ html { scroll-behavior: smooth; }
   .reveal {
     opacity: 1 !important;
     transform: none !important;
+  }
+  /* Le marquee est RE-ACTIVÉ explicitement : c'est un défilement de lecture
+     lent et régulier (40 s), pas un effet stroboscopique — le figer casserait
+     sa fonction. Comme cette règle arrive APRÈS le `animation: none !important`
+     ci-dessus et cible un sélecteur plus précis (0,1,0 > 0,0,0), elle gagne. */
+  .marquee-track {
+    animation: marquee-left-to-right 40s linear infinite !important;
+    animation-play-state: running !important;
   }
 }
 
@@ -287,38 +289,49 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing:
   mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
   -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
 }
+
 /*
- * Piste de la bande défilante — défilement CONTINU et INFINI de la gauche
- * vers la droite.
+ * Bande défilante — boucle INFINIE et CONTINUE de la GAUCHE vers la DROITE.
  *
- * Principe (indéformable) : le template (home.html) répète `techList`
- * EXACTEMENT 2 fois, et la piste glisse d'EXACTEMENT une copie
- * (0 → +50 %) avant de boucler. À la fin du cycle, la copie n°2 occupe
- * pixel pour pixel la position qu'occupait la copie n°1 au départ :
- * le redémarrage est invisible.
+ * Le template (home.html) écrit `techList` DEUX fois dans deux
+ * `.marquee-group` rigoureusement identiques. La piste glisse alors
+ * d'exactement UN groupe : `-50 % → 0`. Fin de cycle = début de cycle
+ * (le groupe n°2 se retrouve pile là où était le n°1), donc la boucle
+ * ne se voit jamais, et comme la piste démarre décalée vers la gauche
+ * (-50 %), elle couvre toujours les deux bords : AUCUN trou.
  */
 .marquee-track {
-  display: inline-flex;
+  display: flex;
   width: max-content;
   flex-shrink: 0;
-  gap: 48px;
-  padding-right: 48px;
   will-change: transform;
-  /* `translate` (propriété CSS indépendante) plutôt que `transform` :
-     aucun autre effet (tilt JS, reveal, hover) ne peut écraser le
-     défilement, et le défilement ne peut écraser aucun autre effet. */
-  translate: 0 0;
-  animation: marquee-left-to-right 30s linear infinite;
+  animation: marquee-left-to-right 40s linear infinite;
+  animation-play-state: running;
 }
 
 /*
- * GAUCHE → DROITE, en boucle : 0 → +50 % (= une copie sur deux),
- * puis retour à 0. Surtout : PAS de `alternate`, PAS de `ease`
- * (un easing ou un aller-retour casserait la continuité).
+ * Un groupe = une copie complète de la liste. `padding-right` vaut
+ * exactement le `gap` : la couture entre les deux groupes est identique
+ * à l'espacement interne, la largeur d'un groupe est donc un multiple
+ * exact et le décalage de -50 % tombe juste au pixel.
+ */
+.marquee-group {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 48px;
+  padding-right: 48px;
+}
+
+/*
+ * GAUCHE → DROITE : la piste part décalée d'un groupe vers la gauche
+ * puis revient à sa position naturelle — le contenu avance donc vers la
+ * droite. `linear` (jamais `ease`) et `infinite` (jamais `alternate`) :
+ * c'est ce qui garantit un défilement continu, sans pause ni à-coup.
  */
 @keyframes marquee-left-to-right {
-  0% { translate: 0 0; }
-  100% { translate: 50% 0; }
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
 }
 
 /* ============ Section accents ============ */

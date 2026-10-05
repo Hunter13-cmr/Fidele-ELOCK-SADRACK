@@ -22,15 +22,16 @@
 
       <div class="hero-typing reveal reveal-delay-2">
         <span class="typing-prefix">{{ '{' }}</span>
-        <span id="typing-text" class="typing-text" aria-label="Développeur Web, Full Stack Junior, Créateur d'interfaces modernes, Basé à Douala, Cameroun"></span>
+        <span id="typing-text" class="typing-text" aria-label="Développeur Web, Créateur d’interfaces modernes, Ancien chef d’équipe terrain, Basé à Douala, Cameroun"></span>
         <span class="typing-cursor blink-cursor">|</span>
         <span class="typing-suffix">{{ '}' }}</span>
       </div>
 
       <p class="hero-pitch reveal reveal-delay-3">
-        Certifié <strong>Software Engineering</strong> chez ALX et première cohorte de
-        l'<strong>Angular Talent Lab 2026</strong> — je transforme le support terrain
-        en interfaces web structurées, pensées pour les vrais usages.
+        Ingénieur en Génie Logiciel (ESIAC, 3ᵉ année) et certifié
+        <strong>Software Engineering</strong> chez ALX — j'ai encadré des équipes
+        terrain sur le <strong>4ᵉ RGPH</strong> et je construis aujourd'hui des
+        applications <strong>Angular</strong> complètes, pensées pour les vrais usages.
       </p>
 
       <div class="hero-actions reveal reveal-delay-4">
@@ -88,33 +89,51 @@
 </section>
 
 <!-- ============ TECH MARQUEE ============ -->
+<!--
+  Boucle infinie SANS COUTURE, de la gauche vers la droite.
+  `techList` est écrit DEUX fois (`marquee-group`), les deux groupes étant
+  rigoureusement identiques (même contenu, même `gap`, même `padding-right`).
+  La piste glisse d'exactement UN groupe : au moment où le cycle repart,
+  le groupe n°2 occupe pixel pour pixel la place du groupe n°1 — aucun
+  saut, aucun vide, et TOUS les éléments repassent indéfiniment.
+-->
 <div class="tech-marquee marquee" dir="ltr">
   <div class="marquee-track" dir="ltr">
-    @for (copy of marqueeCopies; track copy) {
+    <div class="marquee-group">
       @for (tech of techList; track tech) {
         <span>{{ tech }}</span><span class="sep">✦</span>
       }
-    }
+    </div>
+    <div class="marquee-group" aria-hidden="true">
+      @for (tech of techList; track tech) {
+        <span>{{ tech }}</span><span class="sep">✦</span>
+      }
+    </div>
   </div>
 </div>
 
 <!-- ============ STATS BAR ============ -->
+<!--
+  Les quatre compteurs sont alimentés par des `computed` de services, jamais par
+  des nombres en dur. Ajouter / supprimer une entrée dans projects.json,
+  academic-projects.json ou certifications.json met la barre à jour seule.
+-->
 <section class="stats-bar">
   <div class="container stats-grid">
     <div class="stat reveal" data-tilt>
-      <span class="stat-num" data-counter="3" data-suffix="+">0+</span>
+      <app-stat-counter [value]="projectsCount()" suffix="+" />
       <span class="stat-label">Projets réalisés</span>
     </div>
     <div class="stat reveal reveal-delay-1" data-tilt>
-      <span class="stat-num" data-counter="6" data-suffix="+">0+</span>
+      <app-stat-counter [value]="academicProjectsCount()" suffix="+" />
       <span class="stat-label">Projets académiques</span>
     </div>
     <div class="stat reveal reveal-delay-2" data-tilt>
-      <span class="stat-num" data-counter="7" data-suffix="+">0+</span>
+      <app-stat-counter [value]="certificationsCount()" suffix="+" />
       <span class="stat-label">Certifications obtenues</span>
     </div>
     <div class="stat reveal reveal-delay-3" data-tilt>
-      <span class="stat-num" data-counter="2" data-suffix="">0</span>
+      <app-stat-counter [value]="organizationsCount()" suffix="" />
       <span class="stat-label">Organisations certifiantes</span>
     </div>
   </div>

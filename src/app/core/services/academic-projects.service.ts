@@ -2,18 +2,23 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { catchError, finalize, of, tap } from 'rxjs';
 
-import { Project } from '../models/project.model';
+import { AcademicProject } from '../models/academic-project.model';
 
 /**
- * Charge les projets depuis un JSON local via HttpClient (démonstration
- * volontaire d'un flux Observable -> Signal, sans backend fictif).
+ * Charge les projets académiques (travaux de formation ALX / ODC) depuis un
+ * JSON local via HttpClient.
+ *
+ * Ces projets ne sont pas affichés dans la page « Projets » : ils servent
+ * uniquement à alimenter le compteur « Projets académiques » de la barre de
+ * statistiques de la page d'accueil. Ajouter ou supprimer une entrée dans
+ * `assets/data/academic-projects.json` met le compteur à jour automatiquement.
  */
 @Injectable({ providedIn: 'root' })
-export class ProjectsService {
+export class AcademicProjectsService {
   private readonly http = inject(HttpClient);
-  private readonly dataUrl = 'assets/data/projects.json';
+  private readonly dataUrl = 'assets/data/academic-projects.json';
 
-  private readonly _projects = signal<Project[]>([]);
+  private readonly _projects = signal<AcademicProject[]>([]);
   private readonly _loading = signal(false);
   private readonly _error = signal<string | null>(null);
   private loaded = false;
@@ -22,12 +27,7 @@ export class ProjectsService {
   readonly loading = this._loading.asReadonly();
   readonly error = this._error.asReadonly();
 
-  readonly featuredProjects = computed(() => this._projects().filter((p) => p.featured));
-
-  /**
-   * Nombre total de projets — source unique du compteur « Projets réalisés »
-   * de la barre de statistiques (page d'accueil).
-   */
+  /** Nombre de projets académiques — source unique de ce compteur. */
   readonly projectsCount = computed(() => this._projects().length);
 
   /** Déclenche le chargement une seule fois (mis en cache côté signal). */
@@ -39,22 +39,18 @@ export class ProjectsService {
     this._error.set(null);
 
     this.http
-      .get<Project[]>(this.dataUrl)
+      .get<AcademicProject[]>(this.dataUrl)
       .pipe(
         tap((projects) => {
           this._projects.set(projects);
           this.loaded = true;
         }),
         catchError(() => {
-          this._error.set('Impossible de charger les projets pour le moment.');
-          return of([] as Project[]);
+          this._error.set('Impossible de charger les projets académiques pour le moment.');
+          return of([] as AcademicProject[]);
         }),
         finalize(() => this._loading.set(false))
       )
       .subscribe();
-  }
-
-  getBySlug(slug: string): Project | undefined {
-    return this._projects().find((p) => p.slug === slug);
   }
 }

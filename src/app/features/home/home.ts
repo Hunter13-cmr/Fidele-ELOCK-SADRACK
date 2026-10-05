@@ -9,9 +9,12 @@ import {
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ProjectsService } from '../../core/services/projects.service';
+import { AcademicProjectsService } from '../../core/services/academic-projects.service';
+import { CertificationsService } from '../../core/services/certifications.service';
 import { Project } from '../../core/models/project.model';
 import { Certifications } from '../certifications/certifications';
 import { Globe } from './components/globe/globe';
+import { StatCounter } from './components/stat-counter/stat-counter';
 
 interface Particle {
   x: number;
@@ -26,12 +29,14 @@ interface Particle {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, Certifications, Globe],
+  imports: [RouterLink, Certifications, Globe, StatCounter],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
 export class Home implements OnInit {
   private readonly projectsService = inject(ProjectsService);
+  private readonly academicProjectsService = inject(AcademicProjectsService);
+  private readonly certificationsService = inject(CertificationsService);
   private readonly el = inject(ElementRef);
   private readonly destroyRef = inject(DestroyRef);
 
@@ -39,12 +44,23 @@ export class Home implements OnInit {
   readonly loading = this.projectsService.loading;
   readonly error = this.projectsService.error;
 
+  /**
+   * Compteurs de la barre de statistiques. Ce sont des `computed` de services :
+   * aucune valeur n'est écrite en dur dans le template, donc les compteurs
+   * suivent automatiquement le contenu des fichiers JSON (ajout ou suppression
+   * d'un projet / d'une certification).
+   */
+  readonly projectsCount = this.projectsService.projectsCount;
+  readonly academicProjectsCount = this.academicProjectsService.projectsCount;
+  readonly certificationsCount = this.certificationsService.certificationsCount;
+  readonly organizationsCount = this.certificationsService.organizationsCount;
+
   readonly year = new Date().getFullYear();
 
   /**
-   * Technologies de la bande défilante de l'accueil.
-   * Liste unique reprise de la section « Compétences » : pour en ajouter une,
-   * c'est ici qu'il faut l'écrire (le template la répète automatiquement).
+   * Technologies de la bande défilante. Le template (home.html) écrit
+   * cette liste DEUX fois (deux `.marquee-group` identiques) pour la
+   * boucle infinie sans couture — pour en ajouter une, c'est ici.
    */
   readonly techList = [
     'Angular',
@@ -69,18 +85,6 @@ export class Home implements OnInit {
     'Vercel',
   ];
 
-  /**
-   * Copies de `techList` dans la piste : EXACTEMENT 2. La keyframe
-   * `marquee-left-to-right` glisse la piste d'une copie (0 → +50 %) avant
-   * de boucler, ce qui rend le redémarrage invisible. Avec 3 copies et un
-   * glissement de 50 %, la 3ᵉ copie créerait un à-coup à chaque tour —
-   * ne pas changer ce chiffre sans changer la keyframe en même temps.
-   *
-   * Largeur de sécurité : 2 copies × 20 technos ≈ 2 × la largeur d'écran
-   * sur desktop comme sur mobile, donc aucun vide n'apparaît aux bords.
-   */
-  readonly marqueeCopies = [1, 2];
-
   private particlesCanvas?: HTMLCanvasElement;
   private ctx?: CanvasRenderingContext2D;
   private particles: Particle[] = [];
@@ -90,13 +94,12 @@ export class Home implements OnInit {
   private reducedMotion = false;
   private readonly roles = [
     'Développeur Web',
-    'Full Stack Junior',
-    "Créateur d'interfaces modernes",
+    'Créateur d’interfaces modernes',
+    'Ancien chef d’équipe terrain',
     'Basé à Douala, Cameroun',
   ];
 
   private revealObserver?: IntersectionObserver;
-  private readonly counterObservers: IntersectionObserver[] = [];
   private readonly revealSeen = new WeakSet<Element>();
   private readonly tiltSeen = new WeakSet<Element>();
   private domObserver?: MutationObserver;
@@ -106,7 +109,6 @@ export class Home implements OnInit {
     afterNextRender(() => {
       this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       this.initScrollReveal();
-      this.initCounter();
       this.watchDynamicContent();
 
       // Le typing est le contenu principal du Hero : il doit toujours tourner.
@@ -125,7 +127,10 @@ export class Home implements OnInit {
   }
 
   ngOnInit(): void {
+    // Les trois sources alimentent la barre de statistiques.
     this.projectsService.load();
+    this.academicProjectsService.load();
+    this.certificationsService.load();
   }
 
   @HostListener('window:resize')
@@ -315,38 +320,6 @@ export class Home implements OnInit {
     return project.images ?? [];
   }
 
-  private initCounter(): void {
-    const root = this.el.nativeElement as HTMLElement;
-    const counters = root.querySelectorAll<HTMLElement>('[data-counter]');
-    counters.forEach((el) => {
-      const target = parseInt(el.getAttribute('data-counter') || '0', 10);
-      if (!target) return;
-      const suffix = el.getAttribute('data-suffix') || '+';
-      const dur = 2000;
-      const start = performance.now();
-
-      const update = (now: number) => {
-        const p = Math.min((now - start) / dur, 1);
-        el.textContent = Math.floor((1 - Math.pow(1 - p, 3)) * target) + suffix;
-        if (p < 1) requestAnimationFrame(update);
-      };
-
-      const obs = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              requestAnimationFrame(update);
-              obs.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.5 }
-      );
-      obs.observe(el);
-      this.counterObservers.push(obs);
-    });
-  }
-
   private initCursorGlow(): void {
     const glow = document.createElement('div');
     glow.className = 'cursor-glow';
@@ -364,7 +337,6 @@ export class Home implements OnInit {
 
   private disposeVisualEffects(): void {
     this.revealObserver?.disconnect();
-    this.counterObservers.forEach((obs) => obs.disconnect());
     this.domObserver?.disconnect();
     if (this.scanFrame !== undefined) {
       cancelAnimationFrame(this.scanFrame);

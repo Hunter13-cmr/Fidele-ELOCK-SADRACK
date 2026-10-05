@@ -12,3 +12,6 @@ _*.bat
 _*.ps1
 _build.status
 _tmp/
+
+# Fichier parasite (contenu "dd"), supprime dans la passation 9.5
+start-build.js

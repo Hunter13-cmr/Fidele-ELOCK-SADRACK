@@ -458,16 +458,40 @@
 }
 
 .tech-marquee .marquee-track {
-  /* Ceinture et bretelles : si le CSS global `styles.css` n'est pas chargé
-     (cache, CDN), la piste garde sa propre animation et le défilement reste
-     visible au lieu d'être figée. */
-  translate: 0 0;
-  animation: marquee-left-to-right 30s linear infinite;
+  display: flex;
+  width: max-content;
+  flex-shrink: 0;
+  will-change: transform;
+  /* Repli autonome : si le CSS global (`styles.css`) est indisponible ou en
+     cache, la piste garde ici sa propre animation et le défilement reste
+     visible au lieu d'être figé. Les valeurs sont identiques au global. */
+  animation: marquee-left-to-right 40s linear infinite;
+  animation-play-state: running;
+}
+
+/* Un groupe = une copie complète de la liste (`techList` est écrit 2 fois
+   dans le template). `padding-right` = `gap` pour une couture au pixel. */
+.tech-marquee .marquee-group {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 48px;
+  padding-right: 48px;
 }
 
 @keyframes marquee-left-to-right {
-  0% { translate: 0 0; }
-  100% { translate: 50% 0; }
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+/* Le marquee reste animé même en `prefers-reduced-motion` (défilement de
+   lecture lent, pas un effet stroboscopique). Même logique que dans le CSS
+   global : re-déclaration APRÈS le `animation: none !important` général. */
+@media (prefers-reduced-motion: reduce) {
+  .tech-marquee .marquee-track {
+    animation: marquee-left-to-right 40s linear infinite !important;
+    animation-play-state: running !important;
+  }
 }
 
 .tech-marquee .marquee-track span {
@@ -480,8 +504,9 @@
 
 .tech-marquee .sep { color: var(--color-primary); opacity: 0.6; }
 
-/* La piste, son sens de défilement et sa keyframe sont définis globalement
-   dans styles.css : `.marquee` / `.marquee-track` y vivent ensemble. */
+/* La piste, son sens de défilement et sa keyframe existent aussi
+   globalement dans styles.css ; les définitions ci-dessus en sont le
+   repli autonome, avec exactement les mêmes valeurs. */
 
 /* ============ STATS BAR ============ */
 .stats-bar {

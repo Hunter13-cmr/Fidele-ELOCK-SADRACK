@@ -4,7 +4,13 @@
     <div class="footer-brand">
       <span class="footer-logo">fidele<span>.dev</span></span>
       <span class="footer-copy">© {{ year }} Fidèle Elock Sadrack — Built with Angular 22</span>
-      <span class="footer-certs">Certifié ALX × Orange Digital Center — 7 certifications</span>
+      <span class="footer-certs">
+        @if (certificationsCount() > 0) {
+          Certifié ALX × Orange Digital Center — {{ certificationsCount() }} certifications
+        } @else {
+          Certifié ALX × Orange Digital Center
+        }
+      </span>
     </div>
     <div class="footer-links">
       <a href="https://github.com/Hunter13-cmr" target="_blank" rel="noopener noreferrer">
