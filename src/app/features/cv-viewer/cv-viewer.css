@@ -33,6 +33,27 @@
   background: var(--color-surface);
 }
 .cv-canvas { display: block; width: 100%; height: auto; }
+/* Le canvas reste dans le DOM — pdf.js y écrit — mais on le masque tant que
+   la premiere page n'est pas rasterisee, pour eviter un rectangle blanc. */
+.cv-canvas-hidden { visibility: hidden; }
+
+.cv-loading {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 12px; padding: 90px 24px; text-align: center;
+}
+.cv-spinner {
+  width: 38px; height: 38px; border-radius: 50%;
+  border: 2px solid var(--color-border);
+  border-top-color: var(--color-primary);
+  animation: cv-spin .9s linear infinite;
+}
+.cv-loading-text { font-size: 0.95rem; color: var(--color-text); margin: 0; }
+.cv-loading-sub {
+  font-family: var(--font-mono); font-size: 0.72rem;
+  color: var(--color-text-faint); margin: 0;
+}
+@keyframes cv-spin { to { transform: rotate(360deg); } }
+
 .cv-render-error { padding: 60px 24px; text-align: center; color: var(--color-text-muted); }
 
 .cv-pager {
@@ -50,6 +71,13 @@
 .cv-page-btn:hover:not(:disabled) { border-color: var(--color-primary); color: var(--color-primary); }
 .cv-page-btn:disabled { opacity: .35; cursor: default; }
 .cv-page-info { font-family: var(--font-mono); font-size: 0.74rem; color: var(--color-text-faint); }
+
+/* Le spinner est decoratif : sans animation, on le remplace par un texte
+   statique pour ne pas laisser un anneau fige sans explication. */
+@media (prefers-reduced-motion: reduce) {
+  .cv-spinner { animation: none; border-top-color: var(--color-border); opacity: .4; }
+  .cv-loading-text::after { content: '…'; }
+}
 .cv-hint {
   margin-top: 14px; font-size: 0.78rem; color: var(--color-text-faint);
   font-family: var(--font-mono); line-height: 1.7;

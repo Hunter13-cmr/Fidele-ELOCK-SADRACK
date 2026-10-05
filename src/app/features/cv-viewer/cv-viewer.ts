@@ -160,6 +160,15 @@ readonly pdfUrl = computed(() => {
   readonly pageCount = signal(0);
   readonly renderError = signal<string | null>(null);
   readonly rendering = signal(false);
+  /** Telechargement et rasterisation du document par pdf.js en cours. */
+  readonly docLoading = signal(false);
+  /** Le canvas a recu au moins une page : on peut l'afficher. */
+  readonly docReady = signal(false);
+
+  /** Vrai tant qu'aucune page n'est affichee et qu'aucune erreur n'est survenue. */
+  readonly showSkeleton = computed(
+    () => this.docLoading() && !this.docReady() && !this.renderError()
+  );
 
   readonly hasPrev = computed(() => this.page() > 1);
   readonly hasNext = computed(() => this.page() < this.pageCount());
@@ -171,6 +180,10 @@ readonly pdfUrl = computed(() => {
   private async loadDocument(url: string): Promise<void> {
     const token = ++this.renderToken;
     this.renderError.set(null);
+    // Le state « ready » est deja atteint (le fichier existe) : on affiche
+    // desormais la zone d'apercu, mais elle est vide tant que pdf.js n'a pas
+    // rasterise la page. Ce second chargement doit avoir son propre message.
+    this.docLoading.set(true);
     try {
       // C'est la loadingTask — et non le document — qui porte destroy() :
       // elle interrompt les requetes reseau et libere le worker.
@@ -187,6 +200,8 @@ readonly pdfUrl = computed(() => {
       if (token === this.renderToken) {
         this.renderError.set("Ce CV n'a pas pu être affiché. Utilisez les boutons ci-dessous.");
       }
+    } finally {
+      if (token === this.renderToken) this.docLoading.set(false);
     }
   }
 
@@ -215,6 +230,7 @@ readonly pdfUrl = computed(() => {
       el.style.height = Math.floor(viewport.height / ratio) + 'px';
 
       await page.render({ canvas: el, canvasContext: ctx, viewport }).promise;
+      if (token === this.renderToken) this.docReady.set(true);
     } catch {
       /* le rendu peut echouer si la page a change entre-temps */
     } finally {
@@ -225,6 +241,9 @@ readonly pdfUrl = computed(() => {
   async goToPage(n: number): Promise<void> {
     if (n < 1 || n > this.pageCount()) return;
     this.page.set(n);
+    // Le squelette ne concerne que le premier chargement : ensuite on garde
+    // la page affichee pendant que la suivante se rasterise.
+    this.rendering.set(true);
     await this.renderPage();
   }
 

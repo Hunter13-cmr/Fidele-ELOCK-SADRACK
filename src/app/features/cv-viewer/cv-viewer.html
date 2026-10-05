@@ -22,9 +22,23 @@
           @if (renderError()) {
             <p class="cv-render-error">{{ renderError() }}</p>
           } @else {
-            <canvas #pdfCanvas class="cv-canvas" role="img" aria-label="Aperçu du CV"></canvas>
+            @if (showSkeleton()) {
+              <div class="cv-loading" role="status" aria-live="polite">
+                <div class="cv-spinner" aria-hidden="true"></div>
+                <p class="cv-loading-text">Chargement du CV en cours…</p>
+                <p class="cv-loading-sub">Mise en forme de la première page</p>
+              </div>
+            }
 
-            @if (pageCount() > 1) {
+            <canvas
+              #pdfCanvas
+              class="cv-canvas"
+              role="img"
+              aria-label="Aperçu du CV"
+              [class.cv-canvas-hidden]="showSkeleton()"
+            ></canvas>
+
+            @if (pageCount() > 1 && !showSkeleton()) {
               <div class="cv-pager">
                 <button
                   type="button"
