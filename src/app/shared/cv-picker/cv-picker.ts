@@ -84,6 +84,25 @@ export class CvPicker implements OnInit {
     this.trigger()?.nativeElement.focus();
   }
 
+  /**
+   * Clic sur une entrée du menu.
+   *
+   * IMPORTANT : on n'appelle surtout PAS `preventDefault()` ici — l'élément est
+   * une balise <a href> et c'est sa navigation qui ouvre le PDF. Empêcher le
+   * comportement par défaut annulait le téléchargement, donc le clic ne
+   * produisait aucun effet.
+   *
+   * Le focus n'est rendu au déclencheur que pour une activation au clavier
+   * (`MouseEvent.detail === 0`), afin de ne pas perturber le clic de souris.
+   */
+  onSelect(cv: Cv, event: MouseEvent): void {
+    this.cvsService.select(cv.id);
+    this.close();
+    if (event.detail === 0) {
+      this.trigger()?.nativeElement.focus();
+    }
+  }
+
   onTriggerKeydown(event: KeyboardEvent): void {
     if (event.key === 'ArrowDown' || event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();

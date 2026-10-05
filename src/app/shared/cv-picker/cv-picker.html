@@ -63,7 +63,7 @@
             [tabindex]="activeIndex() === i ? 0 : -1"
             [href]="cv.fileUrl"
             [download]="cv.fileName"
-            (click)="choose(cv); $event.preventDefault()"
+            (click)="onSelect(cv, $event)"
             (focus)="activeIndex.set(i)"
           >
             <span class="cv-item-label">{{ cv.label }}</span>
