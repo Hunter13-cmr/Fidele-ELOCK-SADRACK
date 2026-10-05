@@ -42,7 +42,20 @@ export class CvViewer {
   /** Empêche une réponse HEAD obsolète d'écraser un état plus récent. */
   private probeToken = 0;
 
-  readonly pdfUrl = computed(() => this.cv()?.fileUrl ?? '');
+  /**
+ * URL absolue du PDF.
+ *
+ * `fileUrl` est stocké en relatif (« assets/cvs/… ») pour rester portable. Or
+ * sur la page /cv/:id, un lien relatif est resolu par le navigateur contre le
+ * chemin courant et non contre la racine : il pointait vers
+ * « /cv/assets/cvs/… » et renvoyait un 404 — d'ou un apercu vide ET des
+ * boutons de telechargement inoperants. On prefixe donc par « / ».
+ */
+readonly pdfUrl = computed(() => {
+  const url = this.cv()?.fileUrl;
+  if (!url) return '';
+  return url.startsWith('/') ? url : '/' + url;
+});
 
   constructor() {
     this.cvsService.load();
@@ -84,10 +97,11 @@ export class CvViewer {
   private async probe(cv: Cv): Promise<void> {
     const token = ++this.probeToken;
     this.state.set('loading');
+    // Même résolution que pdfUrl() : la requête part de la racine du site,
+    // sinon elle viserait /cv/assets/... et conclurait à tort « missing ».
+    const url = '/' + cv.fileUrl.replace(/^\/+/, '');
     try {
-      await firstValueFrom(
-        this.http.head(cv.fileUrl, { observe: 'response', responseType: 'blob' })
-      );
+      await firstValueFrom(this.http.head(url, { observe: 'response', responseType: 'blob' }));
       if (token === this.probeToken) this.state.set('ready');
     } catch {
       if (token === this.probeToken) this.state.set('missing');
