@@ -34,6 +34,11 @@ export const routes: Routes = [
     title: 'Contact — Fidèle Elock Sadrack',
   },
   {
+    path: 'cv/:id',
+    loadComponent: () => import('./features/cv-viewer/cv-viewer').then((m) => m.CvViewer),
+    title: 'CV — Fidèle Elock Sadrack',
+  },
+  {
     path: '**',
     loadComponent: () => import('./features/not-found/not-found').then((m) => m.NotFound),
     title: 'Page introuvable — Fidèle Elock Sadrack',

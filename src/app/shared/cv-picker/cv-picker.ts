@@ -9,6 +9,7 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { CvsService } from '../../core/services/cvs.service';
 import { Cv } from '../../core/models/cv.model';
 
@@ -26,7 +27,7 @@ import { Cv } from '../../core/models/cv.model';
 @Component({
   selector: 'app-cv-picker',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './cv-picker.html',
   styleUrl: './cv-picker.css',
 })
@@ -85,12 +86,9 @@ export class CvPicker implements OnInit {
   }
 
   /**
-   * Clic sur une entrée du menu.
-   *
-   * IMPORTANT : on n'appelle surtout PAS `preventDefault()` ici — l'élément est
-   * une balise <a href> et c'est sa navigation qui ouvre le PDF. Empêcher le
-   * comportement par défaut annulait le téléchargement, donc le clic ne
-   * produisait aucun effet.
+   * Clic sur une entrée du menu : enregistre la version choisie puis laisse le
+   * `routerLink` naviguer vers la page `/cv/:id`. On n'appelle PAS
+   * `preventDefault()` — il annulerait la navigation.
    *
    * Le focus n'est rendu au déclencheur que pour une activation au clavier
    * (`MouseEvent.detail === 0`), afin de ne pas perturber le clic de souris.

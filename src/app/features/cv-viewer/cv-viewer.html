@@ -1,0 +1,92 @@
+<section class="section cv-page" style="border-bottom:none;">
+  <div class="container">
+    @switch (state()) {
+      @case ('loading') {
+        <p class="cv-state">Chargement du CV…</p>
+      }
+
+      @case ('ready') {
+        <nav class="cv-breadcrumb" aria-label="Fil d'Ariane">
+          <a routerLink="/">Accueil</a>
+          <span aria-hidden="true">/</span>
+          <span aria-current="page">{{ cv()?.label }}</span>
+        </nav>
+
+        <header class="cv-head">
+          <span class="eyebrow">CV</span>
+          <h1>{{ cv()?.label }}</h1>
+          <p class="cv-audience">{{ cv()?.audience }}</p>
+        </header>
+
+        <div class="cv-actions">
+          <a class="btn btn-primary" [href]="pdfUrl()" [download]="cv()?.fileName">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 3v12M6 10l6 6 6-6M4 21h16"/>
+            </svg>
+            Télécharger le PDF
+          </a>
+          <a class="btn btn-ghost" [href]="pdfUrl()" target="_blank" rel="noopener noreferrer">
+            Ouvrir dans un nouvel onglet
+          </a>
+          <span class="cv-updated">Mise à jour : {{ cv()?.updated }}</span>
+        </div>
+
+        <div class="cv-frame-wrap">
+          <object class="cv-frame" [data]="pdfUrl() + '#view=FitH'" type="application/pdf">
+            <div class="cv-noembed">
+              <p>
+                Votre navigateur ne peut pas afficher le PDF directement.
+              </p>
+              <a class="btn btn-primary" [href]="pdfUrl()" [download]="cv()?.fileName">
+                Télécharger le PDF
+              </a>
+            </div>
+          </object>
+        </div>
+      }
+
+      @default {
+        <!-- 404 : version inconnue, ou fichier PDF pas encore déposé. -->
+        <div class="cv-404">
+          <span class="eyebrow">404</span>
+          <h1>
+            @if (state() === 'unknown-id') {
+              Cette version de CV n'existe pas.
+            } @else {
+              Ce CV n'est pas encore disponible.
+            }
+          </h1>
+          <p>
+            @if (state() === 'unknown-id') {
+              L'adresse comporte peut-être une erreur.
+            } @else {
+              Le fichier PDF n'a pas encore été mis en ligne. Revenez bientôt, ou
+              contactez-moi directement pour en obtenir une copie.
+            }
+          </p>
+
+          <div class="cv-404-actions">
+            <a routerLink="/contact" class="btn btn-primary">Me contacter</a>
+            <a routerLink="/" class="btn btn-ghost">Retour à l'accueil</a>
+          </div>
+
+          @if (otherCvs().length > 0) {
+            <div class="cv-404-alt">
+              <h2>Autres versions</h2>
+              <ul>
+                @for (other of otherCvs(); track other.id) {
+                  <li>
+                    <a [routerLink]="['/cv', other.id]">
+                      {{ other.label }}
+                      <span>{{ other.audience }}</span>
+                    </a>
+                  </li>
+                }
+              </ul>
+            </div>
+          }
+        </div>
+      }
+    }
+  </div>
+</section>

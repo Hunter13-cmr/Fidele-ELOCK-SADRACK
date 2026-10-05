@@ -1,0 +1,61 @@
+.cv-page { padding-top: 60px; }
+.cv-state { color: var(--color-text-faint); font-size: 0.9rem; padding: 40px 0; }
+
+/* ---------- Fil d'Ariane ---------- */
+.cv-breadcrumb {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-text-faint);
+  margin-bottom: 26px;
+}
+.cv-breadcrumb a { color: var(--color-text-muted); text-decoration: none; }
+.cv-breadcrumb a:hover { color: var(--color-primary); }
+
+/* ---------- En-tete ---------- */
+.cv-head h1 { font-size: clamp(1.6rem, 3.4vw, 2.2rem); margin-top: 10px; }
+.cv-audience { color: var(--color-text-muted); margin-top: 12px; max-width: 60ch; }
+
+/* ---------- Actions ---------- */
+.cv-actions {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 14px;
+  margin: 28px 0 20px;
+}
+.cv-updated {
+  font-family: var(--font-mono); font-size: 0.72rem; color: var(--color-text-faint);
+}
+
+/* ---------- Lecteur ---------- */
+.cv-frame-wrap {
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--color-surface);
+}
+.cv-frame { display: block; width: 100%; height: 78vh; min-height: 520px; border: 0; }
+.cv-noembed { padding: 60px 24px; text-align: center; color: var(--color-text-muted); }
+.cv-noembed p { margin-bottom: 18px; }
+
+/* ---------- 404 ---------- */
+.cv-404 { text-align: center; padding: 70px 0 90px; }
+.cv-404 h1 { font-size: clamp(1.7rem, 3.6vw, 2.4rem); margin-top: 10px; }
+.cv-404 > p { color: var(--color-text-muted); margin: 18px auto 30px; max-width: 52ch; }
+.cv-404-actions { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+.cv-404-alt { margin-top: 46px; text-align: left; }
+.cv-404-alt h2 {
+  font-family: var(--font-mono); font-size: 0.74rem; text-transform: uppercase;
+  letter-spacing: .08em; color: var(--color-text-faint); margin-bottom: 14px;
+}
+.cv-404-alt ul { list-style: none; padding: 0; }
+.cv-404-alt li { border-top: 1px solid var(--color-border); }
+.cv-404-alt li:last-child { border-bottom: 1px solid var(--color-border); }
+.cv-404-alt a {
+  display: flex; flex-direction: column; gap: 3px; padding: 14px 2px;
+  color: var(--color-text); text-decoration: none; font-weight: 600; font-size: 0.95rem;
+  transition: color .2s ease, padding-left .2s ease;
+}
+.cv-404-alt a span { font-weight: 400; font-size: 0.8rem; color: var(--color-text-faint); }
+.cv-404-alt a:hover { color: var(--color-primary); padding-left: 8px; }
+
+@media (max-width: 640px) {
+  .cv-frame { height: 62vh; min-height: 400px; }
+  .cv-actions .btn { width: 100%; justify-content: center; }
+}

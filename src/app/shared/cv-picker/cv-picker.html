@@ -3,8 +3,8 @@
 } @else if (error()) {
   <span class="cv-error">{{ error() }}</span>
 } @else if (singleCv(); as cv) {
-  <!-- Une seule version disponible : un lien direct, sans menu superflu. -->
-  <a class="cv-link" [href]="cv.fileUrl" [download]="cv.fileName">
+  <!-- Une seule version disponible : un lien direct vers la page, sans menu superflu. -->
+  <a class="cv-link" [routerLink]="['/cv', cv.id]">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <path d="M12 3v12M6 10l6 6 6-6M4 21h16"/>
     </svg>
@@ -61,8 +61,7 @@
             [attr.aria-checked]="selectedCv()?.id === cv.id"
             [class.cv-item-active]="selectedCv()?.id === cv.id"
             [tabindex]="activeIndex() === i ? 0 : -1"
-            [href]="cv.fileUrl"
-            [download]="cv.fileName"
+            [routerLink]="['/cv', cv.id]"
             (click)="onSelect(cv, $event)"
             (focus)="activeIndex.set(i)"
           >
