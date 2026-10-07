@@ -8,7 +8,6 @@ export const EN: Record<string, string> = {
   'nav.projects': `Projects`,
   'nav.certifications': `Certifications`,
   'nav.journey': `Journey`,
-  'nav.contact': `Contact`,
   'nav.main': `Main navigation`,
   'nav.menuOpen': `Open menu`,
   'nav.menuClose': `Close menu`,

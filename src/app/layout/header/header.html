@@ -8,11 +8,10 @@
 
     <nav class="nav-links" [attr.aria-label]="t('nav.main')">
       <a routerLink="/about" routerLinkActive="active">{{ t('nav.about') }}</a>
-      <a routerLink="/" fragment="skills">{{ t('nav.skills') }}</a>
       <a routerLink="/projects" routerLinkActive="active">{{ t('nav.projects') }}</a>
       <a routerLink="/certifications" routerLinkActive="active">{{ t('nav.certifications') }}</a>
+      <a routerLink="/" fragment="skills">{{ t('nav.skills') }}</a>
       <a routerLink="/" fragment="about-preview">{{ t('nav.journey') }}</a>
-      <a routerLink="/contact" routerLinkActive="active">{{ t('nav.contact') }}</a>
     </nav>
 
     <div class="nav-cta">
@@ -97,11 +96,11 @@
         </button>
       </div>
       <a routerLink="/about" (click)="closeMenu()">{{ t('nav.about') }}</a>
-      <a routerLink="/" fragment="skills" (click)="closeMenu()">{{ t('nav.skills') }}</a>
       <a routerLink="/projects" (click)="closeMenu()">{{ t('nav.projects') }}</a>
       <a routerLink="/certifications" (click)="closeMenu()">{{ t('nav.certifications') }}</a>
+      <a routerLink="/" fragment="skills" (click)="closeMenu()">{{ t('nav.skills') }}</a>
       <a routerLink="/" fragment="about-preview" (click)="closeMenu()">{{ t('nav.journey') }}</a>
-      <a routerLink="/contact" (click)="closeMenu()">{{ t('nav.contact') }}</a>
+      <a routerLink="/contact" class="mobile-cta" (click)="closeMenu()">{{ t('cta.contact') }}</a>
       <app-cv-picker class="mobile-cv" />
     </div>
   }
