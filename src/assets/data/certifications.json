@@ -17,6 +17,7 @@
       "Standalone Components"
     ],
     "description": "Programme intensif de développement Angular : architecture de composants, gestion d'état réactive avec Signals, services et développement d'applications réelles.",
+    "descriptionEn": "Intensive Angular development programme: component architecture, reactive state management with Signals, services and building real applications.",
     "iconType": "angular",
     "accent": "#DD0031",
     "verifiable": false
@@ -37,6 +38,7 @@
       "Éthique de l'IA"
     ],
     "description": "Initiation pratique à l'IA générative : prompt engineering, cas d'usage concrets et compréhension des modèles de langage pour les intégrer à des produits web.",
+    "descriptionEn": "Hands-on introduction to generative AI: prompt engineering, concrete use cases and understanding language models to integrate them into web products.",
     "iconType": "ai",
     "accent": "#4EC9A0",
     "verifiable": true,
@@ -60,6 +62,7 @@
       "Git"
     ],
     "description": "Formation d'ingénierie logicielle couvrant les fondamentaux de la programmation, les structures de données, les algorithmes et les bonnes pratiques de développement.",
+    "descriptionEn": "Software engineering training covering programming fundamentals, data structures, algorithms and development best practices.",
     "iconType": "code",
     "accent": "#A020F0",
     "verifiable": true,
@@ -81,6 +84,7 @@
       "Outils collaboratifs"
     ],
     "description": "Compétences d'assistant virtuel professionnel : gestion du temps, priorisation, communication écrite et outils de productivité à distance.",
+    "descriptionEn": "Professional virtual assistant skills: time management, prioritization, written communication and remote productivity tools.",
     "iconType": "assistant",
     "accent": "#7C6CF0",
     "verifiable": true,
@@ -90,6 +94,7 @@
     "id": "5",
     "slug": "odc-masterclass-css-animations",
     "title": "Masterclass Web : Donnez vie à votre portfolio grâce aux animations CSS & JS",
+    "titleEn": "Web Masterclass: Bring Your Portfolio to Life with CSS & JS Animations",
     "organization": "orange-digital-center",
     "organizationLabel": "Orange Digital Center",
     "year": "2024",
@@ -103,6 +108,7 @@
       "UX"
     ],
     "description": "Masterclass pratique sur les animations web : transitions CSS, keyframes, interactions JavaScript et création d expériences utilisateur vivantes.",
+    "descriptionEn": "Practical masterclass on web animations: CSS transitions, keyframes, JavaScript interactions and building lively user experiences.",
     "iconType": "animation",
     "accent": "#F0A93E",
     "verifiable": false
@@ -111,6 +117,7 @@
     "id": "6",
     "slug": "odc-figma-prototypes",
     "title": "Concevoir les prototypes de vos applications grâce à Figma",
+    "titleEn": "Design Your App Prototypes with Figma",
     "organization": "orange-digital-center",
     "organizationLabel": "Orange Digital Center",
     "year": "2024",
@@ -123,6 +130,7 @@
       "Design System"
     ],
     "description": "Maîtrise de Figma pour concevoir des prototypes d'applications : wireframes, design systems, composants réutilisables et prototypage interactif haute fidélité.",
+    "descriptionEn": "Mastering Figma to design app prototypes: wireframes, design systems, reusable components and high-fidelity interactive prototyping.",
     "iconType": "figma",
     "accent": "#F24E1E",
     "verifiable": false
@@ -144,6 +152,7 @@
       "Intelligence artificielle"
     ],
     "description": "Préparation professionnelle renforcée par l'IA : optimisation du profil LinkedIn, rédaction de CV, préparation aux entretiens et stratégie de carrière.",
+    "descriptionEn": "AI-powered career preparation: optimizing your LinkedIn profile, writing resumes, interview preparation and career strategy.",
     "iconType": "robot",
     "accent": "#5BB5F0",
     "verifiable": true,
@@ -153,6 +162,7 @@
     "id": "8",
     "slug": "odc-systemes-distribues",
     "title": "Systèmes Distribués",
+    "titleEn": "Distributed Systems",
     "organization": "orange-digital-center",
     "organizationLabel": "Orange Digital Center",
     "year": "2022",
@@ -166,6 +176,7 @@
       "Haute disponibilité"
     ],
     "description": "Conception et fonctionnement des systèmes répartis : architecture distribuée, communication entre services, montage de solutions tolérantes aux pannes.",
+    "descriptionEn": "Design and operation of distributed systems: distributed architecture, service communication, building fault-tolerant solutions.",
     "iconType": "cloud",
     "accent": "#5BB5F0",
     "verifiable": false
@@ -186,6 +197,7 @@
       "Fondamentaux"
     ],
     "description": "Premier niveau du Network Security Expert : concepts fondamentaux de la sécurité réseau et configuration des solutions Fortinet.",
+    "descriptionEn": "First level of the Network Security Expert: fundamental network security concepts and Fortinet solution configuration.",
     "iconType": "shield",
     "accent": "#EE3D43",
     "verifiable": false
@@ -206,6 +218,7 @@
       "Haute disponibilité"
     ],
     "description": "Niveau 2 du Network Security Expert : administration, dépannage et optimisation des solutions de sécurité Fortinet.",
+    "descriptionEn": "Level 2 of the Network Security Expert: administration, troubleshooting and optimization of Fortinet security solutions.",
     "iconType": "shield",
     "accent": "#EE3D43",
     "verifiable": false
@@ -226,6 +239,7 @@
       "Détection"
     ],
     "description": "Niveau 3 du Network Security Expert : architecture réseau sécurisée et diagnostic avancé d'incidents.",
+    "descriptionEn": "Level 3 of the Network Security Expert: secure network architecture and advanced incident diagnostics.",
     "iconType": "shield",
     "accent": "#EE3D43",
     "verifiable": false
@@ -234,6 +248,7 @@
     "id": "12",
     "slug": "odc-decouverte-ia",
     "title": "À la découverte de l'intelligence artificielle",
+    "titleEn": "Discovering Artificial Intelligence",
     "organization": "orange-digital-center",
     "organizationLabel": "Orange Digital Center",
     "year": "2022",
@@ -246,6 +261,7 @@
       "Panorama"
     ],
     "description": "Panorama d'introduction à l'intelligence artificielle : fonctionnement des modèles, usages actuels et enjeux.",
+    "descriptionEn": "Introductory overview of artificial intelligence: how models work, current uses and key stakes.",
     "iconType": "book",
     "accent": "#7AA2F7",
     "verifiable": false
@@ -254,6 +270,7 @@
     "id": "13",
     "slug": "tme-arduino-kits",
     "title": "Électronique et programmation des kits Arduino",
+    "titleEn": "Electronics and Arduino Kit Programming",
     "organization": "tme",
     "organizationLabel": "TME Education",
     "year": "2021",
@@ -267,6 +284,7 @@
       "Capteurs"
     ],
     "description": "Initiation à l'électronique et à la programmation embarquée : montage de circuits, lecture de schémas et pilotage de composants Arduino.",
+    "descriptionEn": "Introduction to electronics and embedded programming: building circuits, reading schematics and driving Arduino components.",
     "iconType": "chip",
     "accent": "#00979D",
     "verifiable": false

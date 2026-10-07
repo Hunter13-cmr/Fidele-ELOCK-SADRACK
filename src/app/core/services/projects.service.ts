@@ -2,15 +2,21 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { catchError, finalize, of, tap } from 'rxjs';
 
+import { localizeProject } from '../i18n/translate';
 import { Project } from '../models/project.model';
+import { I18nService } from './i18n.service';
 
 /**
  * Charge les projets depuis un JSON local via HttpClient (démonstration
  * volontaire d'un flux Observable -> Signal, sans backend fictif).
+ *
+ * `projects` est localisé (FR/EN) : le `computed` se recalcule au changement
+ * de langue, les templates re-rendent sans recharger le JSON.
  */
 @Injectable({ providedIn: 'root' })
 export class ProjectsService {
   private readonly http = inject(HttpClient);
+  private readonly i18n = inject(I18nService);
   private readonly dataUrl = 'assets/data/projects.json';
 
   private readonly _projects = signal<Project[]>([]);
@@ -18,11 +24,16 @@ export class ProjectsService {
   private readonly _error = signal<string | null>(null);
   private loaded = false;
 
-  readonly projects = this._projects.asReadonly();
+  readonly projects = computed(() => {
+    const lang = this.i18n.lang();
+    const list = this._projects();
+    return lang === 'fr' ? list : list.map((p) => localizeProject(p, lang));
+  });
   readonly loading = this._loading.asReadonly();
+  /** Clé de dictionnaire (`error.*`) — traduite à l'affichage par `t()`. */
   readonly error = this._error.asReadonly();
 
-  readonly featuredProjects = computed(() => this._projects().filter((p) => p.featured));
+  readonly featuredProjects = computed(() => this.projects().filter((p) => p.featured));
 
   /**
    * Nombre total de projets — source unique du compteur « Projets réalisés »
@@ -46,7 +57,7 @@ export class ProjectsService {
           this.loaded = true;
         }),
         catchError(() => {
-          this._error.set('Impossible de charger les projets pour le moment.');
+          this._error.set('error.projects');
           return of([] as Project[]);
         }),
         finalize(() => this._loading.set(false))
@@ -55,6 +66,7 @@ export class ProjectsService {
   }
 
   getBySlug(slug: string): Project | undefined {
-    return this._projects().find((p) => p.slug === slug);
+    return this.projects().find((p) => p.slug === slug);
   }
 }
+

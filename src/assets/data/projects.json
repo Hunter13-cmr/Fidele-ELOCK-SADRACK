@@ -5,10 +5,15 @@
     "title": "Le Calao Doré",
     "category": "Angular",
     "shortDescription": "Site vitrine responsive pour un restaurant, pensé pour présenter le lieu et son expérience de restauration camerounaise.",
+    "shortDescriptionEn": "Responsive showcase website for a restaurant, designed to present the venue and its Cameroonian dining experience.",
     "description": "Site vitrine développé dans le cadre de l'Angular Talent Lab 2026, pour présenter un restaurant : menu, ambiance, informations pratiques.",
+    "descriptionEn": "Showcase site built as part of the Angular Talent Lab 2026 to present a restaurant: menu, atmosphere, practical information.",
     "context": "Un restaurant a besoin d'une présence en ligne claire, rapide à consulter sur mobile, qui donne envie de venir sur place.",
+    "contextEn": "A restaurant needs a clear online presence that loads fast on mobile and makes people want to visit.",
     "goal": "Concevoir une interface professionnelle et responsive, capable de représenter l'identité du lieu sans complexité technique inutile.",
+    "goalEn": "Design a professional, responsive interface that represents the venue's identity without unnecessary technical complexity.",
     "role": "Conception et développement Front-End (UI, structure des composants, responsive).",
+    "roleEn": "Front-end design and development (UI, component structure, responsive layout).",
     "technologies": ["Angular 22", "TypeScript", "Bootstrap 5", "Standalone Components"],
     "features": [
       "Présentation du restaurant et de son ambiance",
@@ -16,8 +21,16 @@
       "Design responsive mobile / desktop",
       "Composants standalone réutilisables"
     ],
+    "featuresEn": [
+      "Restaurant and atmosphere presentation",
+      "Menu showcase",
+      "Mobile / desktop responsive design",
+      "Reusable standalone components"
+    ],
     "challenges": "Obtenir une mise en page soignée avec Bootstrap 5 sans sacrifier la cohérence visuelle propre au projet.",
+    "challengesEn": "Achieving a polished layout with Bootstrap 5 while preserving the project's own visual identity.",
     "solution": "Personnalisation ciblée des composants Bootstrap et découpage en composants Angular standalone pour garder un code lisible.",
+    "solutionEn": "Targeted customization of Bootstrap components and splitting the app into standalone Angular components to keep the code readable.",
     "image": "assets/images/projects/le-calao-dore.jpg",
     "images": [
       "assets/images/projects/le-calao-dore.jpg",
@@ -35,15 +48,25 @@
     "title": "ChatApp",
     "category": "Full Stack",
     "shortDescription": "Application de messagerie démontrant la communication entre le front-end et un back-end.",
+    "shortDescriptionEn": "Messaging application demonstrating communication between the front end and a back end.",
     "description": "Projet de messagerie visant à mettre en pratique les échanges de données entre client et serveur.",
+    "descriptionEn": "A messaging project aimed at putting client–server data exchange into practice.",
     "context": "Comprendre et mettre en œuvre une communication client/serveur au-delà d'un simple appel HTTP ponctuel.",
+    "contextEn": "Understand and implement client/server communication beyond a single one-off HTTP call.",
     "goal": "Construire une messagerie fonctionnelle démontrant la gestion des échanges de données.",
+    "goalEn": "Build a working messaging app that demonstrates data exchange handling.",
     "role": "Développement front-end et back-end.",
+    "roleEn": "Front-end and back-end development.",
     "technologies": ["Node.js", "PHP", "MySQL"],
     "features": [
       "Envoi et réception de messages",
       "Gestion des utilisateurs",
       "Persistance des données côté serveur"
+    ],
+    "featuresEn": [
+      "Sending and receiving messages",
+      "User management",
+      "Server-side data persistence"
     ],
     "challenges": "",
     "solution": "",
@@ -57,18 +80,30 @@
     "title": "WattMboa 237",
     "category": "Angular",
     "shortDescription": "Outil d'estimation et de simulation de consommation électrique, avec formulaires et calculs côté client.",
+    "shortDescriptionEn": "Electricity consumption estimation and simulation tool, with forms and client-side calculations.",
     "description": "Application Angular permettant à un utilisateur d'estimer sa consommation électrique à partir des équipements de son foyer.",
+    "descriptionEn": "An Angular application that lets users estimate their electricity consumption based on their household appliances.",
     "context": "Beaucoup d'utilisateurs n'ont pas de visibilité claire sur leur consommation électrique réelle.",
+    "contextEn": "Many users have no clear view of their real electricity consumption.",
     "goal": "Fournir une estimation simple et compréhensible à partir de données saisies par l'utilisateur.",
+    "goalEn": "Provide a simple, understandable estimate from data entered by the user.",
     "role": "Conception de la logique métier, des services et des composants Angular.",
+    "roleEn": "Design of the business logic, services and Angular components.",
     "technologies": ["Angular", "Services", "Formulaires réactifs", "Logique de calcul côté client"],
     "features": [
       "Saisie des équipements électriques du foyer",
       "Calcul de la consommation estimée",
       "Restitution claire du résultat"
     ],
+    "featuresEn": [
+      "Input of household electrical appliances",
+      "Estimated consumption calculation",
+      "Clear presentation of the result"
+    ],
     "challenges": "Structurer une logique de calcul réutilisable en dehors des composants d'affichage.",
+    "challengesEn": "Structuring a reusable calculation logic outside the display components.",
     "solution": "Externalisation de la logique métier dans un service Angular dédié, appelé par les composants d'interface.",
+    "solutionEn": "Moving the business logic into a dedicated Angular service, called by the interface components.",
     "demoUrl": "",
     "githubUrl": "",
     "featured": true

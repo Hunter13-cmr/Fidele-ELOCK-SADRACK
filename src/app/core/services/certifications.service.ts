@@ -2,25 +2,34 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { catchError, finalize, of, tap } from 'rxjs';
 
+import { localizeCertification } from '../i18n/translate';
 import { Certification, CertificationOrg } from '../models/certification.model';
+import { I18nService } from './i18n.service';
 
 /**
  * Charge les certifications depuis un JSON local via HttpClient.
+ * `certifications` est localisé (FR/EN) via `localizeCertification`.
  */
 @Injectable({ providedIn: 'root' })
 export class CertificationsService {
   private readonly http = inject(HttpClient);
+  private readonly i18n = inject(I18nService);
   private readonly dataUrl = 'assets/data/certifications.json';
 
   private readonly _certifications = signal<Certification[]>([]);
   private readonly _loading = signal(false);
+  /** Clé de dictionnaire (`error.*`) — traduite à l'affichage par `t()`. */
   private readonly _error = signal<string | null>(null);
   private loaded = false;
 
   /** Organisation active pour le filtre. null = toutes. */
   private readonly _activeOrg = signal<CertificationOrg | null>(null);
 
-  readonly certifications = this._certifications.asReadonly();
+  readonly certifications = computed(() => {
+    const lang = this.i18n.lang();
+    const list = this._certifications();
+    return lang === 'fr' ? list : list.map((c) => localizeCertification(c, lang));
+  });
   readonly loading = this._loading.asReadonly();
   readonly error = this._error.asReadonly();
   readonly activeOrg = this._activeOrg.asReadonly();
@@ -31,7 +40,7 @@ export class CertificationsService {
     for (const c of this._certifications()) map.set(c.organization, c.organizationLabel);
     return [...map.entries()]
       .map(([id, label]) => ({ id, label }))
-      .sort((a, b) => a.label.localeCompare(b.label, 'fr'));
+      .sort((a, b) => a.label.localeCompare(b.label, 'en'));
   });
 
   /** Nombre de certifications d'une organisation donnée. */
@@ -41,8 +50,9 @@ export class CertificationsService {
 
   readonly filteredCertifications = computed(() => {
     const org = this._activeOrg();
-    if (!org) return this._certifications();
-    return this._certifications().filter((c) => c.organization === org);
+    const list = this.certifications();
+    if (!org) return list;
+    return list.filter((c) => c.organization === org);
   });
 
   readonly certificationsCount = computed(() => this._certifications().length);
@@ -71,7 +81,7 @@ export class CertificationsService {
           this.loaded = true;
         }),
         catchError(() => {
-          this._error.set('Impossible de charger les certifications pour le moment.');
+          this._error.set('error.certs');
           return of([] as Certification[]);
         }),
         finalize(() => this._loading.set(false))

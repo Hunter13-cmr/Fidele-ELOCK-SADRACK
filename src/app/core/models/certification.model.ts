@@ -23,10 +23,16 @@ export interface Certification {
    * plusieurs mois et une seule année serait trompeuse.
    */
   period?: string;
+  /** Traduction explicite ; sinon les mois sont convertis automatiquement. */
+  periodEn?: string;
   /** Fin de la certification au format `AAAA-MM` : clé de tri reliable. */
   dateEnd?: string;
   skills: string[];
   description: string;
+  /** Variante anglaise : absente => secours sur le FR (skills via glossaire). */
+  titleEn?: string;
+  descriptionEn?: string;
+  skillsEn?: string[];
   /** Lien facultatif, affiché uniquement lorsque le document est réellement fourni. */
   pdfUrl?: string;
   iconType: IconsType;

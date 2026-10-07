@@ -2,15 +2,22 @@
   {
     "id": "talent-lab",
     "title": "Angular Talent Lab 2026 — 1ère cohorte",
+    "titleEn": "Angular Talent Lab 2026 — 1st cohort",
     "organization": "ODC",
     "organizationFull": "Orange Digital Center Cameroun",
+    "organizationFullEn": "Orange Digital Center Cameroon",
     "period": "juin → oct. 2026 · en cours",
     "contract": "Programme intensif",
+    "contractEn": "Intensive programme",
     "location": "Douala, Cameroun",
+    "locationEn": "Douala, Cameroon",
     "status": "En cours",
+    "statusEn": "Ongoing",
     "kind": "training",
     "summary": "Formation intensive au développement Angular moderne : composants standalone, signals, services, routing, formulaires réactifs et consommation d’API.",
+    "summaryEn": "Intensive training in modern Angular development: standalone components, signals, services, routing, reactive forms and API consumption.",
     "note": "Suivie simultanément à l’encadrement du 4ᵉ RGPH : formation de 9 h à 16 h en semaine, puis supervision des agents recenseurs sur le terrain du lundi au vendredi ; le week-end, recensement en journée et révision Angular en soirée, jusqu’à la fin des opérations.",
+    "noteEn": "Taken while simultaneously supervising the 4th RGPH: training from 9am to 4pm on weekdays, then supervising census agents in the field Monday to Friday; weekends were spent enumerating during the day and revising Angular in the evening, until the end of the operations.",
     "skills": [
       "Angular",
       "TypeScript",
@@ -27,10 +34,14 @@
     "organizationFull": "ALX Africa",
     "period": "août 2022 → jan. 2025 · achevée",
     "contract": "Formation certifiante",
+    "contractEn": "Certification programme",
     "location": "À distance",
+    "locationEn": "Remote",
     "kind": "training",
     "summary": "Formation d’ingénierie logicielle : fondamentaux de la programmation, structures de données, algorithmes et bonnes pratiques de développement.",
+    "summaryEn": "Software engineering training: programming fundamentals, data structures, algorithms and development best practices.",
     "note": "Débutée en août 2022 vers la fin de mon cycle à l’ESIAC, poursuivie avec des pauses dans le parcours, et achevée après le début de ma première mission terrain.",
+    "noteEn": "Started in August 2022 near the end of my ESIAC cycle, continued with breaks along the way, and completed after the start of my first field mission.",
     "skills": [
       "C",
       "Python",
@@ -43,13 +54,17 @@
   {
     "id": "esiac-genie-logiciel",
     "title": "Génie Logiciel — cycle ingénieur",
+    "titleEn": "Software Engineering — engineering track",
     "organization": "ESIAC",
     "organizationFull": "École Supérieure d’Ingénieurs et de Management d’Afrique Centrale",
+    "organizationFullEn": "Higher School of Engineers and Management of Central Africa",
     "period": "oct. 2019 → oct. 2022",
     "contract": "Douala",
     "kind": "training",
     "summary": "Formation d’ingénieur en Génie Logiciel. Cycle de 5 ans suivi jusqu’à la 3ᵉ année puis interrompu.",
+    "summaryEn": "Software engineering education. A 5-year programme followed up to the 3rd year, then interrupted.",
     "note": "La formation n’a pas été achevée : je l’ai arrêtée après la 3ᵉ année pour entrer dans des postes d’encadrement terrain.",
+    "noteEn": "The programme was not completed: I stopped after the 3rd year to take on field supervision roles.",
     "skills": [
       "Algorithmique",
       "Génie logiciel",
@@ -60,13 +75,18 @@
   {
     "id": "burep",
     "title": "Chef d’équipe",
+    "titleEn": "Team Leader",
     "organization": "BUCREP",
     "organizationFull": "Bureau Central des Recensements et des Etudes de Population",
+    "organizationFullEn": "Central Bureau of Censuses and Population Studies",
     "period": "avr. 2026 – sept. 2026 · 6 mois",
     "contract": "CDD",
+    "contractEn": "Fixed-term",
     "location": "Douala III, Région du Littoral, Cameroun · Hybride",
+    "locationEn": "Douala III, Littoral Region, Cameroon · Hybrid",
     "kind": "job",
     "summary": "Supervision et pilotage des opérations de collecte dans le cadre du 4ᵉ Recensement Général de la Population et de l’Habitat, couplé au Recensement Général de l’Agriculture et de l’Élevage (4-RGPH/RGAE).",
+    "summaryEn": "Supervision and management of data collection operations for the 4th General Population and Housing Census, coupled with the General Agriculture and Livestock Census (4-RGPH/RGAE).",
     "missions": [
       "Supervision, encadrement et coordination des agents recenseurs sur le terrain",
       "Planification et organisation des activités de collecte dans les zones de dénombrement attribuées",
@@ -76,10 +96,24 @@
       "Coordination avec les responsables de la chaîne de supervision et remontée des rapports opérationnels",
       "Gestion des contraintes logistiques et organisationnelles pour assurer la continuité des opérations"
     ],
+    "missionsEn": [
+      "Supervision, mentoring and coordination of census agents in the field",
+      "Planning and organizing collection activities in the assigned enumeration areas",
+      "Quality, completeness and reliability checks on collected data",
+      "Daily tracking of operations and rapid identification of issues encountered",
+      "Verification of household and farm coverage to guarantee census completeness",
+      "Coordination with the supervision chain leads and reporting of operational updates",
+      "Handling logistical and organizational constraints to keep operations running"
+    ],
     "results": [
       "100 % de réalisation sur ZD050, ZD051 et ZD052B lors de la phase principale",
       "100 % de réalisation sur ZD052A lors du redéploiement complémentaire",
       "Zones supervisées : ZD050, ZD051, ZD052B puis ZD052A"
+    ],
+    "resultsEn": [
+      "100% completion on ZD050, ZD051 and ZD052B during the main phase",
+      "100% completion on ZD052A during the supplementary redeployment",
+      "Supervised areas: ZD050, ZD051, ZD052B then ZD052A"
     ],
     "skills": [
       "Management d’équipe",
@@ -93,12 +127,16 @@
   {
     "id": "adg",
     "title": "Chargé des opérations",
+    "titleEn": "Operations Officer",
     "organization": "ADG Group",
     "period": "juin 2025 – avr. 2026 · 11 mois",
     "contract": "CDD",
+    "contractEn": "Fixed-term",
     "location": "Douala V, Région du Littoral, Cameroun · Hybride",
+    "locationEn": "Douala V, Littoral Region, Cameroon · Hybrid",
     "kind": "job",
     "summary": "Coordination et suivi des activités opérationnelles liées à différents projets et partenariats.",
+    "summaryEn": "Coordination and tracking of operational activities related to various projects and partnerships.",
     "missions": [
       "Supervision des activités de GoodWill Financial House et de Yango",
       "Suivi opérationnel et logistique des activités menées avec les différents partenaires",
@@ -106,6 +144,14 @@
       "Suivi administratif et organisationnel des opérations",
       "Coordination entre les équipes internes, les prestataires et les partenaires pour assurer une communication fluide",
       "Suivi des besoins opérationnels et remontée des informations nécessaires à la prise de décision"
+    ],
+    "missionsEn": [
+      "Supervision of GoodWill Financial House and Yango activities",
+      "Operational and logistical follow-up of activities run with the various partners",
+      "Coordination and follow-up of kiosk maintenance, in partnership with Accent Média",
+      "Administrative and organizational tracking of operations",
+      "Coordination between internal teams, service providers and partners to keep communication smooth",
+      "Tracking of operational needs and escalation of information required for decision-making"
     ],
     "skills": [
       "Coordination opérationnelle",
@@ -118,13 +164,17 @@
   {
     "id": "gas-security",
     "title": "Agent de sécurité",
+    "titleEn": "Security Guard",
     "organization": "GAS Security",
     "organizationFull": "Grand Aigle Security",
     "period": "sept. 2023 – août 2024 · 12 mois",
     "contract": "Gardiennage",
+    "contractEn": "Security guarding",
     "location": "Douala, Cameroun",
+    "locationEn": "Douala, Cameroon",
     "kind": "job",
-    "summary": "Surveillance et sécurisation des sites confiés, avec tenue des registres et application des consignes dIntervention.",
+    "summary": "Surveillance et sécurisation des sites confiés, avec tenue des registres et application des consignes d’intervention.",
+    "summaryEn": "Surveillance and securing of assigned sites, with register keeping and compliance with intervention procedures.",
     "skills": [
       "Surveillance",
       "Rigueur",

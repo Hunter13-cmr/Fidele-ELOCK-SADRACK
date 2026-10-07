@@ -2,7 +2,9 @@
   {
     "id": "dev",
     "label": "CV Développeur Front-End / Angular",
+    "labelEn": "Front-End / Angular Developer CV",
     "audience": "Postes de développement web, junior ou en alternance",
+    "audienceEn": "Web development roles, junior or work-study",
     "fileUrl": "assets/cvs/cv-developpeur-angular.pdf",
     "fileName": "cv-developpeur-angular.pdf",
     "updated": "octobre 2026"
@@ -10,7 +12,9 @@
   {
     "id": "ops",
     "label": "CV Chargé des opérations",
+    "labelEn": "Operations Officer CV",
     "audience": "Chargé d’opérations, chef d’équipe, projets de recensement",
+    "audienceEn": "Operations officer, team leader, census projects",
     "fileUrl": "assets/cvs/cv-operations-terrain.pdf",
     "fileName": "cv-operations-terrain.pdf",
     "updated": "octobre 2026"

@@ -2,43 +2,55 @@
   {
     "id": "1",
     "title": "Projet académique 1 — titre à remplacer",
+    "titleEn": "Academic project 1 — title to replace",
     "organization": "ALX",
     "year": "2025",
-    "description": "Description à compléter."
+    "description": "Description à compléter.",
+    "descriptionEn": "Description to complete."
   },
   {
     "id": "2",
     "title": "Projet académique 2 — titre à remplacer",
+    "titleEn": "Academic project 2 — title to replace",
     "organization": "ALX",
     "year": "2025",
-    "description": "Description à compléter."
+    "description": "Description à compléter.",
+    "descriptionEn": "Description to complete."
   },
   {
     "id": "3",
     "title": "Projet académique 3 — titre à remplacer",
+    "titleEn": "Academic project 3 — title to replace",
     "organization": "ALX",
     "year": "2025",
-    "description": "Description à compléter."
+    "description": "Description à compléter.",
+    "descriptionEn": "Description to complete."
   },
   {
     "id": "4",
     "title": "Projet académique 4 — titre à remplacer",
+    "titleEn": "Academic project 4 — title to replace",
     "organization": "Orange Digital Center",
     "year": "2026",
-    "description": "Description à compléter."
+    "description": "Description à compléter.",
+    "descriptionEn": "Description to complete."
   },
   {
     "id": "5",
     "title": "Projet académique 5 — titre à remplacer",
+    "titleEn": "Academic project 5 — title to replace",
     "organization": "Orange Digital Center",
     "year": "2026",
-    "description": "Description à compléter."
+    "description": "Description à compléter.",
+    "descriptionEn": "Description to complete."
   },
   {
     "id": "6",
     "title": "Projet académique 6 — titre à remplacer",
+    "titleEn": "Academic project 6 — title to replace",
     "organization": "Orange Digital Center",
     "year": "2026",
-    "description": "Description à compléter."
+    "description": "Description à compléter.",
+    "descriptionEn": "Description to complete."
   }
 ]

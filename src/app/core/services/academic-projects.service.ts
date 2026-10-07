@@ -2,7 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { catchError, finalize, of, tap } from 'rxjs';
 
+import { localizeAcademic } from '../i18n/translate';
 import { AcademicProject } from '../models/academic-project.model';
+import { I18nService } from './i18n.service';
 
 /**
  * Charge les projets académiques (travaux de formation ALX / ODC) depuis un
@@ -16,14 +18,20 @@ import { AcademicProject } from '../models/academic-project.model';
 @Injectable({ providedIn: 'root' })
 export class AcademicProjectsService {
   private readonly http = inject(HttpClient);
+  private readonly i18n = inject(I18nService);
   private readonly dataUrl = 'assets/data/academic-projects.json';
 
   private readonly _projects = signal<AcademicProject[]>([]);
   private readonly _loading = signal(false);
+  /** Clé de dictionnaire (`error.*`) — traduite à l'affichage par `t()`. */
   private readonly _error = signal<string | null>(null);
   private loaded = false;
 
-  readonly projects = this._projects.asReadonly();
+  readonly projects = computed(() => {
+    const lang = this.i18n.lang();
+    const list = this._projects();
+    return lang === 'fr' ? list : list.map((p) => localizeAcademic(p, lang));
+  });
   readonly loading = this._loading.asReadonly();
   readonly error = this._error.asReadonly();
 
@@ -46,7 +54,7 @@ export class AcademicProjectsService {
           this.loaded = true;
         }),
         catchError(() => {
-          this._error.set('Impossible de charger les projets académiques pour le moment.');
+          this._error.set('error.academic');
           return of([] as AcademicProject[]);
         }),
         finalize(() => this._loading.set(false))
