@@ -88,6 +88,7 @@ export const EN: Record<string, string> = {
   'level.project': `Project`,
   'level.basics': `Basics`,
   'level.regular': `Fluent`,
+  'level.experience': `Experience`,
 
   /* ---- Process ---- */
   'process.eyebrow': `Method`,
@@ -224,5 +225,3 @@ export const EN: Record<string, string> = {
   'title.cv': `Resume — Fidèle Elock Sadrack`,
   'title.notFound': `Page not found — Fidèle Elock Sadrack`,
 };
-
-  'level.experience': `Experience`,
