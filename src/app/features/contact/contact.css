@@ -26,3 +26,10 @@
 .form-note { font-size: 0.78rem; color: var(--color-text-faint); margin-top: 14px; }
 
 @media (max-width: 900px) { .contact-wrap { grid-template-columns: 1fr; gap: 40px; } }
+
+@media (max-width: 640px) {
+  .contact-wrap { gap: 32px; }
+  .contact-info h1 { font-size: clamp(1.5rem, 7vw, 1.8rem); }
+  .contact-channels a,
+  .contact-channel { flex-wrap: wrap; gap: 6px; font-size: 0.88rem; }
+}
