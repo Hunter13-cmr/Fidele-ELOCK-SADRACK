@@ -19,6 +19,26 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <!--
+    Preboot : applique langue et thème AVANT le bootstrap Angular, pour qu'il
+    n'y ait ni flash de thème clair ni anglais fantôme à la première peinture.
+    Mêmes clés localStorage que PreferencesService.
+  -->
+  <script>
+    (function () {
+      try {
+        var d = document.documentElement;
+        var lang = localStorage.getItem('portfolio-lang');
+        d.lang = lang === 'en' ? 'en' : 'fr';
+        var theme = localStorage.getItem('portfolio-theme');
+        d.setAttribute('data-theme', theme === 'light' ? 'light' : 'dark');
+        if (theme === 'light') {
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', '#F7F8FB');
+        }
+      } catch (e) { /* stockage indisponible : défauts déjà en place */ }
+    })();
+  </script>
 </head>
 <body>
   <app-root></app-root>
