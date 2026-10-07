@@ -1,13 +1,9 @@
 <section class="certifications-section">
   <div class="container">
     <div class="cert-head">
-      <span class="eyebrow">Certifications</span>
-      <h2>Un parcours certifiant en continu</h2>
-      <p>
-        ALX et Orange Digital Center m'ont formé à l'ingénierie logicielle, à l'IA,
-        au design UI/UX et au développement Angular. Chaque certificat est consultable
-        et détaillé ci-dessous. Les justificatifs téléchargeables sont affichés lorsqu'ils sont disponibles.
-      </p>
+      <span class="eyebrow">{{ t('certs.eyebrow') }}</span>
+      <h2>{{ t('certs.title') }}</h2>
+      <p>{{ t('certs.intro') }}</p>
     </div>
 
     <!-- Filtres — construits depuis les organisations présentes dans le JSON -->
@@ -19,7 +15,7 @@
         type="button"
         (click)="setFilter(null)"
       >
-        Toutes
+        {{ t('certs.all') }}
         <span class="filter-count">{{ countAll() }}</span>
       </button>
       @for (org of organizations(); track org.id) {
@@ -38,9 +34,9 @@
 
     <!-- Grille -->
     @if (loading()) {
-      <p class="cert-state">Chargement des certifications…</p>
+      <p class="cert-state">{{ t('loading.certs') }}</p>
     } @else if (error()) {
-      <p class="cert-state cert-error">{{ error() }}</p>
+      <p class="cert-state cert-error">{{ t(error()!) }}</p>
     } @else {
       <div class="cert-grid">
         @for (cert of certifications(); track cert.id) {
@@ -144,14 +140,14 @@
                   <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                   <circle cx="12" cy="12" r="3"/>
                 </svg>
-                Voir
+                {{ t('certs.view') }}
               </button>
               @if (cert.pdfUrl) {
                 <a class="cert-btn cert-btn-download" [href]="cert.pdfUrl" download>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 3v12M6 10l6 6 6-6M4 21h16"/>
                   </svg>
-                  Télécharger
+                  {{ t('certs.download') }}
                 </a>
               }
             </div>
@@ -172,10 +168,10 @@
     role="dialog"
     aria-modal="true"
     tabindex="-1"
-    [attr.aria-label]="'Certificat : ' + selectedCert()!.title"
+    [attr.aria-label]="t('certs.modalAria', { title: selectedCert()!.title })"
   >
     <div class="cert-modal">
-      <button type="button" class="cert-modal-close" (click)="closeModal()" aria-label="Fermer">
+      <button type="button" class="cert-modal-close" (click)="closeModal()" [attr.aria-label]="t('certs.closeAria')">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
           <path d="M6 6l12 12M18 6L6 18"/>
         </svg>
@@ -217,7 +213,7 @@
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M12 3v12M6 10l6 6 6-6M4 21h16"/>
             </svg>
-            Télécharger le PDF
+            {{ t('certs.downloadPdf') }}
           </a>
         }
         @if (selectedCert()!.verifiable && selectedCert()!.verificationUrl) {
@@ -225,7 +221,7 @@
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
             </svg>
-            Vérifier
+            {{ t('certs.verify') }}
           </a>
         }
       </div>

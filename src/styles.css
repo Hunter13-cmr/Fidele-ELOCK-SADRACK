@@ -36,6 +36,106 @@
   --shadow-card: 0 8px 40px -12px rgba(0, 0, 0, 0.5);
   --shadow-glow-primary: 0 0 40px -8px var(--color-primary-glow);
   --shadow-glow-secondary: 0 0 40px -8px var(--color-secondary-glow);
+
+  color-scheme: dark;
+
+  /* Fond des contrôles remplis (CTA, chips actives) : l'ambre vif est conservé
+     DANS LES DEUX THÈMES — sur lui, l'encre #16130A reste lisible (≈ 9:1),
+     alors que `--color-primary` assombri en mode jour retombe à ≈ 3,8:1. */
+  --color-primary-fill: #F0A93E;
+  --color-primary-fill-hover: #D68F2A;
+
+  /* Surfaces translucides (verre dépoli) posées sur le fond du site. */
+  --surface-glass: rgba(21, 28, 38, 0.85);
+  --surface-glass-strong: rgba(15, 20, 28, 0.9);
+  --surface-glass-soft: rgba(15, 20, 28, 0.6);
+  --surface-tint: rgba(21, 28, 38, 0.5);
+
+  /* Pastilles flottant au-dessus d'une image : fond sombre et texte clair
+     FIXES dans les deux thèmes (lisibilité sur photo quelconque). */
+  --media-chip-bg: rgba(10, 14, 20, 0.72);
+  --text-on-media: #F2F4F8;
+  --text-on-media-muted: #9AA7B8;
+
+  /* Fond translucide du footer. */
+  --footer-bg: rgba(10, 14, 20, 0.8);
+  /* Coloration syntaxique de la carte de code. */
+  --code-keyword: #C792EA;
+  /* Dégradés de texte display (titre hero / statistiques). */
+  --gradient-display: linear-gradient(135deg, #F0A93E 0%, #FF6B6B 40%, #C44DFF 80%);
+  --gradient-warm: linear-gradient(135deg, #F0A93E 0%, #FF6B6B 100%);
+  /* Voile de survol discret (listes, menus). */
+  --hover-wash: rgba(255, 255, 255, 0.04);
+  /* Pastille de compteur derrière un libellé de filtre. */
+  --count-pill-bg: rgba(255, 255, 255, 0.1);
+
+  /* Fond translucide du header sticky (blur derrière). */
+  --header-bg: rgba(10, 14, 20, 0.85);
+}
+
+/* ============ MODE JOUR ============
+   Palette claire activée par `<html data-theme="light">` (PreferencesService +
+   preboot inline de index.html). Les composants n'utilisent que des variables :
+   ce bloc suffit à basculer tout le site. Contrastes vérifiés WCAG AA —
+   texte principal ≈ 15:1, texte atténué ≈ 7.6:1, accents ≈ 4.5:1. */
+
+:root[data-theme='light'] {
+  --color-bg: #F7F8FB;
+  --color-bg-alt: #FFFFFF;
+  --color-surface: #FFFFFF;
+  --color-surface-raised: #EDF1F7;
+  /* Ambre assombri pour rester lisible en petit corps sur fond clair (≈ 4.9:1). */
+  --color-primary: #A85F00;
+  --color-primary-dim: #8A4E00;
+  --color-primary-glow: rgba(240, 169, 62, 0.4);
+  --color-secondary: #0B7A56;
+  --color-secondary-glow: rgba(11, 122, 86, 0.3);
+  --color-accent: #2B5FD9;
+  --color-accent-glow: rgba(43, 95, 217, 0.3);
+  --color-text: #18202C;
+  --color-text-muted: #46536A;
+  --color-text-faint: #5D6B80;
+  --color-border: #D9E0EA;
+  --color-success: #0B7A56;
+  --color-danger: #B23A20;
+
+  --gradient-primary: linear-gradient(135deg, #A85F00 0%, #C43C3C 50%, #7A2BD1 100%);
+  --gradient-mesh: radial-gradient(circle at 15% 20%, rgba(240, 169, 62, 0.14) 0%, transparent 35%),
+                   radial-gradient(circle at 85% 15%, rgba(43, 95, 217, 0.1) 0%, transparent 35%),
+                   radial-gradient(circle at 70% 85%, rgba(11, 122, 86, 0.1) 0%, transparent 40%),
+                   linear-gradient(180deg, #F7F8FB 0%, #EDF1F7 100%);
+
+  --shadow-card: 0 8px 30px -14px rgba(24, 32, 44, 0.22);
+
+  color-scheme: light;
+
+  /* Contrôles remplis : ambre vif identique au mode sombre (cf. ci-dessus). */
+  --color-primary-fill: #F0A93E;
+  --color-primary-fill-hover: #E09A2E;
+
+  /* Surfaces translucides : voile clair sur fond clair. */
+  --surface-glass: rgba(255, 255, 255, 0.85);
+  --surface-glass-strong: rgba(255, 255, 255, 0.95);
+  --surface-glass-soft: rgba(255, 255, 255, 0.65);
+  --surface-tint: rgba(237, 241, 247, 0.8);
+
+  /* Pastilles sur image : inchangées (fond sombre fixe, texte clair fixe). */
+  --media-chip-bg: rgba(10, 14, 20, 0.72);
+  --text-on-media: #F2F4F8;
+  --text-on-media-muted: #9AA7B8;
+
+  /* Footer : voile clair au lieu du fond sombre. */
+  --footer-bg: rgba(255, 255, 255, 0.85);
+  /* Mots-clés de code plus foncés pour rester lisibles sur carte claire. */
+  --code-keyword: #7C3AED;
+  /* Dégradés assomcis : les valeurs vives tomberaient sous 3:1 sur blanc. */
+  --gradient-display: linear-gradient(135deg, #A85F00 0%, #C43C3C 40%, #7A2BD1 80%);
+  --gradient-warm: linear-gradient(135deg, #A85F00 0%, #C43C3C 100%);
+  /* Voile de survol : encre légère sur blanc plutôt que blanc sur blanc. */
+  --hover-wash: rgba(24, 32, 44, 0.05);
+  --count-pill-bg: rgba(24, 32, 44, 0.08);
+
+  --header-bg: rgba(247, 248, 251, 0.88);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -76,6 +176,16 @@ body {
   min-height: 100vh;
 }
 
+/* Perf mobile : `background-attachment: fixed` force le navigateur à
+   repeindre le fond à chaque défilement (très coûteux au scroll). Sur
+   écrans tactiles, on repasse en scroll classique — le rendu est identique
+   hors viewport. */
+@media (hover: none) and (pointer: coarse) {
+  body {
+    background-attachment: scroll;
+  }
+}
+
 /* ============ Cursor glow ============ */
 .cursor-glow {
   position: fixed;
@@ -95,7 +205,7 @@ body {
 ::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 6px; border: 2px solid var(--color-bg); }
 ::-webkit-scrollbar-thumb:hover { background: var(--color-text-faint); }
 
-::selection { background: var(--color-primary); color: #16130A; }
+::selection { background: var(--color-primary-fill); color: #16130A; }
 
 a { color: inherit; text-decoration: none; }
 ul { list-style: none; }
@@ -173,20 +283,20 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing:
 .btn:hover::after { transform: scaleX(1); }
 
 .btn-primary {
-  background: var(--color-primary);
+  background: var(--color-primary-fill);
   color: #16130A;
-  border-color: var(--color-primary);
+  border-color: var(--color-primary-fill);
   font-weight: 500;
   box-shadow: 0 4px 24px -4px var(--color-primary-glow);
 }
 .btn-primary:hover {
-  background: var(--color-primary-dim);
-  border-color: var(--color-primary-dim);
+  background: var(--color-primary-fill-hover);
+  border-color: var(--color-primary-fill-hover);
   box-shadow: 0 8px 32px -4px var(--color-primary-glow);
   transform: translateY(-2px);
   color: #16130A;
 }
-.btn-primary::after { background: var(--color-primary-dim); }
+.btn-primary::after { background: var(--color-primary-fill-hover); }
 
 .btn-ghost:hover {
   border-color: var(--color-primary);

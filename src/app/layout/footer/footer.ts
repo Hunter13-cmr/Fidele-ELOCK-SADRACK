@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CertificationsService } from '../../core/services/certifications.service';
+import { injectT } from '../../core/services/i18n.service';
 
 @Component({
   selector: 'app-footer',
@@ -9,6 +10,8 @@ import { CertificationsService } from '../../core/services/certifications.servic
 })
 export class Footer implements OnInit {
   private readonly certificationsService = inject(CertificationsService);
+
+  protected readonly t = injectT();
 
   readonly year = new Date().getFullYear();
 

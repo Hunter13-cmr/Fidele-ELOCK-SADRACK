@@ -35,6 +35,7 @@ GlobalWorkerOptions.workerSrc = '/assets/pdf.worker.min.mjs';
 
 import { Cv } from '../../core/models/cv.model';
 import { CvsService } from '../../core/services/cvs.service';
+import { injectT } from '../../core/services/i18n.service';
 
 type CvState = 'loading' | 'ready' | 'missing' | 'unknown-id';
 
@@ -58,6 +59,8 @@ export class CvViewer {
   private readonly http = inject(HttpClient);
   private readonly cvsService = inject(CvsService);
   private readonly title = inject(Title);
+
+  protected readonly t = injectT();
 
   private readonly params = toSignal(this.route.paramMap, {
     initialValue: this.route.snapshot.paramMap,

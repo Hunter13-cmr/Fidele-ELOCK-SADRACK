@@ -6,9 +6,9 @@
       <span class="footer-copy">© {{ year }} Fidèle Elock Sadrack — Built with Angular 22</span>
       <span class="footer-certs">
         @if (certificationsCount() > 0) {
-          Certifié ALX × Orange Digital Center — {{ certificationsCount() }} certifications
+          {{ t('footer.certifiedN', { n: certificationsCount() }) }}
         } @else {
-          Certifié ALX × Orange Digital Center
+          {{ t('footer.certified') }}
         }
       </span>
     </div>

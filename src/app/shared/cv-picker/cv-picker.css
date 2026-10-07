@@ -73,7 +73,7 @@
 
 .cv-item:hover,
 .cv-item:focus-visible {
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--hover-wash);
   outline: none;
 }
 

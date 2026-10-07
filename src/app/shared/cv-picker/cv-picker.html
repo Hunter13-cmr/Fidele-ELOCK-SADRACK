@@ -1,7 +1,7 @@
 @if (loading()) {
-  <span class="cv-loading">Chargement du CV…</span>
+  <span class="cv-loading">{{ t('loading.cv') }}</span>
 } @else if (error()) {
-  <span class="cv-error">{{ error() }}</span>
+  <span class="cv-error">{{ t(error()!) }}</span>
 } @else if (singleCv(); as cv) {
   <!-- Une seule version disponible : un lien direct vers la page, sans menu superflu. -->
   <a class="cv-link" [routerLink]="['/cv', cv.id]">
@@ -19,7 +19,7 @@
       [class.cv-trigger-inline]="variant() === 'inline'"
       aria-haspopup="menu"
       [attr.aria-expanded]="open()"
-      [attr.aria-label]="'Choisir un CV — ' + cvs().length + ' versions disponibles'"
+      [attr.aria-label]="t('cv.chooseAria', { n: cvs().length })"
       (click)="toggle()"
       (keydown)="onTriggerKeydown($event)"
     >
@@ -51,7 +51,7 @@
         #menu
         class="cv-menu"
         role="menu"
-        [attr.aria-label]="'Versions du CV disponibles'"
+        [attr.aria-label]="t('cv.menuAria')"
         (keydown)="onMenuKeydown($event)"
       >
         @for (cv of cvs(); track cv.id; let i = $index) {
@@ -67,7 +67,7 @@
           >
             <span class="cv-item-label">{{ cv.label }}</span>
             <span class="cv-item-audience">{{ cv.audience }}</span>
-            <span class="cv-item-updated">Mise à jour : {{ cv.updated }}</span>
+            <span class="cv-item-updated">{{ t('cv.updated', { date: cv.updated }) }}</span>
           </a>
         }
       </div>

@@ -1,11 +1,11 @@
 @if (loading()) {
   <section class="section" style="border-bottom:none;">
-    <div class="container"><p class="state-msg">Chargement du projet…</p></div>
+    <div class="container"><p class="state-msg">{{ t('pd.loading') }}</p></div>
   </section>
 } @else if (project(); as p) {
   <section class="section" style="border-bottom:none;">
     <div class="container detail-container">
-      <a routerLink="/projects" class="back-link">← Tous les projets</a>
+      <a routerLink="/projects" class="back-link">{{ t('pd.back') }}</a>
 
       <span class="eyebrow">{{ p.category }}</span>
       <h1>{{ p.title }}</h1>
@@ -14,19 +14,19 @@
       <div class="detail-grid">
         <div class="detail-main">
           <div class="detail-block">
-            <h2>Contexte</h2>
+            <h2>{{ t('pd.context') }}</h2>
             <p>{{ p.context }}</p>
           </div>
           <div class="detail-block">
-            <h2>Objectif</h2>
+            <h2>{{ t('pd.goal') }}</h2>
             <p>{{ p.goal }}</p>
           </div>
           <div class="detail-block">
-            <h2>Mon rôle</h2>
+            <h2>{{ t('pd.role') }}</h2>
             <p>{{ p.role }}</p>
           </div>
           <div class="detail-block">
-            <h2>Fonctionnalités</h2>
+            <h2>{{ t('pd.features') }}</h2>
             <ul class="feature-list">
               @for (feature of p.features; track feature) {
                 <li>{{ feature }}</li>
@@ -35,32 +35,32 @@
           </div>
           @if (p.challenges) {
             <div class="detail-block">
-              <h2>Difficultés</h2>
+              <h2>{{ t('pd.challenges') }}</h2>
               <p>{{ p.challenges }}</p>
             </div>
           }
           @if (p.solution) {
             <div class="detail-block">
-              <h2>Solution</h2>
+              <h2>{{ t('pd.solution') }}</h2>
               <p>{{ p.solution }}</p>
             </div>
           }
         </div>
 
         <aside class="detail-side">
-          <h3>Stack</h3>
+          <h3>{{ t('pd.stack') }}</h3>
           @if (p.image) {
-            <div class="detail-image-carousel" aria-label="Images du projet">
+            <div class="detail-image-carousel" [attr.aria-label]="t('pd.imagesAria')">
               <div class="detail-image-track">
                 @for (image of getProjectImages(p); track $index) {
                   <div class="detail-project-slide">
-                    <img [src]="image" [alt]="p.title + ' - image ' + ($index + 1)" class="detail-project-image" loading="lazy" />
+                    <img [src]="image" [alt]="t('projects.imgAlt', { title: p.title, n: $index + 1 })" class="detail-project-image" loading="lazy" />
                   </div>
                 }
               </div>
             </div>
           } @else {
-            <p class="detail-visual-missing">Visuel du projet à ajouter.</p>
+            <p class="detail-visual-missing">{{ t('pd.visualMissing') }}</p>
           }
           <div class="stack-tags">
             @for (tech of p.technologies; track tech) {
@@ -68,16 +68,16 @@
             }
           </div>
 
-          <h3>Résultat</h3>
+          <h3>{{ t('pd.outcome') }}</h3>
           @if (p.demoUrl) {
-            <a [href]="p.demoUrl" target="_blank" rel="noopener noreferrer" class="btn btn-primary side-btn">Voir la démo</a>
+            <a [href]="p.demoUrl" target="_blank" rel="noopener noreferrer" class="btn btn-primary side-btn">{{ t('pd.demo') }}</a>
           } @else {
-            <p class="placeholder-tag">Démo — lien à ajouter</p>
+            <p class="placeholder-tag">{{ t('pd.demoMissing') }}</p>
           }
           @if (p.githubUrl) {
             <a [href]="p.githubUrl" target="_blank" rel="noopener noreferrer" class="btn btn-ghost side-btn">GitHub</a>
           } @else {
-            <p class="placeholder-tag">GitHub — lien à ajouter</p>
+            <p class="placeholder-tag">{{ t('pd.githubMissing') }}</p>
           }
         </aside>
       </div>
@@ -86,8 +86,9 @@
 } @else {
   <section class="section" style="border-bottom:none;">
     <div class="container">
-      <p class="state-msg">Ce projet n'existe pas ou n'est plus disponible.</p>
-      <a routerLink="/projects" class="btn btn-ghost">Retour aux projets</a>
+      <p class="state-msg">{{ t('pd.notFound') }}</p>
+      <a routerLink="/projects" class="btn btn-ghost">{{ t('back.projects') }}</a>
     </div>
   </section>
 }
+

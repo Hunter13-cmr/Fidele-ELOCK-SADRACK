@@ -11,6 +11,7 @@ import {
   viewChild,
 } from '@angular/core';
 import { CertificationsService } from '../../core/services/certifications.service';
+import { injectT } from '../../core/services/i18n.service';
 import { Certification, CertificationOrg } from '../../core/models/certification.model';
 import { OdcBrand } from '../../shared/odc-brand/odc-brand';
 
@@ -24,6 +25,8 @@ import { OdcBrand } from '../../shared/odc-brand/odc-brand';
 export class Certifications implements OnInit {
   private readonly certificationsService = inject(CertificationsService);
   private readonly destroyRef = inject(DestroyRef);
+
+  protected readonly t = injectT();
 
   readonly certifications = this.certificationsService.filteredCertifications;
   readonly allCertifications = this.certificationsService.certifications;

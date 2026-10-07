@@ -4,7 +4,7 @@
 }
 
 .code-card {
-  background: rgba(21, 28, 38, 0.85);
+  background: var(--surface-glass);
   border: 1px solid rgba(240, 169, 62, 0.15);
   border-radius: 16px;
   overflow: hidden;
@@ -41,7 +41,7 @@
   align-items: center;
   gap: 12px;
   padding: 14px 18px;
-  background: rgba(15, 20, 28, 0.9);
+  background: var(--surface-glass-strong);
   border-bottom: 1px solid var(--color-border);
 }
 
@@ -87,7 +87,7 @@
 }
 
 .code-comment { color: var(--color-text-faint); font-style: italic; }
-.code-keyword { color: #C792EA; }
+.code-keyword { color: var(--code-keyword); }
 .code-string { color: var(--color-primary); }
 .code-property { color: var(--color-accent); }
 .code-punctuation { color: var(--color-text-faint); }
@@ -108,7 +108,7 @@
   gap: 16px;
   padding: 12px 18px;
   border-top: 1px solid var(--color-border);
-  background: rgba(15, 20, 28, 0.6);
+  background: var(--surface-glass-soft);
 }
 
 .code-lint {
@@ -130,7 +130,7 @@
   font-family: var(--font-mono);
   font-size: 0.7rem;
   color: var(--color-text);
-  background: rgba(21, 28, 38, 0.9);
+  background: var(--surface-glass-strong);
   border: 1px solid var(--color-border);
   border-radius: 100px;
   padding: 8px 14px;

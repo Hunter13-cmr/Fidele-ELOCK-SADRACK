@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { injectT } from '../../core/services/i18n.service';
 import { ExperienceService } from '../../core/services/experience.service';
 import { ExperienceEntry } from '../../core/models/experience.model';
 
@@ -12,6 +13,8 @@ import { ExperienceEntry } from '../../core/models/experience.model';
 })
 export class About implements OnInit {
   private readonly experienceService = inject(ExperienceService);
+
+  protected readonly t = injectT();
 
   readonly jobs = this.experienceService.jobs;
   readonly training = this.experienceService.training;

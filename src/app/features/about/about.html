@@ -1,28 +1,16 @@
 <section class="section" style="border-bottom:none;">
   <div class="container about-grid">
     <div>
-      <span class="eyebrow">À propos</span>
-      <h1>De l'encadrement terrain à la conception d'interfaces</h1>
-      <p>
-        J'ai une formation d'<strong>ingénieur en Génie Logiciel</strong> à l'ESIAC
-        (3ᵉ année sur un cycle de 5 ans), complétée par une certification
-        <strong>Software Engineering</strong> d'ALX. En parallèle, j'ai encadré des
-        équipes terrain sur des projets d'envergure — dont le
-        <strong>4ᵉ Recensement Général de la Population et de l'Habitat</strong>.
-      </p>
-      <p>
-        Aujourd'hui, je développe avec <strong>Angular</strong> à l'Orange Digital Center
-        Cameroun : composants standalone, signaux, services et formulaires réactifs.
-        Ce que je recherche, c'est une équipe où le code est relu, discuté et amélioré —
-        en m'appuyant sur une expérience d'encadrement qui m'a appris à tenir un objectif
-        et une équipe.
-      </p>
+      <span class="eyebrow">{{ t('about.eyebrow') }}</span>
+      <h1>{{ t('about.title') }}</h1>
+      <p [innerHTML]="t('about.introP1')"></p>
+      <p [innerHTML]="t('about.introP2')"></p>
 
-      <h2>Formation</h2>
+      <h2>{{ t('about.education') }}</h2>
       @if (loading()) {
-        <p class="xp-state">Chargement du parcours…</p>
+        <p class="xp-state">{{ t('loading.training') }}</p>
       } @else if (error()) {
-        <p class="xp-state xp-error">{{ error() }}</p>
+        <p class="xp-state xp-error">{{ t(error()!) }}</p>
       } @else {
         <div class="xp-timeline">
           @for (t of training(); track t.id) {
@@ -60,14 +48,14 @@
     </div>
 
     <div class="seeking-box">
-      <h3>Ce que je cherche</h3>
+      <h3>{{ t('seeking.title') }}</h3>
       <ul>
-        <li>Une opportunité junior en développement Front-End / Angular</li>
-        <li>Une équipe où le code est relu, discuté, amélioré</li>
-        <li>Un environnement pour progresser rapidement et durablement</li>
-        <li>La possibilité d'apporter aussi une expérience d'encadrement</li>
+        <li>{{ t('seeking.q1') }}</li>
+        <li>{{ t('seeking.q2') }}</li>
+        <li>{{ t('seeking.q3') }}</li>
+        <li>{{ t('seeking.q4About') }}</li>
       </ul>
-      <a routerLink="/contact" class="btn btn-primary" style="margin-top:20px; width:100%; justify-content:center;">Me contacter</a>
+      <a routerLink="/contact" class="btn btn-primary" style="margin-top:20px; width:100%; justify-content:center;">{{ t('cta.contact') }}</a>
     </div>
   </div>
 </section>
@@ -77,19 +65,15 @@
   <div class="section-accent"></div>
   <div class="container">
     <div class="section-head">
-      <span class="eyebrow">Expérience</span>
-      <h2>Des postes d'encadrement sur des projets de terrain</h2>
-      <p>
-        Des opérations exigeantes : encadrement d'agents recenseurs sur un recensement
-        national, coordination de partenaires, surveillance. C'est là que j'ai appris à
-        tenir un objectif et à synchroniser une équipe.
-      </p>
+      <span class="eyebrow">{{ t('about.expEyebrow') }}</span>
+      <h2>{{ t('about.expTitle') }}</h2>
+      <p [innerHTML]="t('about.expIntro')"></p>
     </div>
 
     @if (loading()) {
-      <p class="xp-state">Chargement de l'expérience…</p>
+      <p class="xp-state">{{ t('loading.experience') }}</p>
     } @else if (error()) {
-      <p class="xp-state xp-error">{{ error() }}</p>
+      <p class="xp-state xp-error">{{ t(error()!) }}</p>
     } @else {
       <div class="xp-grid">
         @for (job of jobs(); track job.id) {
@@ -113,7 +97,7 @@
             }
 
             @if (job.missions?.length) {
-              <h4 class="xp-subtitle">Missions principales</h4>
+              <h4 class="xp-subtitle">{{ t('about.missions') }}</h4>
               <ul class="xp-missions">
                 @for (m of job.missions; track m) {
                   <li>{{ m }}</li>
@@ -122,7 +106,7 @@
             }
 
             @if (job.results?.length) {
-              <h4 class="xp-subtitle xp-subtitle-results">Résultats obtenus</h4>
+              <h4 class="xp-subtitle xp-subtitle-results">{{ t('about.results') }}</h4>
               <ul class="xp-results">
                 @for (r of job.results; track r) {
                   <li>{{ r }}</li>

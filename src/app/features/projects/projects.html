@@ -1,12 +1,12 @@
 <section class="section" style="border-bottom:none;">
   <div class="container">
     <div class="section-head">
-      <span class="eyebrow">Projets</span>
-      <h2>Réalisations concrètes</h2>
-      <p>3 à 5 projets choisis plutôt qu'une longue liste superficielle.</p>
+      <span class="eyebrow">{{ t('projects.eyebrow') }}</span>
+      <h2>{{ t('projects.pageTitle') }}</h2>
+      <p>{{ t('projects.pageIntro') }}</p>
     </div>
 
-    <div class="projects-filter" role="group" aria-label="Filtrer les projets">
+    <div class="projects-filter" role="group" [attr.aria-label]="t('projects.filterAria')">
       @for (filter of filters; track filter) {
         <button
           type="button"
@@ -15,17 +15,17 @@
           [attr.aria-pressed]="activeFilter() === filter"
           (click)="setFilter(filter)"
         >
-          {{ filter }}
+          {{ filter === 'Tous' ? t('projects.filterAll') : filter }}
         </button>
       }
     </div>
 
     @if (loading()) {
-      <p class="state-msg">Chargement des projets…</p>
+      <p class="state-msg">{{ t('loading.projects') }}</p>
     } @else if (error()) {
-      <p class="state-msg state-error">{{ error() }}</p>
+      <p class="state-msg state-error">{{ t(error()!) }}</p>
     } @else if (filteredProjects().length === 0) {
-      <p class="state-msg">Aucun projet ne correspond à ce filtre.</p>
+      <p class="state-msg">{{ t('projects.noMatch') }}</p>
     } @else {
       <div class="project-grid">
         @for (project of filteredProjects(); track project.id) {
@@ -35,12 +35,12 @@
                 <div class="project-slides">
                   @for (image of getProjectImages(project); track $index) {
                     <div class="project-slide">
-                      <img [src]="image" [alt]="project.title + ' - image ' + ($index + 1)" class="thumb-image" loading="lazy" />
+                      <img [src]="image" [alt]="t('projects.imgAlt', { title: project.title, n: $index + 1 })" class="thumb-image" loading="lazy" />
                     </div>
                   }
                 </div>
               } @else {
-                <span class="project-visual-missing">Aperçu à ajouter</span>
+                <span class="project-visual-missing">{{ t('projects.previewMissing') }}</span>
               }
             </div>
             <div class="project-body">
@@ -53,11 +53,11 @@
                 }
               </div>
               <div class="project-links">
-                <a [routerLink]="['/projects', project.slug]">Étude de cas</a>
+                <a [routerLink]="['/projects', project.slug]">{{ t('projects.caseStudy') }}</a>
                 @if (project.githubUrl) {
                   <a [href]="project.githubUrl" target="_blank" rel="noopener noreferrer">GitHub</a>
                 } @else {
-                  <span class="placeholder-tag">GitHub — lien à ajouter</span>
+                  <span class="placeholder-tag">{{ t('projects.githubMissing') }}</span>
                 }
               </div>
             </div>

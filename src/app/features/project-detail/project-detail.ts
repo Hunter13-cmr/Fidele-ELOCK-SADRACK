@@ -1,6 +1,7 @@
 import { Component, DestroyRef, OnInit, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { injectT } from '../../core/services/i18n.service';
 import { ProjectsService } from '../../core/services/projects.service';
 import { Project } from '../../core/models/project.model';
 
@@ -18,6 +19,8 @@ export class ProjectDetail implements OnInit {
 
   private readonly slug = signal<string>(this.route.snapshot.paramMap.get('slug') ?? '');
   readonly loading = this.projectsService.loading;
+
+  protected readonly t = injectT();
 
   readonly project = computed<Project | undefined>(() =>
     this.projectsService.getBySlug(this.slug())

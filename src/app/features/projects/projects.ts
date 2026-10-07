@@ -1,5 +1,6 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { injectT } from '../../core/services/i18n.service';
 import { ProjectsService } from '../../core/services/projects.service';
 import { Project } from '../../core/models/project.model';
 
@@ -14,6 +15,8 @@ type FilterValue = 'Tous' | Project['category'];
 })
 export class Projects implements OnInit {
   private readonly projectsService = inject(ProjectsService);
+
+  protected readonly t = injectT();
 
   readonly filters: FilterValue[] = ['Tous', 'Angular', 'Front-End', 'Full Stack', 'API'];
   readonly activeFilter = signal<FilterValue>('Tous');

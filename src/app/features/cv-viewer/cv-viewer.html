@@ -2,12 +2,12 @@
   <div class="container">
     @switch (state()) {
       @case ('loading') {
-        <p class="cv-state">Chargement du CV…</p>
+        <p class="cv-state">{{ t('loading.cv') }}</p>
       }
 
       @case ('ready') {
-        <nav class="cv-breadcrumb" aria-label="Fil d'Ariane">
-          <a routerLink="/">Accueil</a>
+        <nav class="cv-breadcrumb" [attr.aria-label]="t('cvv.breadcrumbAria')">
+          <a routerLink="/">{{ t('cvv.home') }}</a>
           <span aria-hidden="true">/</span>
           <span aria-current="page">{{ cv()?.label }}</span>
         </nav>
@@ -25,8 +25,8 @@
             @if (showSkeleton()) {
               <div class="cv-loading" role="status" aria-live="polite">
                 <div class="cv-spinner" aria-hidden="true"></div>
-                <p class="cv-loading-text">Chargement du CV en cours…</p>
-                <p class="cv-loading-sub">Mise en forme de la première page</p>
+                <p class="cv-loading-text">{{ t('cvv.loadingText') }}</p>
+                <p class="cv-loading-sub">{{ t('cvv.loadingSub') }}</p>
               </div>
             }
 
@@ -34,7 +34,7 @@
               #pdfCanvas
               class="cv-canvas"
               role="img"
-              aria-label="Aperçu du CV"
+              [attr.aria-label]="t('cvv.previewAria')"
               [class.cv-canvas-hidden]="showSkeleton()"
             ></canvas>
 
@@ -45,19 +45,19 @@
                   class="cv-page-btn"
                   [disabled]="!hasPrev()"
                   (click)="prevPage()"
-                  aria-label="Page précédente"
+                  [attr.aria-label]="t('cvv.prevAria')"
                 >
                   ‹
                 </button>
                 <span class="cv-page-info">
-                  Page {{ page() }} sur {{ pageCount() }}
+                  {{ t('cvv.pageOf', { page: page(), total: pageCount() }) }}
                 </span>
                 <button
                   type="button"
                   class="cv-page-btn"
                   [disabled]="!hasNext()"
                   (click)="nextPage()"
-                  aria-label="Page suivante"
+                  [attr.aria-label]="t('cvv.nextAria')"
                 >
                   ›
                 </button>
@@ -66,22 +66,19 @@
           }
         </div>
 
-        <p class="cv-hint">
-          Aperçu généré à la volée — l'image peut différer légèrement du PDF d'origine.
-          Pour la version exacte, préférez le téléchargement.
-        </p>
+        <p class="cv-hint">{{ t('cvv.hint') }}</p>
 
         <div class="cv-actions">
           <a class="btn btn-primary" [href]="pdfUrl()" [download]="cv()?.fileName">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M12 3v12M6 10l6 6 6-6M4 21h16"/>
             </svg>
-            Télécharger le PDF
+            {{ t('cvv.download') }}
           </a>
           <a class="btn btn-ghost" [href]="pdfUrl()" target="_blank" rel="noopener noreferrer">
-            Ouvrir dans un nouvel onglet
+            {{ t('cvv.openNew') }}
           </a>
-          <span class="cv-updated">Mise à jour : {{ cv()?.updated }}</span>
+          <span class="cv-updated">{{ t('cv.updated', { date: cv()?.updated ?? '' }) }}</span>
         </div>
       }
 
@@ -91,28 +88,27 @@
           <span class="eyebrow">404</span>
           <h1>
             @if (state() === 'unknown-id') {
-              Cette version de CV n'existe pas.
+              {{ t('cvv.unknownId') }}
             } @else {
-              Ce CV n'est pas encore disponible.
+              {{ t('cvv.missing') }}
             }
           </h1>
           <p>
             @if (state() === 'unknown-id') {
-              L'adresse comporte peut-être une erreur.
+              {{ t('cvv.unknownIdHint') }}
             } @else {
-              Le fichier PDF n'a pas encore été mis en ligne. Revenez bientôt, ou
-              contactez-moi directement pour en obtenir une copie.
+              {{ t('cvv.missingHint') }}
             }
           </p>
 
           <div class="cv-404-actions">
-            <a routerLink="/contact" class="btn btn-primary">Me contacter</a>
-            <a routerLink="/" class="btn btn-ghost">Retour à l'accueil</a>
+            <a routerLink="/contact" class="btn btn-primary">{{ t('cta.contact') }}</a>
+            <a routerLink="/" class="btn btn-ghost">{{ t('nf.back') }}</a>
           </div>
 
           @if (otherCvs().length > 0) {
             <div class="cv-404-alt">
-              <h2>Autres versions</h2>
+              <h2>{{ t('cvv.otherVersions') }}</h2>
               <ul>
                 @for (other of otherCvs(); track other.id) {
                   <li>

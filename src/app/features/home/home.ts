@@ -16,6 +16,7 @@ import { Certifications } from '../certifications/certifications';
 import { Globe } from './components/globe/globe';
 import { StatCounter } from './components/stat-counter/stat-counter';
 import { OdcBrand } from '../../shared/odc-brand/odc-brand';
+import { injectT } from '../../core/services/i18n.service';
 
 interface Particle {
   x: number;
@@ -93,12 +94,23 @@ export class Home implements OnInit {
   private typingTimeout?: ReturnType<typeof setTimeout>;
   private cursorGlow?: HTMLElement;
   private reducedMotion = false;
-  private readonly roles = [
-    'Développeur Web',
-    'Créateur d’interfaces modernes',
-    'Ancien chef d’équipe terrain',
-    'Basé à Douala, Cameroun',
-  ];
+
+  /** Traduction liée (référence stable) — bindings de home.html. */
+  protected readonly t = injectT();
+
+  /**
+   * Phrases du typing, tirées du dictionnaire courant. C'est un `getter` :
+   * le timer relit la liste à chaque cycle, donc un changement de langue
+   * s'applique au prochain mot sans redémarrer l'animation.
+   */
+  private get roles(): string[] {
+    return ['role.1', 'role.2', 'role.3', 'role.4'].map((key) => this.t(key));
+  }
+
+  /** aria-label du typing : rôles joints dans la langue courante. */
+  protected get rolesAria(): string {
+    return this.roles.join(', ');
+  }
 
   private revealObserver?: IntersectionObserver;
   private readonly revealSeen = new WeakSet<Element>();
@@ -293,7 +305,12 @@ export class Home implements OnInit {
     let del = false;
 
     const type = () => {
-      const txt = this.roles[role];
+      const list = this.roles;
+      if (role >= list.length) role = 0;
+      const txt = list[role];
+      // Changement de langue en cours de frappe : position bornée à la
+      // longueur de la nouvelle phrase avant de poursuivre.
+      if (char > txt.length) char = txt.length;
       el.textContent = del ? txt.substring(0, char - 1) : txt.substring(0, char + 1);
       del ? char-- : char++;
 

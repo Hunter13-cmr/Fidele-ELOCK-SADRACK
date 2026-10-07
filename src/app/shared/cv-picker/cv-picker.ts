@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CvsService } from '../../core/services/cvs.service';
+import { injectT } from '../../core/services/i18n.service';
 import { Cv } from '../../core/models/cv.model';
 
 /**
@@ -35,6 +36,8 @@ export class CvPicker implements OnInit {
   private readonly cvsService = inject(CvsService);
   private readonly host = inject(ElementRef<HTMLElement>);
   private readonly destroyRef = inject(DestroyRef);
+
+  protected readonly t = injectT();
 
   readonly cvs = this.cvsService.cvs;
   readonly loading = this.cvsService.loading;
