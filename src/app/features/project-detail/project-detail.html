@@ -7,7 +7,11 @@
     <div class="container detail-container">
       <a routerLink="/projects" class="back-link">{{ t('pd.back') }}</a>
 
-      <span class="eyebrow">{{ p.category }}</span>
+      <div class="eyebrow-group">
+        @for (cat of p.categories; track cat) {
+          <span class="eyebrow">{{ cat }}</span>
+        }
+      </div>
       <h1>{{ p.title }}</h1>
       <p class="lead">{{ p.description }}</p>
 
