@@ -201,7 +201,7 @@ readonly pdfUrl = computed(() => {
       await this.renderPage();
     } catch {
       if (token === this.renderToken) {
-        this.renderError.set("Ce CV n'a pas pu être affiché. Utilisez les boutons ci-dessous.");
+        this.renderError.set(this.t('cvv.renderError'));
       }
     } finally {
       if (token === this.renderToken) this.docLoading.set(false);
