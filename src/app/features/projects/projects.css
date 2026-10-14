@@ -72,6 +72,7 @@
   font-size: 0.7rem;
 }
 .project-body { padding: 22px 22px 24px; flex: 1; display: flex; flex-direction: column; }
+.cat-group { display: flex; flex-wrap: wrap; gap: 6px 10px; }
 .project-body .cat { font-family: var(--font-mono); font-size: 0.7rem; color: var(--color-secondary); text-transform: uppercase; letter-spacing: 0.08em; }
 .project-body h3 { font-size: 1.15rem; margin-top: 8px; }
 .project-body p { color: var(--color-text-muted); font-size: 0.9rem; margin-top: 10px; flex: 1; }
