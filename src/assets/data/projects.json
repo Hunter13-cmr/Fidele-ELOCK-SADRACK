@@ -3,7 +3,7 @@
     "id": "1",
     "slug": "le-calao-dore",
     "title": "Le Calao Doré",
-    "category": "Angular",
+    "categories": ["Angular", "Front-End"],
     "shortDescription": "Site vitrine responsive pour un restaurant, pensé pour présenter le lieu et son expérience de restauration camerounaise.",
     "shortDescriptionEn": "Responsive showcase website for a restaurant, designed to present the venue and its Cameroonian dining experience.",
     "description": "Site vitrine développé dans le cadre de l'Angular Talent Lab 2026, pour présenter un restaurant : menu, ambiance, informations pratiques.",
@@ -38,15 +38,15 @@
       "assets/images/projects/le-calao-dore3.jpg",
       "assets/images/projects/le-calao-dore4.jpg"
     ],
-    "demoUrl": "",
-    "githubUrl": "",
+    "demoUrl": "https://le-calao-dore-five.vercel.app/",
+    "githubUrl": "https://github.com/Hunter13-cmr/le-calao-dore",
     "featured": true
   },
   {
     "id": "2",
     "slug": "chatapp",
     "title": "ChatApp",
-    "category": "Full Stack",
+    "categories": ["Full Stack", "API"],
     "shortDescription": "Application de messagerie démontrant la communication entre le front-end et un back-end.",
     "shortDescriptionEn": "Messaging application demonstrating communication between the front end and a back end.",
     "description": "Projet de messagerie visant à mettre en pratique les échanges de données entre client et serveur.",
@@ -78,7 +78,7 @@
     "id": "3",
     "slug": "wattmboa-237",
     "title": "WattMboa 237",
-    "category": "Angular",
+    "categories": ["Angular", "Front-End"],
     "shortDescription": "Outil d'estimation et de simulation de consommation électrique, avec formulaires et calculs côté client.",
     "shortDescriptionEn": "Electricity consumption estimation and simulation tool, with forms and client-side calculations.",
     "description": "Application Angular permettant à un utilisateur d'estimer sa consommation électrique à partir des équipements de son foyer.",
@@ -106,6 +106,53 @@
     "solutionEn": "Moving the business logic into a dedicated Angular service, called by the interface components.",
     "demoUrl": "",
     "githubUrl": "",
+    "featured": true
+  },
+  {
+    "id": "4",
+    "slug": "delices-de-douala",
+    "title": "Délices de Douala",
+    "titleEn": "Délices de Douala",
+    "categories": ["Angular", "Front-End", "API"],
+    "shortDescription": "Application Angular 22 de présentation et de notation des restaurants de Douala, avec design premium, mode sombre et carte du jour interactive.",
+    "shortDescriptionEn": "Angular 22 application for showcasing and rating Douala restaurants, with a premium design, dark mode and an interactive daily menu.",
+    "description": "SPA Angular 22 (standalone, Signals, httpResource) dédiée à la présentation et à la notation des restaurants de Douala. Système de design complet (tokens CSS, modes clair/sombre), notation interactive avec persistance locale, carte du jour chargée depuis un JSON statique et SSR optionnel.",
+    "descriptionEn": "Angular 22 single-page application (standalone, Signals, httpResource) dedicated to showcasing and rating Douala restaurants. Full design system (CSS tokens, light/dark modes), interactive rating with local persistence, daily menu loaded from static JSON and optional SSR.",
+    "context": "Un portefeuille de restaurants a besoin d'une présence en ligne immersive qui donne envie de découvrir les lieux, tout en restant rapide et agréable à consulter sur mobile.",
+    "contextEn": "A restaurant portfolio needs an immersive online presence that makes people want to discover the venues, while staying fast and pleasant to browse on mobile.",
+    "goal": "Concevoir une expérience premium combinant un vrai système de design, une gestion d'état réactive par Signals et des interactions soignées (notation, recherche, plat du jour).",
+    "goalEn": "Design a premium experience combining a real design system, reactive state management with Signals and polished interactions (rating, search, dish of the day).",
+    "role": "Conception et développement Front-End : architecture des composants, design system, état réactif et intégration des données JSON.",
+    "roleEn": "Front-end design and development: component architecture, design system, reactive state and JSON data integration.",
+    "technologies": ["Angular 22", "TypeScript", "Signals", "httpResource", "CSS custom properties", "Vitest"],
+    "features": [
+      "Accueil immersif avec statistiques et filtre « meilleures tables »",
+      "Cartes restaurants avec notation interactive persistée",
+      "Carte du jour : filtre par catégorie, recherche instantanée, badge « Épuisé » et plat du jour rotatif",
+      "Mode sombre / clair persistant avec variables CSS unifiées",
+      "Design responsive mobile-first (grilles auto-fit, typographie clamp())"
+    ],
+    "featuresEn": [
+      "Immersive home page with statistics and a \"best tables\" filter",
+      "Restaurant cards with persisted interactive rating",
+      "Daily menu: category filter, instant search, \"Sold out\" badge and rotating dish of the day",
+      "Persistent dark / light mode with unified CSS variables",
+      "Mobile-first responsive design (auto-fit grids, clamp() typography)"
+    ],
+    "challenges": "Rester dans les budgets de build (anyComponentStyle) tout en proposant un rendu premium, et garder une carte du jour lisible malgré de nombreux états (chargement, erreur, filtre, recherche).",
+    "challengesEn": "Staying within build budgets (anyComponentStyle) while delivering a premium look, and keeping the daily menu readable despite many states (loading, error, filtering, search).",
+    "solution": "Découpage en composants standalone spécialisés, état fragmenté par domaine via des services à base de Signals, et stylisation par tokens CSS plutôt qu'un framework UI.",
+    "solutionEn": "Splitting into focused standalone components, domain-split state through Signals-based services, and styling via CSS tokens instead of a UI framework.",
+    "image": "https://raw.githubusercontent.com/Hunter13-cmr/delices-de-douala-HTTP-notation/main/src/assets/screenshots/Home-header.webp",
+    "images": [
+      "https://raw.githubusercontent.com/Hunter13-cmr/delices-de-douala-HTTP-notation/main/src/assets/screenshots/Home-header.webp",
+      "https://raw.githubusercontent.com/Hunter13-cmr/delices-de-douala-HTTP-notation/main/src/assets/screenshots/Liste-menu.webp",
+      "https://raw.githubusercontent.com/Hunter13-cmr/delices-de-douala-HTTP-notation/main/src/assets/screenshots/Recherche-menu.webp",
+      "https://raw.githubusercontent.com/Hunter13-cmr/delices-de-douala-HTTP-notation/main/src/assets/screenshots/Restaurant-header.webp",
+      "https://raw.githubusercontent.com/Hunter13-cmr/delices-de-douala-HTTP-notation/main/src/assets/screenshots/carte-restaurant.webp"
+    ],
+    "demoUrl": "https://delices-de-douala-http-notation.vercel.app/",
+    "githubUrl": "https://github.com/Hunter13-cmr/delices-de-douala-HTTP-notation",
     "featured": true
   }
 ]
