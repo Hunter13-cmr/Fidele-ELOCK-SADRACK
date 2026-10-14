@@ -898,6 +898,7 @@
   letter-spacing: 0.1em;
   font-weight: 500;
 }
+.cat-group { display: flex; flex-wrap: wrap; gap: 6px 10px; }
 
 .project-body h3 {
   font-size: 1.25rem;
