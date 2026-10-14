@@ -1,10 +1,13 @@
+export type ProjectCategory = 'Angular' | 'Front-End' | 'Full Stack' | 'API';
+
 export interface Project {
   id: string;
   slug: string;
   title: string;
   /** Variante anglaise des champs textuels : absente => secours sur le FR. */
   titleEn?: string;
-  category: 'Angular' | 'Front-End' | 'Full Stack' | 'API';
+  /** Un projet peut appartenir à plusieurs catégories (ex. Angular + Front-End). */
+  categories: ProjectCategory[];
   shortDescription: string;
   shortDescriptionEn?: string;
   description: string;
