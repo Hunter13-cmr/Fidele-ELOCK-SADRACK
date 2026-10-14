@@ -182,6 +182,7 @@ export const EN: Record<string, string> = {
   'cvv.unknownIdHint': `The address may contain a typo.`,
   'cvv.missingHint': `The PDF has not been published yet.`,
   'cvv.otherVersions': `Other versions`,
+  'cvv.renderError': `This resume could not be displayed. Use the buttons below.`,
 
   /* ---- Project detail ---- */
   'pd.loading': `Loading project…`,

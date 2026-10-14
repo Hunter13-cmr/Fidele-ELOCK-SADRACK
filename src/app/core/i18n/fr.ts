@@ -182,6 +182,7 @@ export const FR: Record<string, string> = {
   'cvv.unknownIdHint': `L'adresse comporte peut-être une erreur.`,
   'cvv.missingHint': `Le fichier PDF n'a pas encore été mis en ligne.`,
   'cvv.otherVersions': `Autres versions`,
+  'cvv.renderError': `Ce CV n'a pas pu être affiché. Utilisez les boutons ci-dessous.`,
 
   /* ---- Détail de projet ---- */
   'pd.loading': `Chargement du projet…`,
