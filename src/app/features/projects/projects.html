@@ -44,7 +44,11 @@
               }
             </div>
             <div class="project-body">
-              <span class="cat">{{ project.category }}</span>
+              <div class="cat-group">
+                @for (cat of project.categories; track cat) {
+                  <span class="cat">{{ cat }}</span>
+                }
+              </div>
               <h3>{{ project.title }}</h3>
               <p>{{ project.shortDescription }}</p>
               <div class="stack-tags">
