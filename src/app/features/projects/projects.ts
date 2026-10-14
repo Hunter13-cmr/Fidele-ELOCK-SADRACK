@@ -2,9 +2,9 @@ import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { injectT } from '../../core/services/i18n.service';
 import { ProjectsService } from '../../core/services/projects.service';
-import { Project } from '../../core/models/project.model';
+import { Project, ProjectCategory } from '../../core/models/project.model';
 
-type FilterValue = 'Tous' | Project['category'];
+type FilterValue = 'Tous' | ProjectCategory;
 
 @Component({
   selector: 'app-projects',
@@ -27,7 +27,7 @@ export class Projects implements OnInit {
   readonly filteredProjects = computed(() => {
     const filter = this.activeFilter();
     const all = this.projectsService.projects();
-    return filter === 'Tous' ? all : all.filter((p) => p.category === filter);
+    return filter === 'Tous' ? all : all.filter((p) => p.categories.includes(filter));
   });
 
   ngOnInit(): void {
