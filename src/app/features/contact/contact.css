@@ -12,6 +12,12 @@
 .cv-channel { align-items: center; }
 .cv-channel app-cv-picker { display: inline-flex; }
 
+.form-success {
+  color: #16803d;
+  margin: 0 0 16px;
+  font-size: 0.9rem;
+}
+
 .form-group { margin-bottom: 18px; }
 .form-group label { display: block; font-size: 0.82rem; color: var(--color-text-muted); margin-bottom: 7px; font-family: var(--font-mono); }
 .form-group input, .form-group textarea {
