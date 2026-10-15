@@ -12,7 +12,8 @@
       </div>
       </div>
       
-@if (successMessage()) {
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+      @if (successMessage()) {
   <div class="form-success" role="status" aria-live="polite">
     {{ successMessage() }}
   </div>
@@ -23,8 +24,6 @@
     {{ errorMessage() }}
   </div>
 }
-
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
       <div class="form-group">
         <label for="name">{{ t('contact.labelName') }}</label>
         <input id="name" type="text" autocomplete="name" formControlName="name" [attr.aria-invalid]="f.name.invalid && (f.name.touched || submitted())" [attr.aria-describedby]="f.name.invalid && (f.name.touched || submitted()) ? 'name-error' : null" />
