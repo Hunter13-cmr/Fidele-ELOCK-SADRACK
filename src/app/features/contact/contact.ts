@@ -86,44 +86,40 @@ export class Contact {
       message,
     } = this.form.getRawValue();
 
-    try {
+    
+try {
+  await this.emailService.sendEmail({
+    from_name: name,
+    from_email: email,
+    subject: subject,
+    message: message,
+  });
 
-      await this.emailService.sendEmail({
-        from_name: name,
-        from_email: email,
-        subject: subject,
-        message: message,
-      });
+  // Confirmer la réussite de l'envoi
+  this.successMessage.set(
+    'Votre message a été envoyé avec succès.'
+  );
+  this.errorMessage.set('');
 
-      this.successMessage.set(
-        'Votre message a été envoyé avec succès.'
-      );
+  // Vider le formulaire après la réussite
+  this.form.reset({
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+    website: '',
+  });
 
-      this.form.reset({
-        name: '',
-        email: '',
-        subject: '',
-        message: '',
-        website: '',
-      });
+  this.submitted.set(false);
 
-      this.submitted.set(false);
+} catch (error) {
+  console.error('Erreur EmailJS :', error);
 
-    } catch (error) {
+  this.successMessage.set('');
+  this.errorMessage.set(
+    'Une erreur est survenue lors de l’envoi. Veuillez réessayer.'
+  );
 
-      console.error(
-        'Erreur EmailJS :',
-        error
-      );
-
-      this.errorMessage.set(
-        'Une erreur est survenue lors de l’envoi. Veuillez réessayer.'
-      );
-
-    } finally {
-
-      this.isSending.set(false);
-
-    }
-  }
+} finally {
+  this.isSending.set(false);
 }
