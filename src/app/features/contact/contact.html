@@ -10,6 +10,19 @@
         <a href="https://github.com/Hunter13-cmr" target="_blank" rel="noopener noreferrer"><span>GitHub</span><span>Hunter13-cmr ↗</span></a>
         <div class="contact-channel cv-channel"><span>{{ t('contact.cvPdf') }}</span><app-cv-picker /></div>
       </div>
+      
+@if (successMessage()) {
+  <p class="form-success" role="status" aria-live="polite">
+    {{ successMessage() }}
+  </p>
+}
+
+@if (errorMessage()) {
+  <p class="form-error" role="alert">
+    {{ errorMessage() }}
+  </p>
+}
+
     </div>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
